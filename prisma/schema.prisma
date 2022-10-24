@@ -3,17 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
-}
-
-model Property {
-  
+model Staff {
+  id         Int     @id @default(autoincrement())
+  department String? @db.VarChar(300)
+  name       String? @db.VarChar(300)
+  title      String? @db.VarChar(300)
+  email      String? @db.VarChar(300)
 }
