@@ -1,12 +1,12 @@
-import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { green } from "@mui/material/colors";
-import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { GoogleLogin } from "@react-oauth/google";
+import Toolbar from "@mui/material/Toolbar";
+import { signIn, useSession } from "next-auth/react";
+import React from "react";
 
 function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,6 +27,8 @@ function ProfileMenu() {
       background: green[800],
     },
   };
+
+  const { data: session } = useSession();
 
   return (
     <Box>
@@ -74,8 +76,14 @@ function ProfileMenu() {
         <MenuItem sx={menuStyles} onClick={handleClose}>
           Settings
         </MenuItem>
-        <MenuItem sx={menuStyles} onClick={handleClose}>
-          Sign out
+        <MenuItem
+          sx={menuStyles}
+          onClick={() => {
+            signIn();
+            handleClose();
+          }}
+        >
+          Sign in
         </MenuItem>
       </Menu>
 
@@ -111,17 +119,6 @@ export function Layout({ children }) {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <Box sx={{ p: 5 }}>
-        <GoogleLogin
-          useOneTap
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
-      </Box>
       {children}
     </>
   );

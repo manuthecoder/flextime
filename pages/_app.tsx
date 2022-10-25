@@ -3,11 +3,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Head from "next/head";
 import * as React from "react";
 import { Layout } from "../components/Layout";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import "../styles/globals.scss";
 import { NoSsr } from "@mui/material";
+import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }): React.ReactElement {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}): React.ReactElement {
   const theme = createTheme({
     components: {
       // Name of the component
@@ -26,15 +29,8 @@ export default function App({ Component, pageProps }): React.ReactElement {
     },
   });
 
-  const session = {
-    name: "Manusvath Gurudath",
-    email: "manusvathgurudath@gmail.com",
-  };
-  const CLIENT_ID =
-    "20713454957-r0fhgg5dqvek7rpnkbni7bqrp863bivp.apps.googleusercontent.com";
-
   return (
-    <GoogleOAuthProvider clientId={CLIENT_ID}>
+    <SessionProvider session={session}>
       <ThemeProvider theme={theme}>
         <Head>
           <meta name="theme-color" content="#e8f5e9" />
@@ -47,6 +43,6 @@ export default function App({ Component, pageProps }): React.ReactElement {
           </Layout>
         </NoSsr>
       </ThemeProvider>
-    </GoogleOAuthProvider>
+    </SessionProvider>
   );
 }
