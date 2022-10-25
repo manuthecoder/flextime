@@ -111,7 +111,7 @@ export function Layout({ children }) {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      {/* <Box sx={{ p: 5 }}>
+      <Box sx={{ p: 5 }}>
         <GoogleLogin
           useOneTap
           onSuccess={(credentialResponse) => {
@@ -121,7 +121,7 @@ export function Layout({ children }) {
             console.log("Login Failed");
           }}
         />
-      </Box> */}
+      </Box>
       {children}
     </>
   );
