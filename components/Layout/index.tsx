@@ -98,7 +98,7 @@ export function Layout({ children }) {
       <AppBar
         elevation={0}
         sx={{
-          background: green[100],
+          background: green[50],
           color: "black",
         }}
       >
