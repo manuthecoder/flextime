@@ -7,12 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Staff {
-  id         Int     @id @default(autoincrement())
-  department String? @db.VarChar(300)
-  name       String? @db.VarChar(300)
-  title      String? @db.VarChar(300)
-  email      String? @db.VarChar(300)
+model FlexChoice {
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(300)
+  email String? @db.VarChar(300)
 
   displayOnList     Boolean?      @default(true)
   appointments      Appointment[]
@@ -21,13 +19,14 @@ model Staff {
 }
 
 model Appointment {
-  id      Int   @id @default(autoincrement())
-  staffId Int
-  staff   Staff @relation(fields: [staffId], references: [id])
+  id         Int        @id @default(autoincrement())
+  flex       Int
+  flexChoice FlexChoice @relation(fields: [flex], references: [id])
 
-  student String
-  comment String?  @db.VarChar(300)
-  date    DateTime @db.DateTime
+  studentName  String
+  studentEmail String
+  comment      String?  @db.VarChar(300)
+  date         DateTime @db.DateTime
 
   teacherCreated Boolean @default(false)
 }

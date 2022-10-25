@@ -1,38 +1,41 @@
 $font-primary: "Outfit", sans-serif;
 $font-heading: "DM Serif Display", serif;
 
-html, body {
-   margin: 0;
+html,
+body {
+  margin: 0;
 }
 
-*:not(.material-symbols-rounded, .material-symbols-outlined, .font-heading, .font-heading *) {
-   font-family: $font-primary !important;
-   & * {
-      font-family: $font-primary !important;
-   }
+*:not(.material-symbols-rounded, .material-symbols-outlined, .font-heading, .font-heading
+    *) {
+  font-family: $font-primary !important;
+  & * {
+    font-family: $font-primary !important;
+  }
 }
 
 .font-heading {
-   font-family: $font-heading !important;
-   & > * {
-      font-family: $font-heading !important;
-   }
+  font-family: $font-heading !important;
+  & > * {
+    font-family: $font-heading !important;
+  }
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48;
-  font-family: 'Material Symbols Outlined' !important;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+  font-family: "Material Symbols Outlined" !important;
 }
 
 .MuiTouchRipple-rippleVisible {
-   animation-duration: 0.25s !important;
-   animation-timing-function: cubic-bezier(.4,0,.2,1) !important;
- }
- .MuiTouchRipple-child {
-   filter: opacity(0.3) !important;
-   background: radial-gradient(#000,  #000);
- }
+  animation-duration: 0.25s !important;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.MuiTouchRipple-child {
+  filter: opacity(0.3) !important;
+  background: radial-gradient(#000, #000);
+}
+
+.MuiBackdrop-root {
+  background-color: rgba(232, 245, 233, 0.5) !important;
+  backdrop-filter: blur(10px);
+}
