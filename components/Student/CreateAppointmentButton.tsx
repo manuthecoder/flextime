@@ -13,9 +13,10 @@ import {
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
+import dayjs from "dayjs";
 import { Person } from "./Person";
 
-export function CreateAppointmentButton() {
+export function CreateAppointmentButton({ day }: { day: Date }) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("/api/search");
   const { data, error } = useSWR(url, () =>
@@ -75,7 +76,7 @@ export function CreateAppointmentButton() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               <Typography variant="h5" className="font-heading" sx={{ mb: 2 }}>
-                Create an appointment
+                {dayjs(day).format("dddd, MMMM D")}
               </Typography>
               <TextField
                 autoComplete="off"

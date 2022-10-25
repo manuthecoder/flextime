@@ -42,7 +42,7 @@ export function Day({ day }) {
         <Typography variant="body2">{dayjs(day).format("dddd")}</Typography>
       </Box>
 
-      <CreateAppointmentButton />
+      <CreateAppointmentButton day={day} />
     </Box>
   );
 }
