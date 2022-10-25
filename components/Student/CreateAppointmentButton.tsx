@@ -154,7 +154,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                     p: 3,
                     background: "rgba(200,200,200,.3)",
                     borderRadius: 5,
-                    mt: { sm: 15 },
+                    mt: { md: 15 },
                   }}
                 >
                   <Typography variant="h4" className="font-heading">
