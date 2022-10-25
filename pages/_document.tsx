@@ -14,6 +14,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;600&display=swap"
           rel="stylesheet"
         />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <body>
         <Main />
