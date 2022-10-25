@@ -8,8 +8,17 @@ export const authOptions = {
   // Configure one or more authentication providers
   callbacks: {
     async signIn(account) {
-      console.log(account);
+      if (!account.profile.email.endsWith("@iusd.org")) {
+        return false;
+      }
+      const admin = await fetch(
+        "/api/checkIfAdmin?email=" + account.profile.email
+      ).then((res) => res.json());
+
       return true;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return token;
     },
   },
   providers: [
