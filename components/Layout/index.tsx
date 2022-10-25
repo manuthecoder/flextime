@@ -1,14 +1,15 @@
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { green } from "@mui/material/colors";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import { signIn, useSession } from "next-auth/react";
+import { signIn,  signOut, useSession } from "next-auth/react";
 import React from "react";
 
-function ProfileMenu() {
+function ProfileMenu({ session }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -27,8 +28,6 @@ function ProfileMenu() {
       background: green[800],
     },
   };
-
-  const { data: session } = useSession();
 
   return (
     <Box>
@@ -50,7 +49,7 @@ function ProfileMenu() {
           sx: {
             minWidth: 200,
             background: green[900],
-            p: 2,
+            p: 1,
             borderRadius: 5,
             mt: "5px!important",
           },
@@ -79,11 +78,11 @@ function ProfileMenu() {
         <MenuItem
           sx={menuStyles}
           onClick={() => {
-            signIn();
+            signOut();
             handleClose();
           }}
         >
-          Sign in
+          Sign out
         </MenuItem>
       </Menu>
 
@@ -102,6 +101,8 @@ function ProfileMenu() {
 }
 
 export function Layout({ children }) {
+  const { data: session } = useSession();
+
   return (
     <>
       <AppBar
@@ -112,9 +113,23 @@ export function Layout({ children }) {
         }}
       >
         <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>Flextime appointments</Box>
+          <Box sx={{ flexGrow: 1 }}>IHS FlexTime</Box>
           <Box>
-            <ProfileMenu />
+            {session ? (
+              <ProfileMenu session={session} />
+            ) : (
+              <Button
+                onClick={() => signIn()}
+                variant="contained"
+                disableElevation
+                size="large"
+                sx={{
+                  borderRadius: 99999,
+                }}
+              >
+                Sign in
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

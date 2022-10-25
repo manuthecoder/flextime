@@ -6,6 +6,12 @@ import prisma from "../../../lib/prisma";
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   // Configure one or more authentication providers
+  callbacks: {
+    async signIn(account) {
+      console.log(account);
+      return true;
+    },
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
