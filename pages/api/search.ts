@@ -12,7 +12,7 @@ export default async function handle(
   const result = await prisma.flexChoice.findMany({
     where: {
       name: {
-        contains: req.query.name ?? undefined,
+        contains: req.query.name ?? "",
       },
     },
     include: {
