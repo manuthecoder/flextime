@@ -58,7 +58,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
             position: "fixed",
             top: 0,
             right: 0,
-            m: 5,
+            m: { xs: 3, sm: 5 },
             color: "#000",
           }}
           size="large"
