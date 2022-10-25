@@ -85,7 +85,7 @@ function ProfileMenu() {
           width: 35,
           height: 35,
           borderRadius: 3,
-          background: green[300],
+          background: green[200],
         }}
       />
     </Box>
