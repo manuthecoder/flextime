@@ -68,13 +68,22 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
         </IconButton>
         <Box
           sx={{
-            p: 2,
-            width: "calc(100vw - 20px)",
+            width: "calc(100vw - 50px)",
             maxWidth: "1000px",
           }}
         >
           <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{
+                display: {
+                  xs: appointment ? "none" : "block",
+                  sm: "block",
+                },
+              }}
+            >
               <Typography variant="h5" className="font-heading" sx={{ mb: 2 }}>
                 {dayjs(day).format("dddd, MMMM D")}
               </Typography>
@@ -166,13 +175,27 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                     }
                     fullWidth
                     size="large"
-                    variant="outlined"
+                    variant="contained"
+                    disableElevation
                     sx={{
-                      borderWidth: "2px!important",
                       borderRadius: 999,
                     }}
                   >
                     Confirm
+                  </Button>
+                  <Button
+                    onClick={() => setAppointment(null)}
+                    fullWidth
+                    size="large"
+                    variant="outlined"
+                    sx={{
+                      mt: 1,
+                      display: { xs: "block", sm: "none" },
+                      borderWidth: "2px!important",
+                      borderRadius: 999,
+                    }}
+                  >
+                    Cancel
                   </Button>
                   {appointment.appointmentBanner && (
                     <Alert
