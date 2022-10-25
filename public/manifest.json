@@ -1,6 +1,6 @@
 {
-   "name": "PWA App",
-   "short_name": "App",
+   "name": "IHS Flextime",
+   "short_name": "IHS Flextime",
    "icons": [
       {
          "src": "/icons/192x192.png",
@@ -21,8 +21,8 @@
          "purpose": "maskable"
       }
    ],
-   "theme_color": "#FFFFFF",
-   "background_color": "#FFFFFF",
+   "theme_color": "#e8f5e9",
+   "background_color": "#e8f5e9",
    "start_url": "/",
    "display": "standalone",
    "orientation": "portrait"
