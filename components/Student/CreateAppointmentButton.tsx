@@ -80,7 +80,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
               sx={{
                 display: {
                   xs: appointment ? "none" : "block",
-                  sm: "block",
+                  md: "block",
                 },
               }}
             >
@@ -149,6 +149,8 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
+                    maxWidth: "400px",
+                    mx: "auto",
                     p: 3,
                     background: "rgba(200,200,200,.3)",
                     borderRadius: 5,
@@ -190,7 +192,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                     variant="outlined"
                     sx={{
                       mt: 1,
-                      display: { xs: "block", sm: "none" },
+                      display: { xs: "block", md: "none" },
                       borderWidth: "2px!important",
                       borderRadius: 999,
                     }}
