@@ -190,13 +190,11 @@ export function CreateAppointmentButton() {
       </SwipeableDrawer>
       <Button
         onClick={() => setOpen(true)}
-        size="large"
-        variant="contained"
-        sx={{ borderRadius: 9, gap: 1 }}
+        variant="outlined"
+        sx={{ mt: 3, borderWidth: "2px!important", borderRadius: 9 }}
         disableElevation
       >
-        <span className="material-symbols-outlined">add</span>
-        New appointment
+        Select&nbsp;appointment
       </Button>
     </>
   );

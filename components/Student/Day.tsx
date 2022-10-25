@@ -2,6 +2,7 @@ import { Typography, Box } from "@mui/material";
 import { green } from "@mui/material/colors";
 import React from "react";
 import dayjs from "dayjs";
+import { CreateAppointmentButton } from "./CreateAppointmentButton";
 
 export function Day({ day }) {
   return (
@@ -40,6 +41,8 @@ export function Day({ day }) {
         </Box>
         <Typography variant="body2">{dayjs(day).format("dddd")}</Typography>
       </Box>
+
+      <CreateAppointmentButton />
     </Box>
   );
 }

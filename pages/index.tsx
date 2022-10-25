@@ -1,16 +1,5 @@
-import {
-  Typography,
-  ListItem,
-  Container,
-  Box,
-  NoSsr,
-  ListItemText,
-  ListItemIcon,
-  Avatar,
-} from "@mui/material";
-import { green } from "@mui/material/colors";
+import { Box, Container, NoSsr, Typography } from "@mui/material";
 import React from "react";
-import { CreateAppointmentButton } from "../components/Student/CreateAppointmentButton";
 import { WeeklyCalendar } from "../components/Student/WeeklyCalendar";
 
 export default function Index(): React.ReactElement {
@@ -26,7 +15,6 @@ export default function Index(): React.ReactElement {
         <Typography className="font-heading" variant="h4" sx={{ flexGrow: 1 }}>
           Appointments
         </Typography>
-        <CreateAppointmentButton />
       </Box>
 
       <NoSsr>
