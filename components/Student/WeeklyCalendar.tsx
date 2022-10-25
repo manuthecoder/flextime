@@ -25,9 +25,10 @@ export function WeeklyCalendar() {
         display: "flex",
         background: "rgba(200,200,200,0.3)",
         borderRadius: 5,
-        minWidth: "1000px",
         height: "500px",
         mb: 5,
+        maxWidth: "100%",
+        overflowX: "scroll!important",
       }}
     >
       {week

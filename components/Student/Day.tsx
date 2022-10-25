@@ -9,7 +9,6 @@ export function Day({ day }) {
     <Box
       sx={{
         p: 4,
-        width: "100%",
         "&:hover": {
           background: "rgba(200,200,200,0.5)",
           borderRadius: 5,
