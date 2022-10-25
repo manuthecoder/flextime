@@ -7,6 +7,16 @@ import "../styles/globals.scss";
 
 export default function App({ Component, pageProps }): React.ReactElement {
   const theme = createTheme({
+    components: {
+      // Name of the component
+      MuiButtonBase: {
+        defaultProps: {
+          style: {
+            textTransform: "none",
+          },
+        },
+      },
+    },
     palette: {
       primary: {
         main: green["800"],

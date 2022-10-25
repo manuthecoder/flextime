@@ -5,6 +5,12 @@ html, body {
    margin: 0;
 }
 
+*:not(.material-symbols-rounded, .material-symbols-outlined, .font-heading, .font-heading *) {
+   font-family: $font-primary !important;
+   & * {
+      font-family: $font-primary !important;
+   }
+}
 
 .font-heading {
    font-family: $font-heading !important;
@@ -13,9 +19,20 @@ html, body {
    }
 }
 
-*:not(.material-symbols-rounded, .material-symbols-outlined, .font-heading, .font-heading *) {
-   font-family: $font-primary !important;
-   & * {
-      font-family: $font-primary !important;
-   }
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48;
+  font-family: 'Material Symbols Outlined' !important;
 }
+
+.MuiTouchRipple-rippleVisible {
+   animation-duration: 0.25s !important;
+   animation-timing-function: cubic-bezier(.4,0,.2,1) !important;
+ }
+ .MuiTouchRipple-child {
+   filter: opacity(0.3) !important;
+   background: radial-gradient(#000,  #000);
+ }
