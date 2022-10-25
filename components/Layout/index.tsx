@@ -6,6 +6,7 @@ import { green } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { GoogleLogin } from "@react-oauth/google";
 
 function ProfileMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -110,6 +111,17 @@ export function Layout({ children }) {
         </Toolbar>
       </AppBar>
       <Toolbar />
+      {/* <Box sx={{ p: 5 }}>
+        <GoogleLogin
+          useOneTap
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+      </Box> */}
       {children}
     </>
   );

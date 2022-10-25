@@ -6,7 +6,19 @@ import { Layout } from "../components/Layout";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import "../styles/globals.scss";
 import { NoSsr } from "@mui/material";
+import { useGoogleOneTapLogin } from "@react-oauth/google";
 
+const Auth = () => {
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
+  return <></>;
+};
 export default function App({ Component, pageProps }): React.ReactElement {
   const theme = createTheme({
     components: {
@@ -35,6 +47,7 @@ export default function App({ Component, pageProps }): React.ReactElement {
 
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
+      <Auth />
       <ThemeProvider theme={theme}>
         <Head>
           <meta name="theme-color" content="#e8f5e9" />
