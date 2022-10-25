@@ -1,0 +1,21 @@
+$font-primary: "Outfit", sans-serif;
+$font-heading: "DM Serif Display", serif;
+
+html, body {
+   margin: 0;
+}
+
+
+.font-heading {
+   font-family: $font-heading !important;
+   & > * {
+      font-family: $font-heading !important;
+   }
+}
+
+*:not(.material-symbols-rounded, .material-symbols-outlined, .font-heading, .font-heading *) {
+   font-family: $font-primary !important;
+   & * {
+      font-family: $font-primary !important;
+   }
+}
