@@ -13,4 +13,21 @@ model Staff {
   name       String? @db.VarChar(300)
   title      String? @db.VarChar(300)
   email      String? @db.VarChar(300)
+
+  displayOnList     Boolean?      @default(true)
+  appointments      Appointment[]
+  maxAppointments   Int?          @default(25) @db.Int
+  appointmentBanner String?       @db.VarChar(300)
+}
+
+model Appointment {
+  id      Int   @id @default(autoincrement())
+  staffId Int
+  staff   Staff @relation(fields: [staffId], references: [id])
+
+  student String
+  comment String?  @db.VarChar(300)
+  date    DateTime @db.DateTime
+
+  teacherCreated Boolean @default(false)
 }
