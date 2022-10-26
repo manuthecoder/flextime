@@ -17,7 +17,6 @@ export const authOptions: any = {
         "https://flextime.vercel.app/api/checkIfAdmin?email=" +
           account.profile.email
       ).then((res) => res.json());
-
       return true;
     },
   },
