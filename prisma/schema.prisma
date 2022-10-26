@@ -103,4 +103,7 @@ model Appointment {
 
   // When is the appointment?
   date DateTime @db.DateTime
+
+  // Was the appointment attended?
+  attended Boolean? @default(false)
 }

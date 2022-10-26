@@ -36,14 +36,16 @@ export function WeeklyCalendar({ admin }) {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-        <Box>
-          <Typography
-            className="font-heading"
-            variant="h4"
-            gutterBottom
-            sx={{ flexGrow: 1 }}
-          >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mb: 4,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
+      >
+        <Box sx={{ flexGrow: 1, mr: "auto" }}>
+          <Typography className="font-heading" variant="h4" gutterBottom>
             Appointments
           </Typography>
           <Typography variant="body1">{dayjs().format("MMMM")}</Typography>
