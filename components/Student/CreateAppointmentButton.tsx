@@ -10,7 +10,6 @@ import {
   Skeleton,
   Alert,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
@@ -20,15 +19,15 @@ import { Person } from "./Person";
 function ConfirmAppointmentButton({ appointment }) {
   const [loading, setLoading] = useState(false);
   return (
-    <LoadingButton
-      loading={loading}
+    <Button
+      disabled={
+        loading ||
+        appointment.maxAppointments - appointment.appointments.length == 0
+      }
       onClick={() => {
         setLoading(true);
         setTimeout(() => setLoading(false), 2000);
       }}
-      disabled={
-        appointment.maxAppointments - appointment.appointments.length === 0
-      }
       fullWidth
       size="large"
       variant="contained"
@@ -38,7 +37,7 @@ function ConfirmAppointmentButton({ appointment }) {
       }}
     >
       Confirm
-    </LoadingButton>
+    </Button>
   );
 }
 
