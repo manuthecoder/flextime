@@ -41,7 +41,13 @@ function ConfirmAppointmentButton({ appointment }) {
   );
 }
 
-export function AddStudentButton({ day }: { day: Date }) {
+export function AddStudentButton({
+  mutationUrl,
+  day,
+}: {
+  mutationUrl: string;
+  day: Date;
+}) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("/api/search");
   const { data, error } = useSWR(url, () =>

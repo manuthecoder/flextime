@@ -3,8 +3,21 @@ import React from "react";
 import dayjs from "dayjs";
 import { Day } from "./Day";
 import { green } from "@mui/material/colors";
+import useSWR from "swr";
+import { useSession } from "next-auth/react";
 
 export function WeeklyCalendar({ admin }) {
+  const { data: session }: any = useSession();
+  const url =
+    "/api/appointments?" +
+    new URLSearchParams({
+      admin: admin ? "true" : "false",
+      studentId: session.user.studentId,
+    });
+
+  const { data, error } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
   const week = [];
   const [navigation, setNavigation] = React.useState(0);
 
@@ -97,7 +110,7 @@ export function WeeklyCalendar({ admin }) {
               dayjs(day).format("dddd") !== "Sunday"
           )
           .map((day) => (
-            <Day day={day} admin={admin} />
+            <Day day={day} url={url} admin={admin} calendarData={data} />
           ))}
       </Box>
     </Box>

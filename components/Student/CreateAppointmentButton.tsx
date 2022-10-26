@@ -17,23 +17,35 @@ import dayjs from "dayjs";
 import { Person } from "./Person";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useSession } from "next-auth/react";
+import { mutate } from "swr";
 
-function ConfirmAppointmentButton({ date, appointment }) {
+function ConfirmAppointmentButton({ mutationUrl, setOpen, date, appointment }) {
   const [loading, setLoading] = useState(false);
   const session: any = useSession();
 
   const handleClick = async () => {
     setLoading(true);
-    const request = await fetch("/api/createAppointment", {
+    const request = await fetch("/api/appointments/create", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        flex: appointment.id,
+        flexId: appointment.id,
         teacherCreated: false,
-        studentId: session.user.studentId,
+        studentId: session.data.user.studentId,
         date: date,
       }),
-    }).then((res) => res.json());
-    setTimeout(() => setLoading(false), 2000);
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        alert("Something went wrong. Please try again later.");
+        setLoading(false);
+        console.error(err);
+      });
+    mutate(mutationUrl);
+    setLoading(false);
+    setOpen(false);
   };
 
   return (
@@ -56,7 +68,13 @@ function ConfirmAppointmentButton({ date, appointment }) {
   );
 }
 
-export function CreateAppointmentButton({ day }: { day: Date }) {
+export function CreateAppointmentButton({
+  mutationUrl,
+  day,
+}: {
+  mutationUrl: string;
+  day: Date;
+}) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("/api/search");
   const { data, error } = useSWR(url, () =>
@@ -210,6 +228,8 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                     remaining
                   </Typography>
                   <ConfirmAppointmentButton
+                    mutationUrl={mutationUrl}
+                    setOpen={setOpen}
                     appointment={appointment}
                     date={day}
                   />

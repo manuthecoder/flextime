@@ -5,7 +5,22 @@ import dayjs from "dayjs";
 import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
 
-export function Day({ admin = false, day }) {
+const FlexAppointment = ({ appointment }) => {
+  return (
+    <Button
+      disableElevation
+      fullWidth
+      variant="outlined"
+      sx={{
+        borderWidth: "2px!important",
+        borderRadius: 999,
+      }}
+    >
+      {appointment.flexChoice.name}
+    </Button>
+  );
+};
+export function Day({ url, calendarData, admin = false, day }) {
   return (
     <Box
       sx={{
@@ -75,9 +90,14 @@ export function Day({ admin = false, day }) {
           </Button>
         )}
         {admin ? (
-          <AddStudentButton day={day} />
+          <AddStudentButton mutationUrl={url} day={day} />
         ) : (
-          <CreateAppointmentButton day={day} />
+          calendarData &&
+          calendarData[0].appointments.filter((appointment) =>
+            dayjs(appointment.date).isSame(day, "day")
+          ).length == 0 && (
+            <CreateAppointmentButton mutationUrl={url} day={day} />
+          )
         )}
         {admin && (
           <Button
@@ -92,6 +112,14 @@ export function Day({ admin = false, day }) {
             View attendees
           </Button>
         )}
+      </Box>
+      <Box>
+        {calendarData &&
+          calendarData[0].appointments
+            .filter((appointment) => dayjs(appointment.date).isSame(day, "day"))
+            .map((appointment) => (
+              <FlexAppointment appointment={appointment} />
+            ))}
       </Box>
     </Box>
   );

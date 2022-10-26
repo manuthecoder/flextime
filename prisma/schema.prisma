@@ -40,7 +40,7 @@ model User {
   id String @id @default(cuid())
 
   // 9 digit student ID
-  studentId String?
+  studentId String? @unique
 
   // List of appointments
   appointments Appointment[]
