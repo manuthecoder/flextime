@@ -20,9 +20,6 @@ export const authOptions: any = {
 
       return true;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      return token;
-    },
   },
 
   // Configure one or more authentication providers
