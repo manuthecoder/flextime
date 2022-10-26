@@ -52,7 +52,7 @@ export function AddStudentButton({ day }: { day: Date }) {
   const [value] = useDebounce(text, 500);
 
   useEffect(() => {
-    setUrl(`/api/search?name=${value}`);
+    setUrl(`/api/findStudents?query=${value}`);
   }, [value]);
 
   const [appointment, setAppointment] = useState(null);
@@ -115,7 +115,7 @@ export function AddStudentButton({ day }: { day: Date }) {
               <TextField
                 autoComplete="off"
                 variant="filled"
-                label="Search..."
+                label="Enter an ID or name"
                 autoFocus
                 fullWidth
                 onChange={(e: any) => setText(e.target.value)}
@@ -226,7 +226,8 @@ export function AddStudentButton({ day }: { day: Date }) {
       </SwipeableDrawer>
       <Button
         onClick={() => setOpen(true)}
-        variant={dayjs(day) <= dayjs() ? "outlined" : "contained"}
+        variant="outlined"
+        disabled={dayjs(day).isBefore(dayjs().subtract(1, "day"))}
         fullWidth
         sx={{
           mt: 3,

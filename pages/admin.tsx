@@ -1,7 +1,20 @@
-import { Container, NoSsr } from "@mui/material";
+import { CircularProgress, Container, NoSsr } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
+import useSWR from "swr";
+
+function VerifyAdmin({ session }) {
+  const url = "/api/checkIfAdmin?email=" + session.user.email;
+  const { data, error } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
+  return data ? (
+    <>{data.admin ? <WeeklyCalendar admin={true} /> : <p>Not an admin</p>}</>
+  ) : (
+    <CircularProgress />
+  );
+}
 
 export default function Index(): React.ReactElement {
   const { data: session } = useSession();
@@ -10,7 +23,7 @@ export default function Index(): React.ReactElement {
     <Container sx={{ mt: 7 }}>
       <NoSsr>
         {session ? (
-          <WeeklyCalendar admin={true} />
+          <VerifyAdmin session={session} />
         ) : (
           "Access denied. Please sign in with your teacher IUSD account to access this page. "
         )}

@@ -1,11 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 
-// POST /api/checkIfAdmin
+// GET /api/checkIfAdmin
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (process.env.NODE_ENV === "development") {
+    res.json({ admin: true });
+    return;
+  }
   //   Select from staff where name contains the search term
   const result = await prisma.flexChoice.findFirst({
     where: {
@@ -13,5 +17,7 @@ export default async function handle(
     },
   });
 
-  res.json(result ? true : false);
+  res.json({
+    admin: result ? true : false,
+  });
 }

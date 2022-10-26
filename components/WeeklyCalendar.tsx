@@ -36,25 +36,35 @@ export function WeeklyCalendar({ admin }) {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", mb: 4 }}>
-        <Typography className="font-heading" variant="h4" sx={{ flexGrow: 1 }}>
-          Appointments
-        </Typography>
-        <ButtonGroup sx={{ ml: "auto" }} variant="contained" disableElevation>
-          <Button
-            sx={styles}
-            onClick={() => setNavigation(0)}
-            disabled={navigation === 0}
+      <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
+        <Box>
+          <Typography
+            className="font-heading"
+            variant="h4"
+            gutterBottom
+            sx={{ flexGrow: 1 }}
           >
-            Today
-          </Button>
-          <Button sx={styles} onClick={() => setNavigation((n) => n - 1)}>
-            <span className="material-symbols-outlined">chevron_left</span>
-          </Button>
-          <Button sx={styles} onClick={() => setNavigation((n) => n + 1)}>
-            <span className="material-symbols-outlined">chevron_right</span>
-          </Button>
-        </ButtonGroup>
+            Appointments
+          </Typography>
+          <Typography variant="body1">{dayjs().format("MMMM")}</Typography>
+        </Box>
+        <Box sx={{ ml: "auto" }}>
+          <ButtonGroup variant="contained" disableElevation>
+            <Button
+              sx={styles}
+              onClick={() => setNavigation(0)}
+              disabled={navigation === 0}
+            >
+              Today
+            </Button>
+            <Button sx={styles} onClick={() => setNavigation((n) => n - 1)}>
+              <span className="material-symbols-outlined">chevron_left</span>
+            </Button>
+            <Button sx={styles} onClick={() => setNavigation((n) => n + 1)}>
+              <span className="material-symbols-outlined">chevron_right</span>
+            </Button>
+          </ButtonGroup>
+        </Box>
       </Box>
       <Box
         sx={{
