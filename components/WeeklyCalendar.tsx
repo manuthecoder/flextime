@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { Day } from "./Day";
 import { green } from "@mui/material/colors";
 
-export function WeeklyCalendar() {
+export function WeeklyCalendar({ admin }) {
   const week = [];
   const [navigation, setNavigation] = React.useState(0);
 
@@ -74,7 +74,7 @@ export function WeeklyCalendar() {
               dayjs(day).format("dddd") !== "Sunday"
           )
           .map((day) => (
-            <Day day={day} />
+            <Day day={day} admin={admin} />
           ))}
       </Box>
     </Box>

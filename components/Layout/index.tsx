@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
+import Link from "next/link";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -113,7 +114,6 @@ function ProfileMenu({ session }) {
         >
           Sign out
         </MenuItem>
-        {JSON.stringify(session)}
       </Menu>
 
       <Avatar
@@ -147,7 +147,11 @@ export function Layout({ children }) {
         }}
       >
         <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>IHS FlexTime</Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link href="/">
+              <Button color="inherit">IHS FlexTime</Button>
+            </Link>
+          </Box>
           <Box>
             {session ? (
               <ProfileMenu session={session} />

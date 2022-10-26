@@ -10,9 +10,9 @@ export default function Index(): React.ReactElement {
     <Container sx={{ mt: 7 }}>
       <NoSsr>
         {session ? (
-          <WeeklyCalendar admin={false} />
+          <WeeklyCalendar admin={true} />
         ) : (
-          "Please sign in with your IUSD account to view your appointments. "
+          "Access denied. Please sign in with your teacher IUSD account to access this page. "
         )}
       </NoSsr>
     </Container>

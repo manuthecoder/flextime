@@ -2,13 +2,15 @@ import { Typography, Box } from "@mui/material";
 import { green } from "@mui/material/colors";
 import React from "react";
 import dayjs from "dayjs";
-import { CreateAppointmentButton } from "./CreateAppointmentButton";
+import { AddStudentButton } from "./Admin/AddStudentButton";
+import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
 
-export function Day({ day }) {
+export function Day({ admin = false, day }) {
   return (
     <Box
       sx={{
         p: 4,
+        width: "100%",
         "&:hover": {
           background: "rgba(200,200,200,0.5)",
           borderRadius: 5,
@@ -41,7 +43,11 @@ export function Day({ day }) {
         <Typography variant="body2">{dayjs(day).format("dddd")}</Typography>
       </Box>
 
-      <CreateAppointmentButton day={day} />
+      {admin ? (
+        <AddStudentButton day={day} />
+      ) : (
+        <CreateAppointmentButton day={day} />
+      )}
     </Box>
   );
 }
