@@ -1,7 +1,7 @@
-import { Box, Container, NoSsr, Typography } from "@mui/material";
+import { Container, NoSsr } from "@mui/material";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { WeeklyCalendar } from "../components/Student/WeeklyCalendar";
-import { useSession } from "next-auth/react";
 
 export default function Index(): React.ReactElement {
   const { data: session } = useSession();
