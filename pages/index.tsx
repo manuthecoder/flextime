@@ -1,24 +1,19 @@
 import { Box, Container, NoSsr, Typography } from "@mui/material";
 import React from "react";
 import { WeeklyCalendar } from "../components/Student/WeeklyCalendar";
+import { useSession } from "next-auth/react";
 
 export default function Index(): React.ReactElement {
+  const { data: session } = useSession();
+
   return (
     <Container sx={{ mt: 7 }}>
-      <Box
-        sx={{
-          mb: 4,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <Typography className="font-heading" variant="h4" sx={{ flexGrow: 1 }}>
-          Appointments
-        </Typography>
-      </Box>
-
       <NoSsr>
-        <WeeklyCalendar />
+        {session ? (
+          <WeeklyCalendar />
+        ) : (
+          "Please sign in to view your appointments."
+        )}
       </NoSsr>
     </Container>
   );

@@ -10,11 +10,37 @@ import {
   Skeleton,
   Alert,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import dayjs from "dayjs";
 import { Person } from "./Person";
+
+function ConfirmAppointmentButton({ appointment }) {
+  const [loading, setLoading] = useState(false);
+  return (
+    <LoadingButton
+      loading={loading}
+      onClick={() => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 2000);
+      }}
+      disabled={
+        appointment.maxAppointments - appointment.appointments.length === 0
+      }
+      fullWidth
+      size="large"
+      variant="contained"
+      disableElevation
+      sx={{
+        borderRadius: 999,
+      }}
+    >
+      Confirm
+    </LoadingButton>
+  );
+}
 
 export function CreateAppointmentButton({ day }: { day: Date }) {
   const [open, setOpen] = useState(false);
@@ -169,22 +195,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                       appointment.appointments.length}{" "}
                     remaining
                   </Typography>
-                  <Button
-                    disabled={
-                      appointment.maxAppointments -
-                        appointment.appointments.length ===
-                      0
-                    }
-                    fullWidth
-                    size="large"
-                    variant="contained"
-                    disableElevation
-                    sx={{
-                      borderRadius: 999,
-                    }}
-                  >
-                    Confirm
-                  </Button>
+                  <ConfirmAppointmentButton appointment={appointment} />
                   <Button
                     onClick={() => setAppointment(null)}
                     fullWidth

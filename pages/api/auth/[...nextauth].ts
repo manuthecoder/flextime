@@ -3,16 +3,19 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 
-export const authOptions = {
+export const authOptions: any = {
+  // Configure Prisma Client
   adapter: PrismaAdapter(prisma),
-  // Configure one or more authentication providers
+
+  // Callback
   callbacks: {
     async signIn(account) {
       if (!account.profile.email.endsWith("@iusd.org")) {
         return false;
       }
       const admin = await fetch(
-        "/api/checkIfAdmin?email=" + account.profile.email
+        "https://flextime.vercel.app/api/checkIfAdmin?email=" +
+          account.profile.email
       ).then((res) => res.json());
 
       return true;
@@ -21,6 +24,8 @@ export const authOptions = {
       return token;
     },
   },
+
+  // Configure one or more authentication providers
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -28,6 +33,10 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  theme: {
+    logo: "https://i.ibb.co/9vqnLWg/image.png",
+    colorScheme: "light",
+  },
 };
 
 export default NextAuth(authOptions);
