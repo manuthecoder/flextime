@@ -12,7 +12,7 @@ export default function Index(): React.ReactElement {
         {session ? (
           <WeeklyCalendar />
         ) : (
-          "Please sign in to view your appointments."
+          "Please sign in to view your appointments"
         )}
       </NoSsr>
     </Container>
