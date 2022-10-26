@@ -10,26 +10,39 @@ export function Day({ admin = false, day }) {
     <Box
       sx={{
         p: 4,
-        width: "100%",
+        display: { xs: "flex", sm: "block" },
+        alignItems: "center",
+        background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
+        borderRadius: 5,
+        width: { sm: "100%" },
         "&:hover": {
-          background: "rgba(200,200,200,0.5)",
-          borderRadius: 5,
+          background: { sm: "rgba(200,200,200,0.5)" },
         },
       }}
     >
-      <Box sx={{ textAlign: "center", mb: 2 }}>
+      <Box
+        sx={{
+          display: { xs: "flex", sm: "block" },
+          gap: 2,
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: { sm: "center" },
+          mb: { sm: 2 },
+        }}
+      >
         <Box
           sx={{
             p: 2,
-            mx: "auto",
+            mx: { sm: "auto" },
             borderRadius: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            mb: 1,
-            mt: -1,
+            mb: { sm: 1 },
+            mt: { sm: -1 },
             width: 20,
             height: 20,
+            background: "rgba(200,200,200,0.3)",
             ...(dayjs(day).isSame(dayjs(), "day") && {
               background: green[900],
               color: "#fff",
@@ -42,39 +55,44 @@ export function Day({ admin = false, day }) {
         </Box>
         <Typography variant="body2">{dayjs(day).format("dddd")}</Typography>
       </Box>
-
-      {admin && dayjs(day).isSame(dayjs(), "day") && (
-        <Button
-          fullWidth
-          disableElevation
-          variant="contained"
-          sx={{
-            mt: 1,
-            borderWidth: "2px!important",
-            borderRadius: 9,
-          }}
-        >
-          Check-in mode
-        </Button>
-      )}
-      {admin ? (
-        <AddStudentButton day={day} />
-      ) : (
-        <CreateAppointmentButton day={day} />
-      )}
-      {admin && (
-        <Button
-          fullWidth
-          variant="outlined"
-          sx={{
-            mt: 1,
-            borderWidth: "2px!important",
-            borderRadius: 9,
-          }}
-        >
-          View attendees
-        </Button>
-      )}
+      <Box
+        sx={{
+          ml: "auto",
+        }}
+      >
+        {admin && dayjs(day).isSame(dayjs(), "day") && (
+          <Button
+            fullWidth
+            disableElevation
+            variant="contained"
+            sx={{
+              mt: 1,
+              borderWidth: "2px!important",
+              borderRadius: 9,
+            }}
+          >
+            Check-in mode
+          </Button>
+        )}
+        {admin ? (
+          <AddStudentButton day={day} />
+        ) : (
+          <CreateAppointmentButton day={day} />
+        )}
+        {admin && (
+          <Button
+            fullWidth
+            variant="outlined"
+            sx={{
+              mt: 1,
+              borderWidth: "2px!important",
+              borderRadius: 9,
+            }}
+          >
+            View attendees
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 }

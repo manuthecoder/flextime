@@ -15,19 +15,34 @@ import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import dayjs from "dayjs";
 import { Person } from "./Person";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useSession } from "next-auth/react";
 
-function ConfirmAppointmentButton({ appointment }) {
+function ConfirmAppointmentButton({ date, appointment }) {
   const [loading, setLoading] = useState(false);
+  const session: any = useSession();
+
+  const handleClick = async () => {
+    setLoading(true);
+    const request = await fetch("/api/createAppointment", {
+      method: "POST",
+      body: JSON.stringify({
+        flex: appointment.id,
+        teacherCreated: false,
+        studentId: session.user.studentId,
+        date: date,
+      }),
+    }).then((res) => res.json());
+    setTimeout(() => setLoading(false), 2000);
+  };
+
   return (
-    <Button
+    <LoadingButton
+      loading={loading}
       disabled={
-        loading ||
         appointment.maxAppointments - appointment.appointments.length == 0
       }
-      onClick={() => {
-        setLoading(true);
-        setTimeout(() => setLoading(false), 2000);
-      }}
+      onClick={handleClick}
       fullWidth
       size="large"
       variant="contained"
@@ -37,7 +52,7 @@ function ConfirmAppointmentButton({ appointment }) {
       }}
     >
       Confirm
-    </Button>
+    </LoadingButton>
   );
 }
 
@@ -194,7 +209,10 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
                       appointment.appointments.length}{" "}
                     remaining
                   </Typography>
-                  <ConfirmAppointmentButton appointment={appointment} />
+                  <ConfirmAppointmentButton
+                    appointment={appointment}
+                    date={day}
+                  />
                   <Button
                     onClick={() => setAppointment(null)}
                     fullWidth
@@ -225,8 +243,15 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
         </Box>
       </SwipeableDrawer>
       <Button
+        fullWidth
         onClick={() => setOpen(true)}
-        variant="outlined"
+        variant={
+          dayjs(day).isBefore(dayjs(), "day") ||
+          dayjs(day).isAfter(dayjs(), "day")
+            ? "outlined"
+            : "contained"
+        }
+        disabled={dayjs(day).isBefore(dayjs(), "day")}
         sx={{ borderWidth: "2px!important", borderRadius: 9 }}
         disableElevation
       >

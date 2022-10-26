@@ -9,9 +9,16 @@ export const authOptions: any = {
 
   // Callback
   callbacks: {
-    async jwt({ token, account, profile }) {
-      console.log(true);
+    jwt: async ({ token, user }) => {
+      user && (token.user = user);
       return token;
+    },
+    session: async ({ user, session }) => {
+      if (user && user.studentId) {
+        session.user.studentId = user.studentId;
+      }
+      console.log(user);
+      return session;
     },
     async signIn(account) {
       if (!account.profile.email.endsWith("@iusd.org")) {
