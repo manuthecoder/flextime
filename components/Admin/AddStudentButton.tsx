@@ -132,22 +132,21 @@ export function AddStudentButton({ day }: { day: Date }) {
                   p: 1,
                 }}
               >
-                {data &&
-                  data.filter((item) => item.displayOnList).length === 0 && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                      }}
-                    >
-                      <p style={{ textAlign: "center" }}>
-                        Uh oh! We couldn&apos;t find any results found for&nbsp;
-                        <b>{text}</b>
-                      </p>
-                    </Box>
-                  )}
+                {data && data.length === 0 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <p style={{ textAlign: "center" }}>
+                      Uh oh! We couldn&apos;t find any results found for&nbsp;
+                      <b>{text}</b>
+                    </p>
+                  </Box>
+                )}
                 {!data &&
                   [...new Array(25)].map(() => (
                     <Skeleton
@@ -158,16 +157,14 @@ export function AddStudentButton({ day }: { day: Date }) {
                     />
                   ))}
                 {data &&
-                  data
-                    .filter((item) => item.displayOnList)
-                    .map((item) => (
-                      <Person
-                        key={item.id}
-                        item={item}
-                        appointment={appointment}
-                        setAppointment={setAppointment}
-                      />
-                    ))}
+                  data.map((item) => (
+                    <Person
+                      key={item.id}
+                      item={item}
+                      appointment={appointment}
+                      setAppointment={setAppointment}
+                    />
+                  ))}
               </List>
             </Grid>
             {appointment && (
@@ -189,10 +186,8 @@ export function AddStudentButton({ day }: { day: Date }) {
                     {appointment.email.toLowerCase()}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 2 }}>
-                    {appointment.maxAppointments} max appointments &bull;{" "}
-                    {appointment.maxAppointments -
-                      appointment.appointments.length}{" "}
-                    remaining
+                    <b>{appointment.name}</b> won&apos;t be able to change this
+                    appointment unless you cancel it.
                   </Typography>
                   <ConfirmAppointmentButton appointment={appointment} />
                   <Button
@@ -230,7 +225,7 @@ export function AddStudentButton({ day }: { day: Date }) {
         disabled={dayjs(day).isBefore(dayjs().subtract(1, "day"))}
         fullWidth
         sx={{
-          mt: 3,
+          mt: 1,
           borderWidth: "2px!important",
           borderRadius: 9,
         }}

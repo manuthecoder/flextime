@@ -71,7 +71,7 @@ export function WeeklyCalendar({ admin }) {
           display: "flex",
           background: "rgba(200,200,200,0.3)",
           borderRadius: 5,
-          height: "500px",
+          height: admin ? "auto" : "500px",
           mb: 5,
           maxWidth: "100%",
           overflowX: "scroll!important",

@@ -18,7 +18,14 @@ export const Person: any = React.memo(function ({
         setAppointment(item);
       }}
     >
-      <ListItemText primary={item.name} secondary={item.email.toLowerCase()} />
+      <ListItemText
+        primary={item.name}
+        secondary={
+          <>
+            {item.email.toLowerCase()} &bull; {item.studentId.toLowerCase()}
+          </>
+        }
+      />
       <ListItemIcon sx={{ mr: -3 }}>
         <Avatar
           sx={{

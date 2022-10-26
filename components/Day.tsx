@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 import { green } from "@mui/material/colors";
 import React from "react";
 import dayjs from "dayjs";
@@ -17,7 +17,7 @@ export function Day({ admin = false, day }) {
         },
       }}
     >
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Box
           sx={{
             p: 2,
@@ -43,10 +43,37 @@ export function Day({ admin = false, day }) {
         <Typography variant="body2">{dayjs(day).format("dddd")}</Typography>
       </Box>
 
+      {admin && dayjs(day).isSame(dayjs(), "day") && (
+        <Button
+          fullWidth
+          disableElevation
+          variant="contained"
+          sx={{
+            mt: 1,
+            borderWidth: "2px!important",
+            borderRadius: 9,
+          }}
+        >
+          Check-in mode
+        </Button>
+      )}
       {admin ? (
         <AddStudentButton day={day} />
       ) : (
         <CreateAppointmentButton day={day} />
+      )}
+      {admin && (
+        <Button
+          fullWidth
+          variant="outlined"
+          sx={{
+            mt: 1,
+            borderWidth: "2px!important",
+            borderRadius: 9,
+          }}
+        >
+          View attendees
+        </Button>
       )}
     </Box>
   );
