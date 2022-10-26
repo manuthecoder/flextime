@@ -10,7 +10,7 @@ const FlexAppointment = ({ appointment }) => {
     <Button
       disableElevation
       fullWidth
-      variant="outlined"
+      variant="contained"
       sx={{
         borderWidth: "2px!important",
         borderRadius: 999,
