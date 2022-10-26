@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Imported from NextAuth docs
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -26,6 +27,7 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+// Imported from NextAuth docs
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -35,11 +37,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
+  id String @id @default(cuid())
+
+  // 9 digit student ID
+  studentId Int?
+
+  // List of appointments
+  appointments Appointment[]
+
+  // Student information
+  name  String?
+  email String? @unique
+
+  // Not used, but required for NextAuth.js
   image         String?
+  emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
 }
@@ -53,25 +65,42 @@ model VerificationToken {
 }
 
 model FlexChoice {
-  id    Int     @id @default(autoincrement())
-  name  String? @db.VarChar(300)
+  id Int @id @default(autoincrement())
+
+  // Teacher name
+  name String? @db.VarChar(300)
+
+  // Teacher email
   email String? @db.VarChar(300)
 
-  displayOnList     Boolean?      @default(true)
-  appointments      Appointment[]
-  maxAppointments   Int?          @default(25) @db.Int
-  appointmentBanner String?       @db.VarChar(300)
+  // Display on appointment list?
+  displayOnList Boolean? @default(true)
+
+  // List of appointments
+  appointments Appointment[]
+
+  // Maximum number of appointments
+  maxAppointments Int? @default(25) @db.Int
+
+  // Appointment banner
+  appointmentBanner String? @db.VarChar(300)
 }
 
 model Appointment {
-  id         Int        @id @default(autoincrement())
+  // Unique appointment ID
+  id Int @id @default(autoincrement())
+
+  // Who is the appointment for?
   flex       Int
   flexChoice FlexChoice @relation(fields: [flex], references: [id])
 
-  studentName  String
-  studentEmail String
-  comment      String?  @db.VarChar(300)
-  date         DateTime @db.DateTime
-
+  // Is the appointment set by the teacher?
   teacherCreated Boolean @default(false)
+
+  // Student information
+  student   User   @relation(fields: [studentId], references: [id])
+  studentId String
+
+  // When is the appointment?
+  date DateTime @db.DateTime
 }
