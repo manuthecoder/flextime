@@ -227,7 +227,7 @@ export function CreateAppointmentButton({ day }: { day: Date }) {
       <Button
         onClick={() => setOpen(true)}
         variant="outlined"
-        sx={{ mt: 3, borderWidth: "2px!important", borderRadius: 9 }}
+        sx={{ borderWidth: "2px!important", borderRadius: 9 }}
         disableElevation
       >
         Select&nbsp;appointment
