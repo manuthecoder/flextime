@@ -113,6 +113,7 @@ function ProfileMenu({ session }) {
         >
           Sign out
         </MenuItem>
+        {JSON.stringify(session)}
       </Menu>
 
       <Avatar

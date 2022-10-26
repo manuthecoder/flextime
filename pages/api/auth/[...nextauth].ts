@@ -9,14 +9,25 @@ export const authOptions: any = {
 
   // Callback
   callbacks: {
+    async jwt({ token, account, profile }) {
+      console.log(true);
+      return token;
+    },
     async signIn(account) {
       if (!account.profile.email.endsWith("@iusd.org")) {
         return false;
       }
+      const development =
+        process.env.NODE_ENV === "development" &&
+        account.profile.email === "26gurudathmanusvat@iusd.org";
       const admin = await fetch(
         "https://flextime.vercel.app/api/checkIfAdmin?email=" +
           account.profile.email
       ).then((res) => res.json());
+
+      if (admin || development) {
+        account.profile.isAdmin = true;
+      }
       return true;
     },
   },
