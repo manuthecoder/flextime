@@ -17,7 +17,7 @@ export default async function handle(
           studentId,
         },
       },
-      date: new Date(req.body.date),
+      date: req.body.date,
       flexChoice: {
         connect: {
           id: parseInt(flexId.toString()),

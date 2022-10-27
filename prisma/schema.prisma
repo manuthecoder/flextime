@@ -71,7 +71,7 @@ model FlexChoice {
   name String? @db.VarChar(300)
 
   // Teacher email
-  email String? @db.VarChar(300)
+  email String? @unique @db.VarChar(300)
 
   // Display on appointment list?
   displayOnList Boolean? @default(true)
@@ -102,7 +102,7 @@ model Appointment {
   studentId String
 
   // When is the appointment?
-  date DateTime @db.DateTime
+  date String
 
   // Was the appointment attended?
   attended Boolean? @default(false)

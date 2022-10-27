@@ -24,16 +24,6 @@ function createData(
   return { name, id, teacherCreated, attended };
 }
 
-const rows = [
-  createData("John Doe", 123456789, false, true),
-  createData("John Doe", 123456789, false, true),
-  createData("John Doe", 123456789, true, false),
-  createData("John Doe", 123456789, false, true),
-  createData("John Doe", 123456789, false, true),
-  createData("John Doe", 123456789, false, true),
-  createData("John Doe", 123456789, false, true),
-];
-
 export function ViewAttendees({ day }) {
   const [open, setOpen] = useState(false);
   const { data: session }: any = useSession();
@@ -41,9 +31,18 @@ export function ViewAttendees({ day }) {
   const url =
     "/api/appointments?" +
     new URLSearchParams({
+      admin: "true",
       day: dayjs(day).format("YYYY-MM-DD"),
       teacherEmail: session.user.email,
     });
+
+  const { data, error } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
+  const [rows, setRows] = useState([]);
+  React.useEffect(() => {
+    if (data && !data.error) setRows([...data.appointments]);
+  }, [data]);
 
   return (
     <>
@@ -85,6 +84,7 @@ export function ViewAttendees({ day }) {
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: "900" }}>Student name</TableCell>
+                  <TableCell sx={{ fontWeight: "900" }}>Email</TableCell>
                   <TableCell sx={{ fontWeight: "900" }} align="right">
                     Student ID
                   </TableCell>
@@ -97,32 +97,46 @@ export function ViewAttendees({ day }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
-                    <TableCell align="right">
-                      <span className="material-symbols-outlined">
-                        {row.teacherCreated ? "check" : "close"}
-                      </span>
-                    </TableCell>
-                    <TableCell align="right">
-                      <span
-                        className="material-symbols-outlined"
-                        style={{
-                          color: row.attended ? green[500] : red[500],
-                        }}
-                      >
-                        {row.attended ? "check" : "close"}
-                      </span>
+                {data && data.error && (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      Yikes! An error occured while trying to fetch your
+                      appointments. Please try again later.
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
+                {data &&
+                  rows.map((row) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.student.name}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.student.email}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.student.studentId}
+                      </TableCell>
+                      <TableCell align="right">
+                        <span className="material-symbols-outlined">
+                          {row.teacherCreated ? "check" : "close"}
+                        </span>
+                      </TableCell>
+                      <TableCell align="right">
+                        <span
+                          className="material-symbols-outlined"
+                          style={{
+                            color: row.attended ? green[500] : red[500],
+                          }}
+                        >
+                          {row.attended ? "check" : "close"}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>

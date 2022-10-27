@@ -34,7 +34,7 @@ function ConfirmAppointmentButton({ mutationUrl, setOpen, date, appointment }) {
         flexId: appointment.id,
         teacherCreated: false,
         studentId: session.data.user.studentId,
-        date: date,
+        date: dayjs(date).format("YYYY-MM-DD"),
       }),
     })
       .then((res) => res.json())
