@@ -136,12 +136,19 @@ function ProfileMenu({ session }) {
 }
 
 export function Layout({ children }) {
-  const { status, data: session } = useSession();
+  const options = {
+    required: true,
+    onUnauthenticated: () => {
+      signIn();
+    },
+  };
+
+  const { status, data: session } = useSession(options);
 
   return (
     <>
       <Backdrop
-        open={status === "loading"}
+        open={status === "loading" || status === "unauthenticated"}
         sx={{
           zIndex: 9999999999999,
           background: "rgba(0,0,0,0.5)",
