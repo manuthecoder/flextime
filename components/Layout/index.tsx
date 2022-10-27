@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import Link from "next/link";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -135,10 +136,19 @@ function ProfileMenu({ session }) {
 }
 
 export function Layout({ children }) {
-  const { data: session } = useSession();
+  const { status, data: session } = useSession();
 
   return (
     <>
+      <Backdrop
+        open={status === "loading"}
+        sx={{
+          zIndex: 9999999999999,
+          background: "rgba(0,0,0,0.5)",
+        }}
+      >
+        <CircularProgress />
+      </Backdrop>
       <AppBar
         elevation={0}
         sx={{

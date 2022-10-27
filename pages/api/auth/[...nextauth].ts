@@ -17,7 +17,6 @@ export const authOptions: any = {
       if (user && user.studentId) {
         session.user.studentId = user.studentId;
       }
-      console.log(user);
       return session;
     },
     async signIn(account) {

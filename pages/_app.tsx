@@ -5,7 +5,7 @@ import * as React from "react";
 import { Layout } from "../components/Layout";
 import "../styles/globals.scss";
 import { NoSsr } from "@mui/material";
-import { SessionProvider } from "next-auth/react";
+import { getSession, SessionProvider } from "next-auth/react";
 
 export default function App({
   Component,
