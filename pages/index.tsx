@@ -4,7 +4,7 @@ import React from "react";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
 export default function Index(): React.ReactElement {
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
   return (
     <Container sx={{ mt: 7 }}>
       <NoSsr>
