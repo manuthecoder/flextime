@@ -10,7 +10,7 @@ datasource db {
 // Imported from NextAuth docs
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            Int
   type              String
   provider          String
   providerAccountId String
@@ -31,13 +31,13 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
+  userId       Int
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   // 9 digit student ID
   studentId String? @unique
@@ -98,8 +98,8 @@ model Appointment {
   teacherCreated Boolean @default(false)
 
   // Student information
-  student   User   @relation(fields: [studentId], references: [id])
-  studentId String
+  student   User @relation(fields: [studentId], references: [id])
+  studentId Int
 
   // When is the appointment?
   date String
