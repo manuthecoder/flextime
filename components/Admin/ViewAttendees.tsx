@@ -11,28 +11,27 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import { green, red } from "@mui/material/colors";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 function createData(
   name: string,
   id: number | string,
-  teacherCreated: boolean
+  teacherCreated: boolean,
+  attended: boolean
 ) {
-  return { name, id, teacherCreated };
+  return { name, id, teacherCreated, attended };
 }
 
 const rows = [
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
-  createData("John Doe", 123456789, false),
+  createData("John Doe", 123456789, false, true),
+  createData("John Doe", 123456789, false, true),
+  createData("John Doe", 123456789, true, false),
+  createData("John Doe", 123456789, false, true),
+  createData("John Doe", 123456789, false, true),
+  createData("John Doe", 123456789, false, true),
+  createData("John Doe", 123456789, false, true),
 ];
 
 export function ViewAttendees({ day }) {
@@ -81,7 +80,7 @@ export function ViewAttendees({ day }) {
           <Typography variant="h6">
             {dayjs(day).format("dddd, MMMM D")}
           </Typography>
-          <TableContainer component={Paper} sx={{ mt: 1 }}>
+          <TableContainer component={Paper} sx={{ mt: 4 }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
@@ -91,6 +90,9 @@ export function ViewAttendees({ day }) {
                   </TableCell>
                   <TableCell sx={{ fontWeight: "900" }} align="right">
                     Teacher created?
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: "900" }} align="right">
+                    Attended?
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -107,6 +109,16 @@ export function ViewAttendees({ day }) {
                     <TableCell align="right">
                       <span className="material-symbols-outlined">
                         {row.teacherCreated ? "check" : "close"}
+                      </span>
+                    </TableCell>
+                    <TableCell align="right">
+                      <span
+                        className="material-symbols-outlined"
+                        style={{
+                          color: row.attended ? green[500] : red[500],
+                        }}
+                      >
+                        {row.attended ? "check" : "close"}
                       </span>
                     </TableCell>
                   </TableRow>
