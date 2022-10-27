@@ -110,7 +110,12 @@ export function WeeklyCalendar({ admin }) {
               dayjs(day).format("dddd") !== "Sunday"
           )
           .map((day) => (
-            <Day day={day} url={url} admin={admin} calendarData={data} />
+            <Day
+              day={day}
+              url={url}
+              admin={admin}
+              calendarData={admin ? [] : data}
+            />
           ))}
       </Box>
     </Box>

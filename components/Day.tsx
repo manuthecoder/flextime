@@ -4,6 +4,7 @@ import React from "react";
 import dayjs from "dayjs";
 import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
+import { ViewAttendees } from "./Admin/ViewAttendees";
 
 const FlexAppointment = ({ appointment }) => {
   return (
@@ -12,6 +13,7 @@ const FlexAppointment = ({ appointment }) => {
       fullWidth
       variant="contained"
       sx={{
+        mt: 1,
         borderWidth: "2px!important",
         borderRadius: 999,
       }}
@@ -93,28 +95,18 @@ export function Day({ url, calendarData, admin = false, day }) {
           <AddStudentButton mutationUrl={url} day={day} />
         ) : (
           calendarData &&
+          calendarData[0] &&
           calendarData[0].appointments.filter((appointment) =>
             dayjs(appointment.date).isSame(day, "day")
           ).length == 0 && (
             <CreateAppointmentButton mutationUrl={url} day={day} />
           )
         )}
-        {admin && (
-          <Button
-            fullWidth
-            variant="outlined"
-            sx={{
-              mt: 1,
-              borderWidth: "2px!important",
-              borderRadius: 9,
-            }}
-          >
-            View attendees
-          </Button>
-        )}
+        {admin && <ViewAttendees day={day} />}
       </Box>
       <Box>
         {calendarData &&
+          calendarData[0] &&
           calendarData[0].appointments
             .filter((appointment) => dayjs(appointment.date).isSame(day, "day"))
             .map((appointment) => (
