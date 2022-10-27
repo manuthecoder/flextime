@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
 import { ViewAttendees } from "./Admin/ViewAttendees";
-
+import { CheckIn } from "./Admin/CheckIn";
 const FlexAppointment = ({ appointment }) => {
   return (
     <Button
@@ -77,20 +77,7 @@ export function Day({ url, calendarData, admin = false, day }) {
           ml: "auto",
         }}
       >
-        {admin && dayjs(day).isSame(dayjs(), "day") && (
-          <Button
-            fullWidth
-            disableElevation
-            variant="contained"
-            sx={{
-              mt: 1,
-              borderWidth: "2px!important",
-              borderRadius: 9,
-            }}
-          >
-            Check-in mode
-          </Button>
-        )}
+        {admin && dayjs(day).isSame(dayjs(), "day") && <CheckIn day={day} />}
         {admin ? (
           <AddStudentButton mutationUrl={url} day={day} />
         ) : (

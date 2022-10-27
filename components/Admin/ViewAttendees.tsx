@@ -15,15 +15,6 @@ import { green, red } from "@mui/material/colors";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function createData(
-  name: string,
-  id: number | string,
-  teacherCreated: boolean,
-  attended: boolean
-) {
-  return { name, id, teacherCreated, attended };
-}
-
 export function ViewAttendees({ day }) {
   const [open, setOpen] = useState(false);
   const { data: session }: any = useSession();
