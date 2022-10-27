@@ -10,7 +10,13 @@ function VerifyAdmin({ session }) {
     fetch(url).then((res) => res.json())
   );
   return data ? (
-    <>{data.admin ? <WeeklyCalendar admin={true} /> : <p>Not an admin</p>}</>
+    <>
+      {data.admin ? (
+        <WeeklyCalendar admin={true} />
+      ) : (
+        <p>You do not have access to this page</p>
+      )}
+    </>
   ) : (
     <CircularProgress />
   );
