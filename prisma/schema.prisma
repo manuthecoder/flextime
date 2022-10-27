@@ -81,6 +81,9 @@ model FlexChoice {
   // Teacher email
   email String? @unique @db.VarChar(300)
 
+  emailVerified DateTime?
+  image         String?
+
   // Display on appointment list?
   displayOnList Boolean? @default(true)
 
