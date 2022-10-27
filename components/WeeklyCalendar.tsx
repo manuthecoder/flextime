@@ -18,7 +18,6 @@ export function WeeklyCalendar({ admin }) {
   const url =
     "/api/appointments?" +
     new URLSearchParams({
-      admin: admin ? "true" : "false",
       studentId: session.user.studentId,
     });
 

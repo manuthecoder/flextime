@@ -156,7 +156,7 @@ export function AddStudentButton({
                   p: 1,
                 }}
               >
-                {data && data.length === 0 && (
+                {data && data.filter((person) => !person.isAdmin).length === 0 && (
                   <Box
                     sx={{
                       display: "flex",
@@ -166,7 +166,8 @@ export function AddStudentButton({
                     }}
                   >
                     <p style={{ textAlign: "center" }}>
-                      Uh oh! We couldn&apos;t find any results found for&nbsp;
+                      Uh oh! We couldn&apos;t find any results
+                      {text !== "" ? " for" : "!"}&nbsp;
                       <b>{text}</b>
                     </p>
                   </Box>
@@ -181,14 +182,16 @@ export function AddStudentButton({
                     />
                   ))}
                 {data &&
-                  data.map((item) => (
-                    <Person
-                      key={item.id}
-                      item={item}
-                      person={person}
-                      setPerson={setPerson}
-                    />
-                  ))}
+                  data
+                    .filter((person) => !person.isAdmin)
+                    .map((item) => (
+                      <Person
+                        key={item.id}
+                        item={item}
+                        person={person}
+                        setPerson={setPerson}
+                      />
+                    ))}
               </List>
             </Grid>
             {person && (

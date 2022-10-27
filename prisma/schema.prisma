@@ -52,7 +52,8 @@ model User {
   appointments Appointment[]
 
   // List of flex choices (only for admins)
-  flexChoices FlexChoice[]
+  flexChoiceId Int?
+  flexChoice   FlexChoice? @relation(fields: [flexChoiceId], references: [id])
 
   // User information
   name  String?
@@ -93,8 +94,7 @@ model FlexChoice {
   appointmentBanner String? @db.VarChar(300)
 
   // Who is this flex choice for?
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  User User[]
 }
 
 model Appointment {
