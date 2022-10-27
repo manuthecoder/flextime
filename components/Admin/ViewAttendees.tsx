@@ -2,7 +2,7 @@ import { Typography, Button, SwipeableDrawer, IconButton } from "@mui/material";
 import dayjs from "dayjs";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { useSession } from "next-auth/react";
 
 import * as React from "react";
@@ -14,11 +14,22 @@ import TableHead from "@mui/material/TableHead";
 import { green, red } from "@mui/material/colors";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { LoadingButton } from "@mui/lab";
 
-export function ViewAttendees({ day }) {
+export function ViewAttendees({
+  customTrigger = null,
+  checkInMode = false,
+  day,
+}) {
   const [open, setOpen] = useState(false);
   const { data: session }: any = useSession();
-
+  let trigger = null;
+  if (customTrigger) {
+    trigger = React.cloneElement(customTrigger, {
+      onClick: () => setOpen(true),
+    });
+  }
+  const [mutateLoading, setMutateLoading] = useState(false);
   const url =
     "/api/appointments?" +
     new URLSearchParams({
@@ -58,7 +69,7 @@ export function ViewAttendees({ day }) {
               className="font-heading"
               sx={{ flexGrow: 1 }}
             >
-              Attendees
+              {checkInMode ? "Check in" : "Attendees"}
             </Typography>
             <Box>
               <IconButton onClick={() => setOpen(false)}>
@@ -68,8 +79,25 @@ export function ViewAttendees({ day }) {
           </Box>
 
           <Typography variant="h6">
-            {dayjs(day).format("dddd, MMMM D")}
+            {checkInMode ? (
+              <>Traditional method &bull; {dayjs(day).format("dddd, MMMM D")}</>
+            ) : (
+              dayjs(day).format("dddd, MMMM D")
+            )}
           </Typography>
+          <LoadingButton
+            loading={mutateLoading}
+            disableElevation
+            variant="contained"
+            onClick={() => {
+              setMutateLoading(true);
+              mutate(url).then(() => setMutateLoading(false));
+            }}
+            sx={{ mt: 1, borderRadius: 999, gap: 2 }}
+          >
+            <span className="material-symbols-outlined">refresh</span>
+            Refresh list
+          </LoadingButton>
           <TableContainer component={Paper} sx={{ mt: 4 }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
@@ -96,7 +124,14 @@ export function ViewAttendees({ day }) {
                     </TableCell>
                   </TableRow>
                 )}
-                {data &&
+                {data && rows.length == 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      You have no appointments today.
+                    </TableCell>
+                  </TableRow>
+                )}
+                {data ? (
                   rows.map((row) => (
                     <TableRow
                       key={row.name}
@@ -127,24 +162,35 @@ export function ViewAttendees({ day }) {
                         </span>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      Loading...
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
       </SwipeableDrawer>
-      <Button
-        onClick={() => setOpen(true)}
-        fullWidth
-        variant="outlined"
-        sx={{
-          mt: 1,
-          borderWidth: "2px!important",
-          borderRadius: 9,
-        }}
-      >
-        View attendees
-      </Button>
+      {customTrigger ? (
+        trigger
+      ) : (
+        <Button
+          onClick={() => setOpen(true)}
+          fullWidth
+          variant="outlined"
+          sx={{
+            mt: 1,
+            borderWidth: "2px!important",
+            borderRadius: 9,
+          }}
+        >
+          View attendees
+        </Button>
+      )}
     </>
   );
 }

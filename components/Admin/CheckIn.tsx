@@ -1,4 +1,11 @@
-import { Button, IconButton, SwipeableDrawer, Typography } from "@mui/material";
+import {
+  Button,
+  CardActionArea,
+  CircularProgress,
+  IconButton,
+  SwipeableDrawer,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
@@ -6,9 +13,41 @@ import { useState } from "react";
 import useSWR from "swr";
 import Card from "@mui/material/Card";
 import * as React from "react";
-
+import { ViewAttendees } from "./ViewAttendees";
+const TraditionalCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
+  return (
+    <>
+      <ViewAttendees
+        day={day}
+        checkInMode
+        customTrigger={
+          <Card
+            sx={{
+              flexGrow: 1,
+              borderWidth: "2px",
+              background: "rgba(200,200,200,.3)",
+              mr: 1,
+              flex: "50%",
+              borderRadius: 5,
+            }}
+            variant="outlined"
+          >
+            <CardActionArea sx={{ p: 3 }}>
+              <Typography variant="h6">Traditional</Typography>
+              <Typography variant="body2">
+                Call out student names and have them respond with "here" as you
+                mark them as present.
+              </Typography>
+            </CardActionArea>
+          </Card>
+        }
+      />
+    </>
+  );
+};
 export function CheckIn({ day }) {
   const [open, setOpen] = useState(false);
+  const [checkInMode, setCheckInMode] = useState("");
   const { data: session }: any = useSession();
 
   const url =
@@ -22,10 +61,6 @@ export function CheckIn({ day }) {
   const { data, error } = useSWR(url, () =>
     fetch(url).then((res) => res.json())
   );
-  const [rows, setRows] = useState([]);
-  React.useEffect(() => {
-    if (data && !data.error) setRows([...data.appointments]);
-  }, [data]);
 
   return (
     <>
@@ -65,17 +100,50 @@ export function CheckIn({ day }) {
 
           <Box
             sx={{
-              background: "rgba(200,200,200,.3)",
-              p: 3,
               mt: 1,
               borderRadius: 5,
             }}
           >
-            <Typography>Select a check-in mode</Typography>
-            <Box sx={{ display: "flex", mt: 1 }}>
-              <Card sx={{ flexGrow: 1, mr: 1 }}>Manual</Card>
-              <Card sx={{ flexGrow: 1, ml: 1 }}>Live</Card>
-            </Box>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "800",
+                mt: 5,
+                mb: 3,
+              }}
+            >
+              How do you want to check students in?
+            </Typography>
+            {data ? (
+              <Box sx={{ display: "flex", mt: 1 }}>
+                <TraditionalCheckIn
+                  day={day}
+                  checkInMode={checkInMode}
+                  setCheckInMode={setCheckInMode}
+                  data={data}
+                />
+                <Card
+                  sx={{
+                    flexGrow: 1,
+                    borderWidth: "2px",
+                    background: "rgba(200,200,200,.3)",
+                    ml: 1,
+                    flex: "50%",
+                    borderRadius: 5,
+                  }}
+                  variant="outlined"
+                >
+                  <CardActionArea sx={{ p: 3 }}>
+                    <Typography variant="h6">Barcode</Typography>
+                    <Typography variant="body2">
+                      Scan student IDs or type it in manually as they walk in.
+                    </Typography>
+                  </CardActionArea>
+                </Card>
+              </Box>
+            ) : (
+              <CircularProgress />
+            )}
           </Box>
         </Box>
       </SwipeableDrawer>
