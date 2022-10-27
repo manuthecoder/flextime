@@ -19,7 +19,13 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useSession } from "next-auth/react";
 import { mutate } from "swr";
 
-function ConfirmAppointmentButton({ mutationUrl, setOpen, date, appointment }) {
+function ConfirmAppointmentButton({
+  disabled,
+  mutationUrl,
+  setOpen,
+  date,
+  appointment,
+}) {
   const [loading, setLoading] = useState(false);
   const session: any = useSession();
 
@@ -51,9 +57,7 @@ function ConfirmAppointmentButton({ mutationUrl, setOpen, date, appointment }) {
   return (
     <LoadingButton
       loading={loading}
-      disabled={
-        appointment.maxAppointments - appointment.appointments.length == 0
-      }
+      disabled={disabled}
       onClick={handleClick}
       fullWidth
       size="large"
@@ -224,12 +228,25 @@ export function CreateAppointmentButton({
                   <Typography variant="body2" sx={{ mb: 2 }}>
                     {appointment.maxAppointments} max appointments &bull;{" "}
                     {appointment.maxAppointments -
-                      appointment.appointments.length}{" "}
+                      appointment.appointments.filter(
+                        (item) =>
+                          dayjs(item.date).format("YYYY-MM-DD") ==
+                          dayjs(day).format("YYYY-MM-DD")
+                      ).length}{" "}
                     remaining
                   </Typography>
                   <ConfirmAppointmentButton
                     mutationUrl={mutationUrl}
                     setOpen={setOpen}
+                    disabled={
+                      appointment.maxAppointments -
+                        appointment.appointments.filter(
+                          (item) =>
+                            dayjs(item.date).format("YYYY-MM-DD") ==
+                            dayjs(day).format("YYYY-MM-DD")
+                        ).length ===
+                      0
+                    }
                     appointment={appointment}
                     date={day}
                   />
