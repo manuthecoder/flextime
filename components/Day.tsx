@@ -6,9 +6,33 @@ import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
 import { ViewAttendees } from "./Admin/ViewAttendees";
 import { CheckIn } from "./Admin/CheckIn";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { mutate } from "swr";
 
-const FlexAppointment = ({ appointment }) => {
+const FlexAppointment = ({ mutationUrl, appointment }) => {
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleDelete = async () => {
+    setLoading(true);
+    const res = await fetch(
+      "/api/appointments/delete?" +
+        new URLSearchParams({
+          id: appointment.id,
+        })
+    )
+      .then((res) => res.json())
+      .catch((err) => {
+        alert("Something went wrong. Please try again later.");
+        setLoading(false);
+        console.error(err);
+      });
+    mutate(mutationUrl).then(() => {
+      setLoading(false);
+      setOpen(false);
+    });
+  };
+
   return (
     <>
       <SwipeableDrawer
@@ -18,7 +42,7 @@ const FlexAppointment = ({ appointment }) => {
         onOpen={() => setOpen(true)}
         disableSwipeToOpen
         PaperProps={{
-          elevation: 0,
+          elevation: 1,
           sx: {
             maxWidth: "500px",
             mx: "auto",
@@ -50,6 +74,7 @@ const FlexAppointment = ({ appointment }) => {
         </Box>
         <Box sx={{ display: "flex", gap: 2 }}>
           <Button
+            disabled={loading}
             size="large"
             fullWidth
             disableElevation
@@ -59,7 +84,9 @@ const FlexAppointment = ({ appointment }) => {
           >
             Cancel
           </Button>
-          <Button
+          <LoadingButton
+            onClick={handleDelete}
+            loading={loading}
             size="large"
             fullWidth
             disableElevation
@@ -67,7 +94,7 @@ const FlexAppointment = ({ appointment }) => {
             variant="contained"
           >
             Delete
-          </Button>
+          </LoadingButton>
         </Box>
       </SwipeableDrawer>
       <Button
@@ -86,6 +113,7 @@ const FlexAppointment = ({ appointment }) => {
           borderWidth: "2px!important",
           borderRadius: 999,
           gap: 1,
+          whiteSpace: "nowrap",
         }}
       >
         {appointment.flexChoice.name}
@@ -102,6 +130,7 @@ export function Day({ url, calendarData, admin = false, day }) {
       sx={{
         p: 4,
         display: { xs: "flex", sm: "block" },
+        gap: 5,
         alignItems: "center",
         background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
         borderRadius: 5,
@@ -165,14 +194,12 @@ export function Day({ url, calendarData, admin = false, day }) {
           )
         )}
         {admin && <ViewAttendees day={day} />}
-      </Box>
-      <Box>
         {calendarData &&
           calendarData[0] &&
           calendarData[0].appointments
             .filter((appointment) => dayjs(appointment.date).isSame(day, "day"))
             .map((appointment) => (
-              <FlexAppointment appointment={appointment} />
+              <FlexAppointment appointment={appointment} mutationUrl={url} />
             ))}
       </Box>
     </Box>

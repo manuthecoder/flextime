@@ -37,7 +37,8 @@ model Session {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
+  accessToken String @unique @default(uuid())
 
   // 9 digit student ID
   studentId String? @unique
