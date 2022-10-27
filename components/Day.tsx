@@ -6,6 +6,7 @@ import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
 import { ViewAttendees } from "./Admin/ViewAttendees";
 import { CheckIn } from "./Admin/CheckIn";
+
 const FlexAppointment = ({ appointment }) => {
   return (
     <Button
@@ -13,7 +14,6 @@ const FlexAppointment = ({ appointment }) => {
       fullWidth
       variant="contained"
       sx={{
-        mt: 1,
         borderWidth: "2px!important",
         borderRadius: 999,
       }}
