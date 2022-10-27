@@ -1,5 +1,5 @@
-import { Typography, Box, Button } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { Typography, Box, Button, SwipeableDrawer } from "@mui/material";
+import { green, red } from "@mui/material/colors";
 import React from "react";
 import dayjs from "dayjs";
 import { AddStudentButton } from "./Admin/AddStudentButton";
@@ -8,18 +8,92 @@ import { ViewAttendees } from "./Admin/ViewAttendees";
 import { CheckIn } from "./Admin/CheckIn";
 
 const FlexAppointment = ({ appointment }) => {
+  const [open, setOpen] = React.useState(false);
   return (
-    <Button
-      disableElevation
-      fullWidth
-      variant="contained"
-      sx={{
-        borderWidth: "2px!important",
-        borderRadius: 999,
-      }}
-    >
-      {appointment.flexChoice.name}
-    </Button>
+    <>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        disableSwipeToOpen
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            maxWidth: "500px",
+            mx: "auto",
+            p: 4,
+            background: green[50],
+            borderRadius: "20px 20px 0 0",
+          },
+        }}
+      >
+        <Box>
+          <Box
+            sx={{
+              width: "50px",
+              height: "2px",
+              background: green[600],
+              borderRadius: 99,
+              mx: "auto",
+              mb: 5,
+            }}
+          />
+          <Typography variant="h5" className="font-heading" sx={{ mb: 2 }}>
+            Delete appointment with <u>{appointment.flexChoice.name}</u>?
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            You will have to set up another appointment.{" "}
+            {appointment.flexChoice.name}'s availability will not be guaranteed
+            if you want to join back
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <Button
+            size="large"
+            fullWidth
+            disableElevation
+            sx={{ mt: 2, borderRadius: 9, borderWidth: "2px!important" }}
+            variant="outlined"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            size="large"
+            fullWidth
+            disableElevation
+            sx={{ mt: 2, borderRadius: 9, borderWidth: "2px!important" }}
+            variant="contained"
+          >
+            Delete
+          </Button>
+        </Box>
+      </SwipeableDrawer>
+      <Button
+        onClick={() => {
+          if (!appointment.teacherCreated) {
+            setOpen(true);
+          }
+        }}
+        disableElevation
+        fullWidth
+        variant="contained"
+        sx={{
+          ...(appointment.teacherCreated && {
+            background: red[900] + "!important",
+          }),
+          borderWidth: "2px!important",
+          borderRadius: 999,
+          gap: 1,
+        }}
+      >
+        {appointment.flexChoice.name}
+        <span className="material-symbols-outlined">
+          {appointment.teacherCreated ? "lock" : "edit"}
+        </span>
+      </Button>
+    </>
   );
 };
 export function Day({ url, calendarData, admin = false, day }) {
