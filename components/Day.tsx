@@ -82,10 +82,11 @@ export function Day({ url, calendarData, admin = false, day }) {
           <AddStudentButton mutationUrl={url} day={day} />
         ) : (
           calendarData &&
-          calendarData[0] &&
-          calendarData[0].appointments.filter((appointment) =>
-            dayjs(appointment.date).isSame(day, "day")
-          ).length == 0 && (
+          ((calendarData[0] &&
+            calendarData[0].appointments.filter((appointment) =>
+              dayjs(appointment.date).isSame(day, "day")
+            ).length == 0) ||
+            calendarData.length == 0) && (
             <CreateAppointmentButton mutationUrl={url} day={day} />
           )
         )}

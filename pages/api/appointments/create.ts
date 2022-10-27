@@ -8,7 +8,6 @@ export default async function handle(
 ) {
   //  Create a new appointment
   const { studentId, teacherCreated, flexId, date } = req.body;
-
   const result = await prisma.appointment.create({
     data: {
       teacherCreated: teacherCreated === "true",
