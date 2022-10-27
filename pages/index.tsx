@@ -5,12 +5,11 @@ import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
 export default function Index(): React.ReactElement {
   const { data: session } = useSession();
-
   return (
     <Container sx={{ mt: 7 }}>
       <NoSsr>
         {session ? (
-          <WeeklyCalendar admin={false} />
+          <WeeklyCalendar admin={session.user.isAdmin} />
         ) : (
           "Please sign in with your IUSD account to view your appointments. "
         )}

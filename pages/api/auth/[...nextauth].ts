@@ -14,9 +14,11 @@ export const authOptions: any = {
       return token;
     },
     session: async ({ user, session }) => {
-      if (user && user.studentId) {
-        session.user.studentId = user.studentId;
-      }
+      session.user = {
+        ...session.user,
+        ...user,
+      };
+      console.log(session);
       return session;
     },
     async signIn(account) {

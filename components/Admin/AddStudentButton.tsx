@@ -15,18 +15,36 @@ import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import dayjs from "dayjs";
 import { Person } from "./Person";
+import { LoadingButton } from "@mui/lab";
+import { useSession } from "next-auth/react";
 
-function ConfirmAppointmentButton({ appointment }) {
+function ConfirmStudentButton({ person }) {
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
+  // alert(JSON.stringify(session));
+
   return (
-    <Button
-      disabled={
-        loading ||
-        appointment.maxAppointments - appointment.appointments.length == 0
-      }
+    <LoadingButton
+      loading={loading}
       onClick={() => {
         setLoading(true);
-        setTimeout(() => setLoading(false), 2000);
+        fetch("/api/appointments/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            flexId: session.user.email,
+            teacherCreated: false,
+            studentId: person.studentId,
+            date: dayjs(person.date).format("YYYY-MM-DD"),
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            setLoading(false);
+            console.log(res);
+          });
       }}
       fullWidth
       size="large"
@@ -37,7 +55,7 @@ function ConfirmAppointmentButton({ appointment }) {
       }}
     >
       Confirm
-    </Button>
+    </LoadingButton>
   );
 }
 
@@ -61,7 +79,7 @@ export function AddStudentButton({
     setUrl(`/api/findStudents?query=${value}`);
   }, [value]);
 
-  const [appointment, setAppointment] = useState(null);
+  const [person, setPerson] = useState(null);
 
   return (
     <>
@@ -110,7 +128,7 @@ export function AddStudentButton({
               md={6}
               sx={{
                 display: {
-                  xs: appointment ? "none" : "block",
+                  xs: person ? "none" : "block",
                   md: "block",
                 },
               }}
@@ -167,13 +185,13 @@ export function AddStudentButton({
                     <Person
                       key={item.id}
                       item={item}
-                      appointment={appointment}
-                      setAppointment={setAppointment}
+                      person={person}
+                      setPerson={setPerson}
                     />
                   ))}
               </List>
             </Grid>
-            {appointment && (
+            {person && (
               <Grid item xs={12} md={6}>
                 <Box
                   sx={{
@@ -186,18 +204,18 @@ export function AddStudentButton({
                   }}
                 >
                   <Typography variant="h4" className="font-heading">
-                    {appointment.name}
+                    {person.name}
                   </Typography>
                   <Typography variant="h6" sx={{ mb: 1 }}>
-                    {appointment.email.toLowerCase()}
+                    {person.email.toLowerCase()}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 2 }}>
-                    <b>{appointment.name}</b> won&apos;t be able to change this
-                    appointment unless you cancel it.
+                    <b>{person.name}</b> won&apos;t be able to change this
+                    person unless you cancel it.
                   </Typography>
-                  <ConfirmAppointmentButton appointment={appointment} />
+                  <ConfirmStudentButton person={person} />
                   <Button
-                    onClick={() => setAppointment(null)}
+                    onClick={() => setPerson(null)}
                     fullWidth
                     size="large"
                     variant="outlined"
@@ -210,15 +228,6 @@ export function AddStudentButton({
                   >
                     Cancel
                   </Button>
-                  {appointment.appointmentBanner && (
-                    <Alert
-                      severity="info"
-                      sx={{ mt: 2, borderRadius: 4 }}
-                      variant="filled"
-                    >
-                      {appointment.appointmentBanner}
-                    </Alert>
-                  )}
                 </Box>
               </Grid>
             )}

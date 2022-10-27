@@ -6,8 +6,8 @@ import { green } from "@mui/material/colors";
 import React from "react";
 
 export const Person: any = React.memo(function ({
-  appointment,
-  setAppointment,
+  person,
+  setPerson,
   item,
 }: any) {
   return (
@@ -15,7 +15,7 @@ export const Person: any = React.memo(function ({
       sx={{ transition: "none", borderRadius: 5 }}
       button
       onClick={() => {
-        setAppointment(item);
+        setPerson(item);
       }}
     >
       <ListItemText
@@ -29,7 +29,7 @@ export const Person: any = React.memo(function ({
       <ListItemIcon sx={{ mr: -3 }}>
         <Avatar
           sx={{
-            transform: appointment === item ? "scale(1)" : "scale(0)",
+            transform: person === item ? "scale(1)" : "scale(0)",
             width: 30,
             transition: "transform .2s",
             height: 30,

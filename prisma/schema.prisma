@@ -37,24 +37,30 @@ model Session {
 }
 
 model User {
-  id          Int    @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
+  // Access token to edit the user's data
   accessToken String @unique @default(uuid())
 
-  // 9 digit student ID
+  // Is admin?
+  isAdmin Boolean @default(false)
+
+  // 9 digit student ID (only for students)
   studentId String? @unique
 
-  // List of appointments
+  // List of appointments (only for students)
   appointments Appointment[]
 
-  // Student information
+  // List of flex choices (only for admins)
+  flexChoices FlexChoice[]
+
+  // User information
   name  String?
   email String? @unique
 
-  // Not used, but required for NextAuth.js
-  image         String?
-  emailVerified DateTime?
-  accounts      Account[]
-  sessions      Session[]
+  // oAuth stuff and session management
+  accounts Account[]
+  sessions Session[]
 }
 
 model VerificationToken {
@@ -85,6 +91,10 @@ model FlexChoice {
 
   // Appointment banner
   appointmentBanner String? @db.VarChar(300)
+
+  // Who is this flex choice for?
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Appointment {
