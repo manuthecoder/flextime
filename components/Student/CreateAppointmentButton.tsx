@@ -279,21 +279,40 @@ export function CreateAppointmentButton({
           </Grid>
         </Box>
       </SwipeableDrawer>
-      <Button
-        fullWidth
-        onClick={() => setOpen(true)}
-        variant={
-          dayjs(day).isBefore(dayjs(), "day") ||
-          dayjs(day).isAfter(dayjs(), "day")
-            ? "outlined"
-            : "contained"
-        }
-        disabled={dayjs(day).isBefore(dayjs(), "day")}
-        sx={{ borderWidth: "2px!important", borderRadius: 9 }}
-        disableElevation
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
-        Set&nbsp;appointment
-      </Button>
+        <Button
+          onClick={() => setOpen(true)}
+          variant={
+            dayjs(day).isBefore(dayjs(), "day") ||
+            dayjs(day).isAfter(dayjs(), "day")
+              ? "outlined"
+              : "contained"
+          }
+          disabled={dayjs(day).isBefore(dayjs(), "day")}
+          sx={{
+            borderWidth: "2px!important",
+            borderRadius: 9,
+            gap: 1,
+          }}
+          disableElevation
+        >
+          <span className="material-symbols-outlined">add</span>
+          <Typography
+            component="span"
+            variant="body2"
+            sx={{
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            Set&nbsp;appointment
+          </Typography>
+        </Button>
+      </Box>
     </>
   );
 }

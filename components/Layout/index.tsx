@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import Link from "next/link";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 import {
   Backdrop,
   CircularProgress,
@@ -150,6 +151,12 @@ export function Layout({ children }) {
     },
   };
 
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: typeof window !== "undefined" ? window : undefined,
+  });
+
   const { status, data: session }: any = useSession(options);
   const [studentId, setStudentId] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -253,14 +260,23 @@ export function Layout({ children }) {
       <AppBar
         elevation={0}
         sx={{
-          background: green[50],
+          background: green[trigger ? 100 : 50],
+          transition: "background .1s",
+          py: 0.5,
           color: "black",
         }}
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
             <Link href="/">
-              <Button color="inherit">IHS FlexTime</Button>
+              <Button
+                color="inherit"
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                IHS FlexTime
+              </Button>
             </Link>
           </Box>
           <Box>
@@ -282,7 +298,7 @@ export function Layout({ children }) {
           </Box>
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar sx={{ py: 0.5 }} />
       {children}
     </>
   );

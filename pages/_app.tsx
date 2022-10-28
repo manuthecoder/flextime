@@ -34,7 +34,7 @@ export default function App({
       <ThemeProvider theme={theme}>
         <Head>
           <meta name="theme-color" content="#e8f5e9" />
-          <link rel="shortcut icon" href="/icons/192x192.png" />
+          <link rel="shortcut icon" href="https://i.ibb.co/9vqnLWg/image.png" />
           <title>Flextime &bull; Irvine High</title>
         </Head>
         <NoSsr>

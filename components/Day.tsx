@@ -129,6 +129,7 @@ export function Day({ url, calendarData, admin = false, day }) {
     <Box
       sx={{
         p: 4,
+        px: 2,
         display: { xs: "flex", sm: "block" },
         gap: 5,
         alignItems: "center",
@@ -136,7 +137,7 @@ export function Day({ url, calendarData, admin = false, day }) {
         borderRadius: 5,
         width: { sm: "100%" },
         "&:hover": {
-          background: { sm: "rgba(200,200,200,0.5)" },
+          background: { sm: "rgba(200,200,200,0.1)" },
         },
       }}
     >
