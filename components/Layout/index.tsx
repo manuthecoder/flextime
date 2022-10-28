@@ -16,6 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -150,6 +151,8 @@ export function Layout({ children }) {
   };
 
   const { status, data: session }: any = useSession(options);
+  const [studentId, setStudentId] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
   return (
     <>
@@ -197,6 +200,11 @@ export function Layout({ children }) {
             stored with zero-access encryption.
           </Typography>
           <TextField
+            value={studentId}
+            onChange={(e: any) => {
+              // Trim to max length of 9 characters
+              setStudentId(parseInt(e.target.value.slice(0, 9), 10));
+            }}
             fullWidth
             variant="filled"
             type="number"
@@ -204,7 +212,30 @@ export function Layout({ children }) {
             autoComplete="off"
             placeholder="*********"
           />
-          <Button
+          <LoadingButton
+            onClick={() => {
+              setLoading(true);
+              fetch("/api/setStudentId", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: session.user.id,
+                  studentId,
+                }),
+              })
+                .then((res) => res.json())
+                .then(() => {
+                  setLoading(false);
+                  window.location.reload();
+                })
+                .catch((err) => {
+                  setLoading(false);
+                  alert("Something went wrong. Please try again later.");
+                });
+            }}
+            loading={loading}
             size="large"
             variant="contained"
             fullWidth
@@ -212,7 +243,7 @@ export function Layout({ children }) {
             sx={{ mt: 2, borderRadius: 999 }}
           >
             Continue
-          </Button>
+          </LoadingButton>
         </Box>
       </SwipeableDrawer>
       <AppBar
