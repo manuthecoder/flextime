@@ -292,7 +292,7 @@ export function CreateAppointmentButton({
         sx={{ borderWidth: "2px!important", borderRadius: 9 }}
         disableElevation
       >
-        Select&nbsp;appointment
+        Set&nbsp;appointment
       </Button>
     </>
   );
