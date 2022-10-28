@@ -7,7 +7,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import { signIn, signOut, useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import {
@@ -260,7 +260,8 @@ export function Layout({ children }) {
       <AppBar
         elevation={0}
         sx={{
-          background: green[trigger ? 100 : 50],
+          background: "rgba(232, 245, 233, .8)",
+          backdropFilter: "blur(10px)",
           transition: "background .1s",
           py: 0.5,
           color: "black",
