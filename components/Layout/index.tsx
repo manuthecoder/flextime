@@ -9,7 +9,13 @@ import Toolbar from "@mui/material/Toolbar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import Link from "next/link";
-import { Backdrop, CircularProgress } from "@mui/material";
+import {
+  Backdrop,
+  CircularProgress,
+  SwipeableDrawer,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -143,7 +149,7 @@ export function Layout({ children }) {
     },
   };
 
-  const { status, data: session } = useSession(options);
+  const { status, data: session }: any = useSession(options);
 
   return (
     <>
@@ -156,6 +162,59 @@ export function Layout({ children }) {
       >
         <CircularProgress />
       </Backdrop>
+      <SwipeableDrawer
+        anchor="bottom"
+        onOpen={() => {}}
+        onClose={() => {}}
+        open={session && !session.user.studentId && !session.user.isAdmin}
+        disableSwipeToOpen
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            background: "transparent",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: "500px",
+            mx: "auto",
+            background: "#fff",
+            color: green[900],
+            p: 5,
+            borderRadius: 5,
+          }}
+        >
+          <Typography variant="h4" gutterBottom className="font-heading">
+            Finish signup
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            Please enter your student ID to finish signing up. Your data is
+            stored with zero-access encryption.
+          </Typography>
+          <TextField
+            fullWidth
+            variant="filled"
+            type="number"
+            label="9-digit student ID"
+            autoComplete="off"
+            placeholder="*********"
+          />
+          <Button
+            size="large"
+            variant="contained"
+            fullWidth
+            disableElevation
+            sx={{ mt: 2, borderRadius: 999 }}
+          >
+            Continue
+          </Button>
+        </Box>
+      </SwipeableDrawer>
       <AppBar
         elevation={0}
         sx={{
