@@ -97,30 +97,36 @@ const FlexAppointment = ({ mutationUrl, appointment }) => {
           </LoadingButton>
         </Box>
       </SwipeableDrawer>
-      <Button
-        onClick={() => {
-          if (!appointment.teacherCreated) {
-            setOpen(true);
-          }
-        }}
-        disableElevation
-        fullWidth
-        variant="contained"
+      <Box
         sx={{
-          ...(appointment.teacherCreated && {
-            background: red[900] + "!important",
-          }),
-          borderWidth: "2px!important",
-          borderRadius: 999,
-          gap: 1,
-          whiteSpace: "nowrap",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        {appointment.flexChoice.name}
-        <span className="material-symbols-outlined">
-          {appointment.teacherCreated ? "lock" : "edit"}
-        </span>
-      </Button>
+        <Button
+          onClick={() => {
+            if (!appointment.teacherCreated) {
+              setOpen(true);
+            }
+          }}
+          disableElevation
+          variant="contained"
+          sx={{
+            ...(appointment.teacherCreated && {
+              background: red[900] + "!important",
+            }),
+            borderWidth: "2px!important",
+            borderRadius: 999,
+            gap: 1,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {appointment.flexChoice.name}
+          <span className="material-symbols-outlined">
+            {appointment.teacherCreated ? "lock" : "edit"}
+          </span>
+        </Button>
+      </Box>
     </>
   );
 };
@@ -136,6 +142,8 @@ export function Day({ url, calendarData, admin = false, day }) {
         background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
         borderRadius: 5,
         width: { sm: "100%" },
+        flexBasis: 0,
+        flexGrow: 1,
         "&:hover": {
           background: { sm: "rgba(200,200,200,0.1)" },
         },

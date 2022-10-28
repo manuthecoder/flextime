@@ -100,10 +100,6 @@ export function WeeklyCalendar({ admin }) {
           background: { sm: "rgba(200,200,200,0.3)" },
           gap: { xs: 2, sm: 0 },
           borderRadius: 5,
-          height: {
-            xs: "auto",
-            sm: admin ? "auto" : "500px",
-          },
           mb: 5,
           maxWidth: "100%",
           overflowX: "scroll!important",
