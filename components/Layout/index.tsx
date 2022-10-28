@@ -197,7 +197,11 @@ export function Layout({ children }) {
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
             Please enter your student ID to finish signing up. Your data is
-            stored with zero-access encryption.
+            stored with zero-access encryption.{" "}
+            <b>
+              Be careful, you will not be able to change this later, unless
+              approved by a staff member
+            </b>
           </Typography>
           <TextField
             value={studentId}
