@@ -99,22 +99,46 @@ function AppointmentDetails({
           mt: { md: 15 },
         }}
       >
-        <Typography variant="h4" className="font-heading">
-          {appointment.name}
-        </Typography>
-        <Typography variant="h6" sx={{ mb: 1 }}>
-          {appointment.email.toLowerCase()}
-        </Typography>
-        <Typography variant="body2" sx={{ mb: 2 }}>
-          {data && (data.maxAppointments ?? 25)} max appointments &bull;{" "}
-          {appointment.maxAppointments -
-            appointment.appointments.filter(
-              (item) =>
-                dayjs(item.date).format("YYYY-MM-DD") ==
-                dayjs(day).format("YYYY-MM-DD")
-            ).length}{" "}
-          remaining
-        </Typography>
+        {data ? (
+          <Typography variant="h4" className="font-heading">
+            {appointment.name}
+          </Typography>
+        ) : (
+          <Skeleton
+            animation="wave"
+            variant="text"
+            height={50}
+            width={"50%"}
+            sx={{ mb: 1 }}
+          />
+        )}
+        {data ? (
+          <Typography variant="h6" sx={{ mb: 1 }}>
+            {appointment.email.toLowerCase()}
+          </Typography>
+        ) : (
+          <Skeleton
+            animation="wave"
+            variant="text"
+            height={30}
+            width={"75%"}
+            sx={{ mb: 2 }}
+          />
+        )}
+        {data ? (
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {data.settings.maxAppointments ?? 25} max appointments &bull;{" "}
+            {data.settings.maxAppointments - data.appointments.length || 25}{" "}
+            remaining
+          </Typography>
+        ) : (
+          <Skeleton
+            width={"90%"}
+            animation="wave"
+            variant="text"
+            sx={{ mb: 2 }}
+          />
+        )}
         <ConfirmAppointmentButton
           loadingSettings={!data || error}
           mutationUrl={mutationUrl}
@@ -145,13 +169,13 @@ function AppointmentDetails({
         >
           Cancel
         </Button>
-        {data && data.banner && (
+        {data && data.settings.banner && (
           <Alert
             severity="info"
             sx={{ mt: 2, borderRadius: 4 }}
             variant="filled"
           >
-            {data.banner}
+            {data.settings.banner}
           </Alert>
         )}
         {error && (

@@ -11,6 +11,14 @@ export default async function handle(
       id: parseInt(req.query.id.toString()),
     },
     select: {
+      appointments: {
+        select: {
+          id: true,
+        },
+        where: {
+          date: req.query.date.toString(),
+        },
+      },
       settings: {
         where: {
           date: req.query.date.toString(),
@@ -18,13 +26,14 @@ export default async function handle(
       },
     },
   });
-  res.json(
-    result
+  res.json({
+    settings: result
       ? result.settings
         ? result.settings[0]
           ? result.settings[0]
           : {}
         : {}
-      : {}
-  );
+      : {},
+    appointments: result ? result.appointments : [],
+  });
 }
