@@ -4,6 +4,7 @@ import {
   CircularProgress,
   IconButton,
   SwipeableDrawer,
+  TextField,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -14,6 +15,101 @@ import useSWR from "swr";
 import Card from "@mui/material/Card";
 import * as React from "react";
 import { ViewAttendees } from "./ViewAttendees";
+import toast from "react-hot-toast";
+
+const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <SwipeableDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        anchor="bottom"
+        disableSwipeToOpen
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            height: "100vh",
+            background: "transparent",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        }}
+      >
+        <Box sx={{ position: "fixed", top: 0, left: 0, width: "100%" }}>
+          <Box sx={{ p: 5, display: "flex" }}>
+            <Typography
+              variant="h4"
+              gutterBottom
+              className="font-heading"
+              sx={{ flexGrow: 1 }}
+            >
+              Barcode
+            </Typography>
+            <Box>
+              <IconButton onClick={() => setOpen(false)}>
+                <span className="material-symbols-outlined">close</span>
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            textAlign: "center",
+          }}
+        >
+          <TextField
+            autoComplete="off"
+            sx={{
+              width: 600,
+            }}
+            onChange={(e: any) => {
+              if (e.target.value.length == 9) {
+                toast(e.target.value);
+                e.target.value = "";
+              }
+              if (e.target.value.length > 9) {
+                e.target.value = e.target.value.slice(0, 9);
+              }
+            }}
+            placeholder="Enter an ID..."
+            InputProps={{
+              disableUnderline: true,
+              // className: "font-heading",
+              sx: {
+                fontSize: "75px",
+                "& *": {
+                  textAlign: "center",
+                },
+              },
+            }}
+          />
+        </Box>
+      </SwipeableDrawer>
+      <Card
+        sx={{
+          flexGrow: 1,
+          borderWidth: "2px",
+          background: "rgba(200,200,200,.3)",
+          ml: 1,
+          flex: "50%",
+          borderRadius: 5,
+        }}
+        variant="outlined"
+      >
+        <CardActionArea sx={{ p: 3 }} onClick={() => setOpen(true)}>
+          <Typography variant="h6">Barcode</Typography>
+          <Typography variant="body2">
+            Scan student IDs or type it in manually as they walk in.
+          </Typography>
+        </CardActionArea>
+      </Card>
+    </>
+  );
+};
+
 const TraditionalCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
   return (
     <>
@@ -122,24 +218,12 @@ export function CheckIn({ day }) {
                   setCheckInMode={setCheckInMode}
                   data={data}
                 />
-                <Card
-                  sx={{
-                    flexGrow: 1,
-                    borderWidth: "2px",
-                    background: "rgba(200,200,200,.3)",
-                    ml: 1,
-                    flex: "50%",
-                    borderRadius: 5,
-                  }}
-                  variant="outlined"
-                >
-                  <CardActionArea sx={{ p: 3 }}>
-                    <Typography variant="h6">Barcode</Typography>
-                    <Typography variant="body2">
-                      Scan student IDs or type it in manually as they walk in.
-                    </Typography>
-                  </CardActionArea>
-                </Card>
+                <BarcodeCheckIn
+                  day={day}
+                  checkInMode={checkInMode}
+                  setCheckInMode={setCheckInMode}
+                  data={data}
+                />
               </Box>
             ) : (
               <CircularProgress />

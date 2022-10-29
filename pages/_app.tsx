@@ -1,11 +1,12 @@
+import { NoSsr } from "@mui/material";
 import { green } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import * as React from "react";
+import { Toaster } from "react-hot-toast";
 import { Layout } from "../components/Layout";
 import "../styles/globals.scss";
-import { NoSsr } from "@mui/material";
-import { getSession, SessionProvider } from "next-auth/react";
 
 export default function App({
   Component,
@@ -42,6 +43,7 @@ export default function App({
             <Component {...pageProps} />
           </Layout>
         </NoSsr>
+        <Toaster />
       </ThemeProvider>
     </SessionProvider>
   );
