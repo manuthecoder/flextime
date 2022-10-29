@@ -5,6 +5,7 @@ import {
   IconButton,
   SwipeableDrawer,
   TextField,
+  Grid,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -60,32 +61,39 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
             textAlign: "center",
           }}
         >
-          <TextField
-            autoComplete="off"
-            sx={{
-              width: 600,
-            }}
-            onChange={(e: any) => {
-              if (e.target.value.length == 9) {
-                toast(e.target.value);
-                e.target.value = "";
-              }
-              if (e.target.value.length > 9) {
-                e.target.value = e.target.value.slice(0, 9);
-              }
-            }}
-            placeholder="Enter an ID..."
-            InputProps={{
-              disableUnderline: true,
-              // className: "font-heading",
-              sx: {
-                fontSize: "75px",
-                "& *": {
-                  textAlign: "center",
-                },
-              },
-            }}
-          />
+          <Grid container>
+            <Grid xs={12} sm={8}>
+              <TextField
+                autoComplete="off"
+                sx={{
+                  width: 600,
+                }}
+                onChange={(e: any) => {
+                  if (e.target.value.length == 9) {
+                    toast(e.target.value);
+                    e.target.value = "";
+                  }
+                  if (e.target.value.length > 9) {
+                    e.target.value = e.target.value.slice(0, 9);
+                  }
+                }}
+                placeholder="Enter an ID..."
+                InputProps={{
+                  disableUnderline: true,
+                  // className: "font-heading",
+                  sx: {
+                    fontSize: "75px",
+                    "& *": {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              />
+            </Grid>
+            <Grid xs={12} sm={4}>
+              <Card>a</Card>
+            </Grid>
+          </Grid>
         </Box>
       </SwipeableDrawer>
       <Card
@@ -99,10 +107,14 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
         }}
         variant="outlined"
       >
-        <CardActionArea sx={{ p: 3 }} onClick={() => setOpen(true)}>
+        <CardActionArea
+          sx={{ p: 3, height: "100%" }}
+          onClick={() => setOpen(true)}
+        >
           <Typography variant="h6">Barcode</Typography>
           <Typography variant="body2">
-            Scan student IDs or type it in manually as they walk in.
+            Scan IDs or type it in manually as students walk in. Scanner
+            recommended.
           </Typography>
         </CardActionArea>
       </Card>
