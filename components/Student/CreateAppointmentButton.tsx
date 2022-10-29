@@ -161,7 +161,7 @@ export function CreateAppointmentButton({
                 sx={{
                   height: "400px",
                   maxHeight: "50vh",
-                  overflow: "scroll",
+                  overflowY: "scroll",
                   background: "rgba(200,200,200,.3)",
                   backdropFilter: "blur(100px)",
                   mt: 2,
@@ -169,22 +169,21 @@ export function CreateAppointmentButton({
                   p: 1,
                 }}
               >
-                {data &&
-                  data.filter((item) => item.displayOnList).length === 0 && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "100%",
-                      }}
-                    >
-                      <p style={{ textAlign: "center" }}>
-                        Uh oh! We couldn&apos;t find any results found for&nbsp;
-                        <b>{text}</b>
-                      </p>
-                    </Box>
-                  )}
+                {data && length === 0 && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <p style={{ textAlign: "center" }}>
+                      Uh oh! We couldn&apos;t find any results found for&nbsp;
+                      <b>{text}</b>
+                    </p>
+                  </Box>
+                )}
                 {!data &&
                   [...new Array(25)].map(() => (
                     <Skeleton
@@ -195,16 +194,14 @@ export function CreateAppointmentButton({
                     />
                   ))}
                 {data &&
-                  data
-                    .filter((item) => item.displayOnList)
-                    .map((item) => (
-                      <Person
-                        key={item.id}
-                        item={item}
-                        appointment={appointment}
-                        setAppointment={setAppointment}
-                      />
-                    ))}
+                  data.map((item) => (
+                    <Person
+                      key={item.id}
+                      item={item}
+                      appointment={appointment}
+                      setAppointment={setAppointment}
+                    />
+                  ))}
               </List>
             </Grid>
             {appointment && (

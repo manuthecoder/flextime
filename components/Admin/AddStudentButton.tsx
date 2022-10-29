@@ -148,7 +148,7 @@ export function AddStudentButton({
                 sx={{
                   height: "400px",
                   maxHeight: "50vh",
-                  overflow: "scroll",
+                  overflowY: "scroll",
                   background: "rgba(200,200,200,.3)",
                   backdropFilter: "blur(100px)",
                   mt: 2,

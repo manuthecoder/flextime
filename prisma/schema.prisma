@@ -84,20 +84,37 @@ model FlexChoice {
   // Teacher email
   email String? @unique @db.VarChar(300)
 
-  // Display on appointment list?
-  displayOnList Boolean? @default(true)
-
   // List of appointments
   appointments Appointment[]
 
   // Maximum number of appointments
   maxAppointments Int? @default(25) @db.Int
 
-  // Appointment banner
-  appointmentBanner String? @db.VarChar(300)
-
   // Who is this flex choice for?
   User User[]
+
+  // Settings
+  settings FlexSetting[]
+}
+
+model FlexSetting {
+  id Int @id @default(autoincrement())
+
+  // ID of the FlexChoice
+  flexChoiceId Int
+  flexChoice   FlexChoice @relation(fields: [flexChoiceId], references: [id])
+
+  // Date this setting applies to
+  date String
+
+  // Display on list?
+  displayOnList Boolean @default(true)
+
+  // Maximum number of appointments
+  maxAppointments Int? @default(25) @db.Int
+
+  // Appointment banner
+  banner String? @db.VarChar(300)
 }
 
 model Appointment {
