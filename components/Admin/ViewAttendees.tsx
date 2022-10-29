@@ -179,16 +179,16 @@ export function ViewAttendees({
         trigger
       ) : (
         <Button
-          onClick={() => setOpen(true)}
           fullWidth
-          variant="outlined"
+          onClick={() => setOpen(true)}
           sx={{
             mt: 1,
-            borderWidth: "2px!important",
+            background: "rgba(200,200,200,0.3)!important",
+            color: "#212121",
             borderRadius: 9,
           }}
         >
-          View attendees
+          <span className="material-symbols-outlined">group</span>
         </Button>
       )}
     </>

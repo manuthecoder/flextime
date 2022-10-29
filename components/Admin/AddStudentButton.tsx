@@ -239,17 +239,16 @@ export function AddStudentButton({
       </SwipeableDrawer>
       <Button
         onClick={() => setOpen(true)}
-        variant="outlined"
         disabled={dayjs(day).isBefore(dayjs().subtract(1, "day"))}
-        fullWidth
         sx={{
           mt: 1,
-          borderWidth: "2px!important",
+          background: "rgba(200,200,200,0.3)!important",
+          color: "#212121",
           borderRadius: 9,
         }}
         disableElevation
       >
-        Add student
+        <span className="material-symbols-outlined">person_add</span>
       </Button>
     </>
   );

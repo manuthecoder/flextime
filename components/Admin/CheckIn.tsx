@@ -149,16 +149,30 @@ export function CheckIn({ day }) {
       </SwipeableDrawer>
       <Button
         onClick={() => setOpen(true)}
-        fullWidth
         disableElevation
         variant="contained"
+        size="large"
         sx={{
           mt: 1,
+          position: "fixed",
+          bottom: 20,
+          right: 20,
           borderWidth: "2px!important",
-          borderRadius: 9,
+          zIndex: 9,
+          borderRadius: 5,
+          gap: 2,
+          py: 2,
         }}
       >
-        Check-in mode
+        <span className="material-symbols-outlined">task_alt</span>
+        <Typography
+          variant="body2"
+          sx={{
+            display: { xs: "none", sm: "block" },
+          }}
+        >
+          Check in
+        </Typography>
       </Button>
     </>
   );

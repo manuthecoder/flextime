@@ -75,7 +75,19 @@ export function WeeklyCalendar({ admin }) {
               : dayjs(week[0]).format("MMMM")}
           </Typography>
         </Box>
-        <Box sx={{ ml: "auto" }}>
+        <Box
+          sx={{
+            ml: "auto",
+            background: { xs: green[100], sm: "transparent" },
+            p: { xs: 1.5, sm: 0 },
+            mt: { xs: 2, sm: 0 },
+            borderRadius: 5,
+            position: { xs: "fixed", sm: "unset" },
+            bottom: "20px",
+            left: 15,
+            zIndex: 999,
+          }}
+        >
           <ButtonGroup variant="contained" disableElevation>
             <Button
               sx={{ ...styles, mr: 2 }}
@@ -98,8 +110,9 @@ export function WeeklyCalendar({ admin }) {
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           background: { sm: "rgba(200,200,200,0.3)" },
-          gap: { xs: 2, sm: 0 },
+          gap: { xs: 2, sm: 1 },
           borderRadius: 5,
+          p: 1,
           mb: 5,
           maxWidth: "100%",
           overflowX: "scroll!important",

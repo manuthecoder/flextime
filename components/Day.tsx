@@ -194,21 +194,43 @@ export function Day({ url, calendarData, admin = false, day }) {
       <Box
         sx={{
           ml: "auto",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {admin && dayjs(day).isSame(dayjs(), "day") && <CheckIn day={day} />}
-        {admin ? (
-          <AddStudentButton mutationUrl={url} day={day} />
-        ) : (
-          appointmentsToday.length === 0 && (
-            <CreateAppointmentButton mutationUrl={url} day={day} />
-          )
+        {appointmentsToday.length === 0 && !admin && (
+          <CreateAppointmentButton mutationUrl={url} day={day} />
         )}
-        {admin && <ViewAttendees day={day} />}
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+          }}
+        >
+          {admin && <ViewAttendees day={day} />}
+          {admin && !dayjs(day).isBefore(dayjs(), "day") && (
+            <AddStudentButton mutationUrl={url} day={day} />
+          )}
+        </Box>
         {appointmentsToday.length !== 0 &&
           appointmentsToday.map((appointment) => (
             <FlexAppointment appointment={appointment} mutationUrl={url} />
           ))}
+        {admin && !dayjs(day).isBefore(dayjs(), "day") && (
+          <Button
+            sx={{
+              background: "rgba(200,200,200,0.3)!important",
+              color: "#212121",
+              borderWidth: "2px!important",
+              mt: 1,
+              borderRadius: 9,
+              gap: 2,
+            }}
+          >
+            <span className="material-symbols-outlined">settings</span> Settings
+          </Button>
+        )}
       </Box>
     </Box>
   );
