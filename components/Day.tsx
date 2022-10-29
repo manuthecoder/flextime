@@ -104,7 +104,9 @@ const FlexAppointment = ({ mutationUrl, appointment }) => {
         }}
       >
         <Button
-          disabled={appointment.date !== dayjs().format("YYYY-MM-DD")}
+          disabled={dayjs(
+            dayjs(appointment.date).format("YYYY-MM-DD")
+          ).isBefore(dayjs().format("YYYY-MM-DD"))}
           onClick={() => {
             if (!appointment.teacherCreated) {
               setOpen(true);
@@ -132,6 +134,10 @@ const FlexAppointment = ({ mutationUrl, appointment }) => {
   );
 };
 export function Day({ url, calendarData, admin = false, day }) {
+  const appointmentsToday = calendarData
+    ? calendarData.filter((a) => a.date === dayjs(day).format("YYYY-MM-DD"))
+    : [];
+
   return (
     <Box
       sx={{
@@ -194,19 +200,13 @@ export function Day({ url, calendarData, admin = false, day }) {
         {admin ? (
           <AddStudentButton mutationUrl={url} day={day} />
         ) : (
-          calendarData &&
-          ((calendarData[0] &&
-            calendarData[0].appointments.filter((appointment) =>
-              dayjs(appointment.date).isSame(day, "day")
-            ).length == 0) ||
-            calendarData.length == 0) && (
+          appointmentsToday.length === 0 && (
             <CreateAppointmentButton mutationUrl={url} day={day} />
           )
         )}
         {admin && <ViewAttendees day={day} />}
-        {calendarData &&
-          calendarData[0] &&
-          calendarData[0].appointments.map((appointment) => (
+        {appointmentsToday.length !== 0 &&
+          appointmentsToday.map((appointment) => (
             <FlexAppointment appointment={appointment} mutationUrl={url} />
           ))}
       </Box>

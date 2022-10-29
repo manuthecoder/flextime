@@ -37,6 +37,8 @@ export default async function handle(
         },
       },
     });
-    res.json(result);
+    res.json(
+      result[0] ? (result[0].appointments ? result[0].appointments : []) : []
+    );
   }
 }
