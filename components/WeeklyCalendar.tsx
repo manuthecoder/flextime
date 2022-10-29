@@ -81,10 +81,10 @@ export function WeeklyCalendar({ admin }) {
             background: { xs: green[100], sm: "transparent" },
             p: { xs: 1.5, sm: 0 },
             mt: { xs: 2, sm: 0 },
-            borderRadius: 5,
+            borderRadius: 4,
             position: { xs: "fixed", sm: "unset" },
             bottom: "20px",
-            left: 15,
+            left: admin ? 15 : "unset",
             zIndex: 999,
           }}
         >
@@ -111,7 +111,7 @@ export function WeeklyCalendar({ admin }) {
           flexDirection: { xs: "column", sm: "row" },
           background: { sm: "rgba(200,200,200,0.3)" },
           gap: { xs: 2, sm: 1 },
-          borderRadius: 5,
+          borderRadius: 2,
           p: 1,
           mb: 5,
           maxWidth: "100%",
@@ -133,67 +133,6 @@ export function WeeklyCalendar({ admin }) {
             />
           ))}
       </Box>
-
-      {admin && (
-        <Box sx={{ my: 10 }}>
-          <Typography className="font-heading" variant="h4" gutterBottom>
-            Settings
-          </Typography>
-          <Box
-            sx={{
-              background: "rgba(200,200,200,0.3)",
-              borderRadius: 5,
-              p: 4,
-            }}
-          >
-            <TextField
-              variant="filled"
-              autoComplete="off"
-              fullWidth
-              label="Appointment banner text"
-              placeholder="Flex appointments are for test retakes only!"
-              sx={{
-                my: 1.5,
-              }}
-            />
-            <TextField
-              variant="filled"
-              autoComplete="off"
-              fullWidth
-              label="Maximum appointments per day"
-              placeholder="25"
-              defaultValue={25}
-              sx={{
-                my: 1.5,
-              }}
-            />
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Checkbox defaultChecked color="primary" />
-              <Typography variant="body1">
-                Display my name on the appointment list
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-              }}
-            >
-              <Button
-                sx={{
-                  ml: "auto",
-                  gap: 2,
-                  borderRadius: 999,
-                }}
-                disableElevation
-                variant="contained"
-              >
-                <span className="material-symbols-outlined">save</span>
-                Save
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      )}
     </Box>
   );
 }

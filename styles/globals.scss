@@ -39,3 +39,41 @@ body {
   background-color: rgba(232, 245, 233, 0.5) !important;
   backdrop-filter: blur(10px);
 }
+body {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0);
+  border: solid 3px transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px #a5d6a7;
+  border: solid 7px transparent;
+  border-radius: 99px;
+}
+::-moz-scrollbar-button:decrement,
+::-moz-scrollbar-button:increment,
+::-webkit-scrollbar-button:decrement,
+::-webkit-scrollbar-button:increment {
+  width: 0px;
+  height: 0px;
+}
+::-moz-scrollbar-button,
+::-webkit-scrollbar-button {
+  height: 0px;
+  width: 0px;
+}
+
+// Display non on mobile scrollbar
+@media (max-width: 600px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
