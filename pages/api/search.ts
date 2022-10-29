@@ -22,6 +22,7 @@ export default async function handle(
         },
       },
     },
+    take: 20,
   });
 
   res.json(result);

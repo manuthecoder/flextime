@@ -107,8 +107,8 @@ model FlexSetting {
   // Date this setting applies to
   date String
 
-  // Display on list?
-  displayOnList Boolean @default(true)
+  // Allow appointments on this day?
+  allowAppointments Boolean @default(true)
 
   // Maximum number of appointments
   maxAppointments Int? @default(25) @db.Int

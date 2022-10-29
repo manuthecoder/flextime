@@ -18,9 +18,9 @@ import { Person } from "./Person";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useSession } from "next-auth/react";
 import { mutate } from "swr";
-
 function ConfirmAppointmentButton({
   disabled,
+  loadingSettings,
   mutationUrl,
   setOpen,
   date,
@@ -56,7 +56,7 @@ function ConfirmAppointmentButton({
 
   return (
     <LoadingButton
-      loading={loading}
+      loading={loading || loadingSettings}
       disabled={disabled}
       onClick={handleClick}
       fullWidth
@@ -69,6 +69,102 @@ function ConfirmAppointmentButton({
     >
       Confirm
     </LoadingButton>
+  );
+}
+function AppointmentDetails({
+  appointment,
+  setAppointment,
+  setOpen,
+  day,
+  mutationUrl,
+}) {
+  const url =
+    "/api/appointments/getSettings?" +
+    new URLSearchParams({
+      id: appointment.id,
+      date: dayjs(day).format("YYYY-MM-DD"),
+    });
+  const { data, error } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
+  return (
+    <Grid item xs={12} md={6}>
+      <Box
+        sx={{
+          maxWidth: "400px",
+          mx: "auto",
+          p: 3,
+          background: "rgba(200,200,200,.3)",
+          borderRadius: 5,
+          mt: { md: 15 },
+        }}
+      >
+        <Typography variant="h4" className="font-heading">
+          {appointment.name}
+        </Typography>
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          {appointment.email.toLowerCase()}
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          {data && (data.maxAppointments ?? 25)} max appointments &bull;{" "}
+          {appointment.maxAppointments -
+            appointment.appointments.filter(
+              (item) =>
+                dayjs(item.date).format("YYYY-MM-DD") ==
+                dayjs(day).format("YYYY-MM-DD")
+            ).length}{" "}
+          remaining
+        </Typography>
+        <ConfirmAppointmentButton
+          loadingSettings={!data || error}
+          mutationUrl={mutationUrl}
+          setOpen={setOpen}
+          disabled={
+            appointment.maxAppointments -
+              appointment.appointments.filter(
+                (item) =>
+                  dayjs(item.date).format("YYYY-MM-DD") ==
+                  dayjs(day).format("YYYY-MM-DD")
+              ).length ===
+            0
+          }
+          appointment={appointment}
+          date={day}
+        />
+        <Button
+          onClick={() => setAppointment(null)}
+          fullWidth
+          size="large"
+          variant="outlined"
+          sx={{
+            mt: 1,
+            display: { xs: "block", md: "none" },
+            borderWidth: "2px!important",
+            borderRadius: 999,
+          }}
+        >
+          Cancel
+        </Button>
+        {data && data.banner && (
+          <Alert
+            severity="info"
+            sx={{ mt: 2, borderRadius: 4 }}
+            variant="filled"
+          >
+            {data.banner}
+          </Alert>
+        )}
+        {error && (
+          <Alert
+            severity="error"
+            sx={{ mt: 2, borderRadius: 4 }}
+            variant="filled"
+          >
+            Something went wrong. Please try again later.
+          </Alert>
+        )}
+      </Box>
+    </Grid>
   );
 }
 
@@ -161,7 +257,7 @@ export function CreateAppointmentButton({
                 sx={{
                   height: "400px",
                   maxHeight: "50vh",
-                  overflowY: "scroll",
+                  overflowY: "auto",
                   background: "rgba(200,200,200,.3)",
                   backdropFilter: "blur(100px)",
                   mt: 2,
@@ -169,7 +265,7 @@ export function CreateAppointmentButton({
                   p: 1,
                 }}
               >
-                {data && length === 0 && (
+                {data && data.length === 0 && (
                   <Box
                     sx={{
                       display: "flex",
@@ -205,73 +301,13 @@ export function CreateAppointmentButton({
               </List>
             </Grid>
             {appointment && (
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    maxWidth: "400px",
-                    mx: "auto",
-                    p: 3,
-                    background: "rgba(200,200,200,.3)",
-                    borderRadius: 5,
-                    mt: { md: 15 },
-                  }}
-                >
-                  <Typography variant="h4" className="font-heading">
-                    {appointment.name}
-                  </Typography>
-                  <Typography variant="h6" sx={{ mb: 1 }}>
-                    {appointment.email.toLowerCase()}
-                  </Typography>
-                  <Typography variant="body2" sx={{ mb: 2 }}>
-                    {appointment.maxAppointments} max appointments &bull;{" "}
-                    {appointment.maxAppointments -
-                      appointment.appointments.filter(
-                        (item) =>
-                          dayjs(item.date).format("YYYY-MM-DD") ==
-                          dayjs(day).format("YYYY-MM-DD")
-                      ).length}{" "}
-                    remaining
-                  </Typography>
-                  <ConfirmAppointmentButton
-                    mutationUrl={mutationUrl}
-                    setOpen={setOpen}
-                    disabled={
-                      appointment.maxAppointments -
-                        appointment.appointments.filter(
-                          (item) =>
-                            dayjs(item.date).format("YYYY-MM-DD") ==
-                            dayjs(day).format("YYYY-MM-DD")
-                        ).length ===
-                      0
-                    }
-                    appointment={appointment}
-                    date={day}
-                  />
-                  <Button
-                    onClick={() => setAppointment(null)}
-                    fullWidth
-                    size="large"
-                    variant="outlined"
-                    sx={{
-                      mt: 1,
-                      display: { xs: "block", md: "none" },
-                      borderWidth: "2px!important",
-                      borderRadius: 999,
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  {appointment.appointmentBanner && (
-                    <Alert
-                      severity="info"
-                      sx={{ mt: 2, borderRadius: 4 }}
-                      variant="filled"
-                    >
-                      {appointment.appointmentBanner}
-                    </Alert>
-                  )}
-                </Box>
-              </Grid>
+              <AppointmentDetails
+                appointment={appointment}
+                setAppointment={setAppointment}
+                setOpen={setOpen}
+                day={day}
+                mutationUrl={mutationUrl}
+              />
             )}
           </Grid>
         </Box>
