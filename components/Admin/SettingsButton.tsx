@@ -15,12 +15,6 @@ import dayjs from "dayjs";
 
 export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
   const [open, setOpen] = React.useState(false);
-  const reasons = [
-    "Flex appointments are only for students who have missed a quiz, test, or assignment.",
-    "Flex appointments are only for students who have questions about the ____________",
-    "Teacher will not be present this day. (Substitute teacher will take over)",
-  ];
-
   const [bannerText, setBannerText] = React.useState("");
 
   return (

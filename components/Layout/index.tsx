@@ -126,6 +126,7 @@ function ProfileMenu({ session }) {
       </Menu>
 
       <Avatar
+      src={session.user.image ?? null}
         {...stringAvatar(session.user.name)}
         onClick={handleClick}
         sx={{
