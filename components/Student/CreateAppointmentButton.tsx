@@ -19,6 +19,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useSession } from "next-auth/react";
 import { mutate } from "swr";
 import toast from "react-hot-toast";
+
 function ConfirmAppointmentButton({
   disabled,
   loadingSettings,
