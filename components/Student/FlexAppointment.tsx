@@ -114,6 +114,8 @@ export function FlexAppointment({ mutationUrl, appointment }) {
             ...(appointment.teacherCreated && {
               background: red[900] + "!important",
             }),
+            ml: { xs: -2, sm: 0 },
+            mt: { xs: 1, sm: 0 },
             borderWidth: "2px!important",
             borderRadius: 999,
             gap: 1,

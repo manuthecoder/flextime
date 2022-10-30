@@ -347,27 +347,25 @@ export function CreateAppointmentButton({
           variant={
             dayjs(day).isBefore(dayjs(), "day") ||
             dayjs(day).isAfter(dayjs(), "day")
-              ? "outlined"
+              ? "text"
               : "contained"
           }
           disabled={dayjs(day).isBefore(dayjs(), "day")}
           sx={{
+            width: { sm: "100%" },
+            background: "rgba(200,200,200,0.3)!important",
+            color: "#212121",
             borderWidth: "2px!important",
+            justifyContent: "start",
+            mt: 1,
+            px: 2,
             borderRadius: 9,
-            gap: 1,
+            gap: 2,
           }}
           disableElevation
         >
           <span className="material-symbols-outlined">add</span>
-          <Typography
-            component="span"
-            variant="body2"
-            sx={{
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            Set&nbsp;appointment
-          </Typography>
+          Set&nbsp;appointment
         </Button>
       </Box>
     </>
