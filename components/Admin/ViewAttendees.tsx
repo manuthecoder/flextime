@@ -190,7 +190,7 @@ export function ViewAttendees({
           }}
         >
           <span className="material-symbols-outlined">group</span>
-          Students
+          Attendees
         </Button>
       )}
     </>
