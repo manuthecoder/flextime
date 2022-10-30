@@ -154,7 +154,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                     type="number"
                     variant="outlined"
                     defaultValue={data.settings.maxAppointments ?? 25}
-                    onKeyUp={(e) => {
+                    onKeyUp={(e: any) => {
                       if (e.key === "Enter") {
                         e.target.blur();
                       }
@@ -191,7 +191,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                       width: "500px",
                     }}
                     defaultValue={data.settings.bannerText ?? ""}
-                    onKeyUp={(e) => {
+                    onKeyUp={(e: any) => {
                       if (e.key === "Enter") {
                         e.target.blur();
                       }
