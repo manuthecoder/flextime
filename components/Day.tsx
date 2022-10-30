@@ -17,11 +17,12 @@ export function Day({ url, calendarData, admin = false, day }) {
   return (
     <Box
       sx={{
-        p: 4,
-        px: 2,
+        p: { xs: 2, sm: 4 },
+        px: 3,
         display: { xs: "flex", sm: "block" },
-        gap: 5,
+        gap: { xs: 1, sm: 5 },
         alignItems: "center",
+        flexDirection: "column",
         background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
         borderRadius: 5,
         width: { sm: "100%" },
@@ -36,7 +37,9 @@ export function Day({ url, calendarData, admin = false, day }) {
         sx={{
           display: { xs: "flex", sm: "block" },
           gap: 2,
+          mr: { xs: "auto", sm: "unset" },
           alignItems: "center",
+          flexDirection: "row",
           justifyContent: "center",
           textAlign: { sm: "center" },
           mb: { sm: 2 },
@@ -52,8 +55,8 @@ export function Day({ url, calendarData, admin = false, day }) {
             justifyContent: "center",
             mb: { sm: 1 },
             mt: { sm: -1 },
-            width: 20,
-            height: 20,
+            width: { xs: 10, sm: 20 },
+            height: { xs: 10, sm: 20 },
             background: "rgba(200,200,200,0.3)",
             ...(dayjs(day).isSame(dayjs(), "day") && {
               background: green[900],
@@ -69,9 +72,12 @@ export function Day({ url, calendarData, admin = false, day }) {
       </Box>
       <Box
         sx={{
-          ml: "auto",
+          ml: { sm: "auto" },
+          width: { xs: "100%", sm: "auto" },
+          gap: { xs: 2 },
+          alignItems: "center",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: { sm: "column" },
         }}
       >
         {admin && dayjs(day).isSame(dayjs(), "day") && <CheckIn day={day} />}
