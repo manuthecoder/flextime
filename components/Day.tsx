@@ -74,7 +74,7 @@ export function Day({ url, calendarData, admin = false, day }) {
         sx={{
           ml: { sm: "auto" },
           width: { xs: "100%", sm: "auto" },
-          gap: { xs: 2 },
+          gap: { xs: 2, sm: 0 },
           alignItems: "center",
           display: "flex",
           flexDirection: { sm: "column" },

@@ -162,6 +162,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
       <Button
         onClick={() => setOpen(true)}
         sx={{
+          width: { sm: "100%" },
           background: "rgba(200,200,200,0.3)!important",
           color: "#212121",
           borderWidth: "2px!important",
