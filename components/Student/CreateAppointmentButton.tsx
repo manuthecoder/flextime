@@ -18,6 +18,7 @@ import { Person } from "./Person";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useSession } from "next-auth/react";
 import { mutate } from "swr";
+import toast from "react-hot-toast";
 function ConfirmAppointmentButton({
   disabled,
   loadingSettings,
@@ -37,15 +38,15 @@ function ConfirmAppointmentButton({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        flexId: appointment.id,
-        teacherCreated: false,
+        flexId: appointment.email,
+        teacherCreated: "false",
         studentId: session.data.user.studentId,
         date: dayjs(date).format("YYYY-MM-DD"),
       }),
     })
       .then((res) => res.json())
       .catch((err) => {
-        alert("Something went wrong. Please try again later.");
+        toast.error("Something went wrong. Please try again later.");
         setLoading(false);
         console.error(err);
       });
@@ -57,7 +58,7 @@ function ConfirmAppointmentButton({
   return (
     <LoadingButton
       loading={loading || loadingSettings}
-      disabled={disabled || !appointment.allowAppointments}
+      disabled={disabled || appointment.allowAppointments == false}
       onClick={handleClick}
       fullWidth
       size="large"
@@ -67,7 +68,9 @@ function ConfirmAppointmentButton({
         borderRadius: 999,
       }}
     >
-      {appointment.allowAppointments ? "Confirm" : "Not available onz this day"}
+      {appointment.allowAppointments == false
+        ? "Not available on this day"
+        : "Confirm"}
     </LoadingButton>
   );
 }
