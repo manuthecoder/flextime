@@ -1,33 +1,55 @@
 import {
   Box,
   Button,
+  CircularProgress,
   IconButton,
   SwipeableDrawer,
   Switch,
   TextField,
   Typography,
 } from "@mui/material";
+import useSWR from "swr";
 import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
 import React from "react";
+import toast from "react-hot-toast";
 
 const updateSettings = async (key, value, flexId, date) => {
   const accessToken = `${flexId},${date}`;
   const res = await fetch(
-    "/api/appointments/updateSetting?" +
+    "/api/appointments/updateSettings?" +
       new URLSearchParams({
         accessToken: accessToken,
-        key,
-        value,
-        date,
+        key: key,
+        value: value,
+        date: date,
         flexChoice: flexId,
       })
-  );
-  return res.json();
+  )
+    .then((res) => res.json())
+    .catch((err) => {
+      toast.error(
+        "An error occurred while updating settings. Please try again later."
+      );
+    });
+  return res;
 };
 
 export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
   const [open, setOpen] = React.useState(false);
   const [bannerText, setBannerText] = React.useState("");
+  const session: any = useSession();
+
+  const url =
+    "/api/appointments/getSettings?" +
+    new URLSearchParams({
+      date: day,
+      id: session && session.data && session.data.user.flexChoiceId,
+    });
+  // Fetch settings only when the button is clicked
+  const { data, error } = useSWR(open ? url : null, () =>
+    fetch(url).then((res) => res.json())
+  );
 
   return (
     <>
@@ -80,94 +102,123 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
               </Box>
             </Box>
 
-            <Box>
-              <Box
-                sx={{
-                  mb: 5,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Display on list?
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    Allow students to sign up for appointments on this day.
-                    Existing appointments will not be affected.
-                  </Typography>
-                </Box>
-                <Switch defaultChecked />
-              </Box>
-
-              <Box
-                sx={{
-                  mb: 5,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Maximum appointments
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    The maximum number of appointments that can be scheduled on
-                    this day
-                  </Typography>
-                </Box>
-                <TextField
-                  type="number"
-                  variant="outlined"
-                  defaultValue={25}
-                  placeholder="25"
-                />
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  mb: 5,
-                }}
-              >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Banner
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    This text will appear at the top of the page for students.
-                  </Typography>
-                </Box>
-                <TextField
+            {data ? (
+              <Box>
+                <Box
                   sx={{
-                    width: "500px",
+                    mb: 5,
+                    display: "flex",
+                    alignItems: "center",
                   }}
-                  value={bannerText}
-                  onChange={(e) => setBannerText(e.target.value)}
-                  placeholder='Example: "Flex appointments are for test retakes only"'
-                />
+                >
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Allow appointments?
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      Allow students to sign up for appointments on this day.
+                      Existing appointments will not be affected.
+                    </Typography>
+                  </Box>
+                  <Switch
+                    defaultChecked={data.settings.displayOnList ?? true}
+                    onChange={(e) => {
+                      updateSettings(
+                        "allowAppointments",
+                        e.target.checked ? "true" : "false",
+                        session.data.user.flexChoiceId,
+                        dayjs(day).format("YYYY-MM-DD")
+                      );
+                    }}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    mb: 5,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Maximum appointments
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      The maximum number of appointments that can be scheduled
+                      on this day
+                    </Typography>
+                  </Box>
+                  <TextField
+                    type="number"
+                    variant="outlined"
+                    defaultValue={25}
+                    placeholder="25"
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mb: 5,
+                  }}
+                >
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Banner
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      This text will appear at the top of the page for students.
+                    </Typography>
+                  </Box>
+                  <TextField
+                    sx={{
+                      width: "500px",
+                    }}
+                    value={bannerText}
+                    onChange={(e) => setBannerText(e.target.value)}
+                    placeholder='Example: "Flex appointments are for test retakes only"'
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Clear appointments
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      This will delete all appointments for this day. This
+                      action cannot be undone.
+                    </Typography>
+                  </Box>
+                  <Button variant="contained" color="error" disableElevation>
+                    Clear appointments
+                  </Button>
+                </Box>
               </Box>
+            ) : (
               <Box
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
+                  height: "50vh",
                 }}
               >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Clear appointments
-                  </Typography>
-                  <Typography variant="body2" gutterBottom>
-                    This will delete all appointments for this day. This action
-                    cannot be undone.
-                  </Typography>
-                </Box>
-                <Button variant="contained" color="error" disableElevation>
-                  Clear appointments
-                </Button>
+                <CircularProgress
+                  sx={{
+                    "& .MuiCircularProgress-svg": {
+                      strokeLinecap: "round",
+                    },
+                  }}
+                />
               </Box>
-            </Box>
+            )}
           </Box>
         </Box>
       </SwipeableDrawer>

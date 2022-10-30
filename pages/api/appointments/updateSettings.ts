@@ -5,6 +5,11 @@ import prisma from "../../../lib/prisma";
 export default async function handle(req: any, res: NextApiResponse) {
   // Create/update flexsetting if exists for certain date and flexChoice
   const { accessToken, flexChoice, date, key, value } = req.query;
+  let newValue = value;
+  if (value == "true" || value == "false") {
+    newValue = value === "true";
+  }
+
   const result: any = await prisma.flexSetting.upsert({
     where: {
       accessToken: accessToken.toString(),
@@ -12,7 +17,7 @@ export default async function handle(req: any, res: NextApiResponse) {
     update: {
       accessToken: accessToken,
       date: date,
-      [key]: req.query.value,
+      [key]: newValue,
       flexChoice: {
         connect: {
           id: parseInt(flexChoice, 10),
@@ -22,7 +27,7 @@ export default async function handle(req: any, res: NextApiResponse) {
     create: {
       accessToken: accessToken,
       date: date,
-      [key]: value,
+      [key]: newValue,
       flexChoice: {
         connect: {
           id: parseInt(flexChoice, 10),
