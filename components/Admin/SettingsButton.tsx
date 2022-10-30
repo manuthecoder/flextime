@@ -198,7 +198,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                     }}
                     onBlur={(e) => {
                       updateSettings(
-                        "bannerText",
+                        "banner",
                         e.target.value,
                         session.data.user.flexChoiceId,
                         dayjs(day).format("YYYY-MM-DD")
