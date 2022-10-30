@@ -98,7 +98,8 @@ model FlexChoice {
 }
 
 model FlexSetting {
-  id Int @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
+  accessToken String @unique
 
   // ID of the FlexChoice
   flexChoiceId Int

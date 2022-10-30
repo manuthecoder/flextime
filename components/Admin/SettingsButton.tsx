@@ -1,17 +1,29 @@
 import {
   Box,
-  IconButton,
-  Typography,
-  TextField,
   Button,
+  IconButton,
   SwipeableDrawer,
-  Chip,
   Switch,
-  FormLabel,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { green } from "@mui/material/colors";
-import React from "react";
 import dayjs from "dayjs";
+import React from "react";
+
+const updateSettings = async (key, value, flexId, date) => {
+  const accessToken = `${flexId},${date}`;
+  const res = await fetch(
+    "/api/appointments/updateSetting?" +
+      new URLSearchParams({
+        accessToken: accessToken,
+        key,
+        value,
+        date,
+        flexChoice: flexId,
+      })
+  );
+  return res.json();
+};
 
 export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
   const [open, setOpen] = React.useState(false);
