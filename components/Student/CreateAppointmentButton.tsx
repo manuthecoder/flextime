@@ -57,7 +57,7 @@ function ConfirmAppointmentButton({
   return (
     <LoadingButton
       loading={loading || loadingSettings}
-      disabled={disabled}
+      disabled={disabled || !appointment.allowAppointments}
       onClick={handleClick}
       fullWidth
       size="large"
@@ -67,7 +67,7 @@ function ConfirmAppointmentButton({
         borderRadius: 999,
       }}
     >
-      Confirm
+      {appointment.allowAppointments ? "Confirm" : "Not available on this day"}
     </LoadingButton>
   );
 }
