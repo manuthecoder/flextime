@@ -223,7 +223,12 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                       action cannot be undone.
                     </Typography>
                   </Box>
-                  <Button variant="contained" color="error" disableElevation>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    disableElevation
+                    disabled={data && data.appointments.length === 0}
+                  >
                     Clear&nbsp;appointments
                   </Button>
                 </Box>
@@ -242,7 +247,12 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                       cannot be undone.
                     </Typography>
                   </Box>
-                  <Button variant="contained" color="error" disableElevation>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    disableElevation
+                    disabled={data && JSON.stringify(data.settings) == "{}"}
+                  >
                     Reset
                   </Button>
                 </Box>
