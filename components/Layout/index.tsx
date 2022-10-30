@@ -19,6 +19,26 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+function NewFeatrureDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <SwipeableDrawer
+      anchor="bottom"
+      open={open}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      PaperProps={{
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      }}
+    ></SwipeableDrawer>
+  );
+}
+
 function stringToColor(string: string) {
   let hash = 0;
   let i;
@@ -302,6 +322,7 @@ export function Layout({ children }) {
       </AppBar>
       <Toolbar sx={{ py: 0.5 }} />
       {children}
+      <NewFeatrureDialog />
     </>
   );
 }
