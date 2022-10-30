@@ -129,6 +129,8 @@ model Appointment {
   // Is the appointment set by the teacher?
   teacherCreated Boolean @default(false)
 
+  reason String? @db.VarChar(300)
+
   // Student information
   student   User @relation(fields: [studentId], references: [id])
   studentId Int
