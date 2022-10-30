@@ -241,14 +241,14 @@ export function AddStudentButton({
         onClick={() => setOpen(true)}
         disabled={dayjs(day).isBefore(dayjs().subtract(1, "day"))}
         sx={{
-          mt: 1,
-          background: "rgba(200,200,200,0.3)!important",
           color: "#212121",
+          px: 1,
+          minWidth: "auto",
           borderRadius: 9,
         }}
         disableElevation
       >
-        <span className="material-symbols-outlined">person_add</span>
+        <span className="material-symbols-outlined">add</span>
       </Button>
     </>
   );

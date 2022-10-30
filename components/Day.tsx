@@ -81,7 +81,10 @@ export function Day({ url, calendarData, admin = false, day }) {
         <Box
           sx={{
             display: "flex",
-            gap: 2,
+            gap: 1,
+            mt: 1,
+            background: "rgba(200,200,200,0.3)!important",
+            borderRadius: 5,
           }}
         >
           {admin && <ViewAttendees day={day} />}

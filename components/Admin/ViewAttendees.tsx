@@ -182,13 +182,15 @@ export function ViewAttendees({
           fullWidth
           onClick={() => setOpen(true)}
           sx={{
-            mt: 1,
-            background: "rgba(200,200,200,0.3)!important",
             color: "#212121",
+            justifyContent: "start",
+            px: 2,
+            gap: 1.5,
             borderRadius: 9,
           }}
         >
           <span className="material-symbols-outlined">group</span>
+          Students
         </Button>
       )}
     </>
