@@ -12,6 +12,60 @@ import { Day } from "./Day";
 import { green } from "@mui/material/colors";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { LoadingButton } from "@mui/lab";
+
+function GlobalAdminSettings() {
+  const { data: session }: any = useSession();
+  const [name, setName] = React.useState(session.user.name);
+  const [email, setEmail] = React.useState(session.user.email);
+
+  return (
+    <>
+      <Typography className="font-heading" variant="h4" gutterBottom>
+        Settings
+      </Typography>
+      <Box
+        sx={{
+          mt: 4,
+          p: 5,
+          mb: 10,
+          borderRadius: 5,
+          background: "rgba(200,200,200,0.3)",
+        }}
+      >
+        <TextField
+          sx={{ mb: 2 }}
+          label="Display name"
+          fullWidth
+          variant="filled"
+          autoComplete="off"
+          defaultValue={session.user.name}
+          value={name}
+          onChange={(e) => setName(e)}
+        />
+        <TextField
+          sx={{ mb: 2 }}
+          label="Display email"
+          fullWidth
+          variant="filled"
+          autoComplete="off"
+          defaultValue={session.user.email}
+          value={email}
+          onChange={(e) => setEmail(e)}
+        />
+        <LoadingButton
+          variant="contained"
+          disableElevation
+          fullWidth
+          size="large"
+          sx={{ borderRadius: 5 }}
+        >
+          Save
+        </LoadingButton>
+      </Box>
+    </>
+  );
+}
 
 export function WeeklyCalendar({ admin }) {
   const { data: session }: any = useSession();
@@ -133,6 +187,7 @@ export function WeeklyCalendar({ admin }) {
             />
           ))}
       </Box>
+      {admin && <GlobalAdminSettings />}
     </Box>
   );
 }

@@ -7,9 +7,10 @@ export default async function handle(
   res: NextApiResponse
 ) {
   //  Create a new appointment
-  const { studentId, teacherCreated, flexId, date } = req.body;
+  const { studentId, teacherCreated, flexId, date, reason }: any = req.body;
   const result = await prisma.appointment.create({
     data: {
+      reason: reason ?? "",
       teacherCreated: teacherCreated === "true",
       student: {
         connect: {

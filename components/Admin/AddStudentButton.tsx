@@ -17,8 +17,9 @@ import dayjs from "dayjs";
 import { Person } from "./Person";
 import { LoadingButton } from "@mui/lab";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
-function ConfirmStudentButton({ person }) {
+function ConfirmStudentButton({ reason, person }) {
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   // alert(JSON.stringify(session));
@@ -34,14 +35,16 @@ function ConfirmStudentButton({ person }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            reason: reason,
             flexId: session.user.email,
-            teacherCreated: false,
+            teacherCreated: true,
             studentId: person.studentId,
             date: dayjs(person.date).format("YYYY-MM-DD"),
           }),
         })
           .then((res) => res.json())
           .then((res) => {
+            toast.success("Appointment created!");
             setLoading(false);
             console.log(res);
           });
@@ -73,6 +76,7 @@ export function AddStudentButton({
   );
 
   const [text, setText] = useState("");
+  const [reason, setReason] = useState("");
   const [value] = useDebounce(text, 500);
 
   useEffect(() => {
@@ -96,7 +100,7 @@ export function AddStudentButton({
           sx: {
             height: "100vh",
             background: "transparent",
-            display: "flex",
+            display: { sm: "flex" },
             alignItems: "center",
             justifyContent: "center",
           },
@@ -119,6 +123,10 @@ export function AddStudentButton({
           sx={{
             width: "calc(100vw - 50px)",
             maxWidth: "1000px",
+            my: 10,
+            mx: "auto",
+            maxHeight: "90vh",
+            pb: 0,
           }}
         >
           <Grid container spacing={4}>
@@ -216,7 +224,17 @@ export function AddStudentButton({
                     <b>{person.name}</b> won&apos;t be able to change this
                     person unless you cancel it.
                   </Typography>
-                  <ConfirmStudentButton person={person} />
+                  <TextField
+                    label="Add a reason..."
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    fullWidth
+                    variant="filled"
+                    sx={{
+                      mb: 3,
+                    }}
+                  />
+                  <ConfirmStudentButton reason={reason} person={person} />
                   <Button
                     onClick={() => setPerson(null)}
                     fullWidth
