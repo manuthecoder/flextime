@@ -126,7 +126,7 @@ function ProfileMenu({ session }) {
       </Menu>
 
       <Avatar
-      src={session.user.image ?? null}
+        src={session.user.image ?? null}
         {...stringAvatar(session.user.name)}
         onClick={handleClick}
         sx={{
@@ -258,66 +258,50 @@ export function Layout({ children }) {
           </LoadingButton>
         </Box>
       </SwipeableDrawer>
-      <Box
+      <AppBar
+        elevation={0}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-          gap: 0,
+          background: "rgba(232, 245, 233, .8)",
+          backdropFilter: "blur(10px)",
+          transition: "background .1s",
+          py: 0.5,
+          color: "black",
         }}
       >
-        <AppBar
-          elevation={0}
-          sx={{
-            background: "rgba(232, 245, 233, .8)",
-            backdropFilter: "blur(10px)",
-            transition: "background .1s",
-            py: 0.5,
-            color: "black",
-          }}
-        >
-          <Toolbar>
-            <Box sx={{ flexGrow: 1 }}>
-              <Link href="/">
-                <Button
-                  color="inherit"
-                  sx={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  IHS FlexTime
-                </Button>
-              </Link>
-            </Box>
-            <Box>
-              {session ? (
-                <ProfileMenu session={session} />
-              ) : (
-                <Button
-                  onClick={() => signIn()}
-                  variant="contained"
-                  disableElevation
-                  size="large"
-                  sx={{
-                    borderRadius: 99999,
-                  }}
-                >
-                  Sign in
-                </Button>
-              )}
-            </Box>
-          </Toolbar>
-        </AppBar>
-        <Box
-          sx={{
-            overflowY: "scroll",
-            flexGrow: 1,
-            mt: { xs: 7, sm: 9 },
-          }}
-        >
-          {children}
-        </Box>
-      </Box>
+        <Toolbar>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link href="/">
+              <Button
+                color="inherit"
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                IHS FlexTime
+              </Button>
+            </Link>
+          </Box>
+          <Box>
+            {session ? (
+              <ProfileMenu session={session} />
+            ) : (
+              <Button
+                onClick={() => signIn()}
+                variant="contained"
+                disableElevation
+                size="large"
+                sx={{
+                  borderRadius: 99999,
+                }}
+              >
+                Sign in
+              </Button>
+            )}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Toolbar sx={{ py: 0.5 }} />
+      {children}
     </>
   );
 }

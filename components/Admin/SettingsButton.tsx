@@ -163,17 +163,30 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
         onClick={() => setOpen(true)}
         sx={{
           width: { sm: "100%" },
+          // width: "100%",
           background: "rgba(200,200,200,0.3)!important",
           color: "#212121",
           borderWidth: "2px!important",
-          justifyContent: "start",
+          justifyContent: { sm: "start" },
           mt: 1,
-          px: 2,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+          minWidth: "10px",
+          px: { xs: 1.5, sm: 2 },
           borderRadius: 9,
           gap: 2,
         }}
       >
-        <span className="material-symbols-outlined">settings</span> Settings
+        <span className="material-symbols-outlined">settings</span>
+        <Typography
+          variant="body2"
+          sx={{
+            display: { xs: "none", sm: "block" },
+          }}
+        >
+          Settings
+        </Typography>
       </Button>
     </>
   );

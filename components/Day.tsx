@@ -74,7 +74,7 @@ export function Day({ url, calendarData, admin = false, day }) {
         sx={{
           ml: { sm: "auto" },
           width: { xs: "100%", sm: "auto" },
-          gap: { xs: 2, sm: 0 },
+          gap: { xs: 1.5, sm: 0 },
           alignItems: "center",
           display: "flex",
           flexDirection: { sm: "column" },
@@ -89,6 +89,8 @@ export function Day({ url, calendarData, admin = false, day }) {
             display: "flex",
             gap: 1,
             mt: 1,
+            flexGrow: 1,
+            width: "100%",
             background: "rgba(200,200,200,0.3)!important",
             borderRadius: 5,
           }}
