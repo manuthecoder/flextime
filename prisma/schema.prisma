@@ -122,6 +122,9 @@ model Appointment {
   // Unique appointment ID
   id Int @id @default(autoincrement())
 
+  // Identifier used in upsert function
+  identifier String @unique
+
   // Who is the appointment for?
   flex       Int
   flexChoice FlexChoice @relation(fields: [flex], references: [id])
