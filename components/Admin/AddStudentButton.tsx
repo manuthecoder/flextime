@@ -45,6 +45,10 @@ function ConfirmStudentButton({ day, reason, person }) {
             toast.success("Appointment created!");
             setLoading(false);
             console.log(res);
+          })
+          .catch((err) => {
+            toast.error("Error creating appointment");
+            setLoading(false);
           });
       }}
       fullWidth

@@ -16,32 +16,35 @@ export default async function handle(
       identifier: identifier,
     },
     update: {
+      identifier: identifier,
+
       flexChoice: {
         connect: {
-          id: flexId,
+          email: flexId,
         },
       },
       teacherCreated: teacherCreated === "true",
       reason: reason,
       student: {
         connect: {
-          id: studentId,
+          studentId: studentId,
         },
       },
       date: date,
       attended: false,
     },
     create: {
+      identifier: identifier,
       flexChoice: {
         connect: {
-          id: flexId,
+          email: flexId,
         },
       },
       teacherCreated: teacherCreated === "true",
       reason: reason,
       student: {
         connect: {
-          id: studentId,
+          studentId: studentId,
         },
       },
       date: date,
