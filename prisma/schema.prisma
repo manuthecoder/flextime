@@ -51,6 +51,8 @@ model User {
   // List of appointments (only for students)
   appointments Appointment[]
 
+  // iCal feature for calendar
+  iCal         String?
   // List of flex choices (only for admins)
   flexChoiceId Int?
   flexChoice   FlexChoice? @relation(fields: [flexChoiceId], references: [id])
