@@ -9,7 +9,7 @@ const Calendar = () => {
   const url =
     "https://iusd.instructure.com/feeds/calendars/user_oAQbGWzXv6PnOTvZrK860MedEicqM9mI6ltvR2ko.ics";
   const { error, data } = useSWR(url, () =>
-    fetch(url).then((res) => res.json())
+    fetch(url).then((res) => res.text())
   );
 
   return <Box>{JSON.stringify(data)}</Box>;
