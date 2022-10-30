@@ -18,7 +18,7 @@ import useSWR from "swr";
 import { useDebounce } from "use-debounce";
 import { Person } from "./Person";
 
-function ConfirmStudentButton({ day, reason, person }) {
+function ConfirmStudentButton({ setReason, day, reason, person }) {
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   // alert(JSON.stringify(session));
@@ -35,7 +35,7 @@ function ConfirmStudentButton({ day, reason, person }) {
           body: JSON.stringify({
             reason: reason,
             flexId: session.user.email,
-            teacherCreated: true,
+            teacherCreated: "true",
             studentId: person.studentId,
             date: dayjs(day).format("YYYY-MM-DD"),
           }),
@@ -45,6 +45,7 @@ function ConfirmStudentButton({ day, reason, person }) {
             toast.success("Appointment created!");
             setLoading(false);
             console.log(res);
+            setReason("");
           })
           .catch((err) => {
             toast.error("Error creating appointment");
@@ -237,6 +238,7 @@ export function AddStudentButton({
                     }}
                   />
                   <ConfirmStudentButton
+                    setReason={setReason}
                     reason={reason}
                     person={person}
                     day={day}
