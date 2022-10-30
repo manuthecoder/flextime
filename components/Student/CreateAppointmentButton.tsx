@@ -67,7 +67,7 @@ function ConfirmAppointmentButton({
         borderRadius: 999,
       }}
     >
-      {appointment.allowAppointments ? "Confirm" : "Not available on this day"}
+      {appointment.allowAppointments ? "Confirm" : "Not available onz this day"}
     </LoadingButton>
   );
 }

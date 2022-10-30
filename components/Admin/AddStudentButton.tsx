@@ -19,11 +19,10 @@ import { LoadingButton } from "@mui/lab";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-function ConfirmStudentButton({ reason, person }) {
+function ConfirmStudentButton({ day, reason, person }) {
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
   // alert(JSON.stringify(session));
-
   return (
     <LoadingButton
       loading={loading}
@@ -39,7 +38,7 @@ function ConfirmStudentButton({ reason, person }) {
             flexId: session.user.email,
             teacherCreated: true,
             studentId: person.studentId,
-            date: dayjs(person.date).format("YYYY-MM-DD"),
+            date: dayjs(day).format("YYYY-MM-DD"),
           }),
         })
           .then((res) => res.json())
@@ -234,7 +233,11 @@ export function AddStudentButton({
                       mb: 3,
                     }}
                   />
-                  <ConfirmStudentButton reason={reason} person={person} />
+                  <ConfirmStudentButton
+                    reason={reason}
+                    person={person}
+                    day={day}
+                  />
                   <Button
                     onClick={() => setPerson(null)}
                     fullWidth
