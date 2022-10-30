@@ -10,6 +10,10 @@ export default async function handle(req: any, res: NextApiResponse) {
     newValue = value === "true";
   }
 
+  if (key == "maxAppointments") {
+    newValue = parseInt(value.toString());
+  }
+
   const result: any = await prisma.flexSetting.upsert({
     where: {
       accessToken: accessToken.toString(),

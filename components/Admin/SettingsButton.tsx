@@ -32,6 +32,7 @@ const updateSettings = async (key, value, flexId, date) => {
         "An error occurred while updating settings. Please try again later."
       );
     });
+  toast.success("Settings updated successfully!");
   return res;
 };
 
@@ -43,7 +44,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
   const url =
     "/api/appointments/getSettings?" +
     new URLSearchParams({
-      date: day,
+      date: dayjs(day).format("YYYY-MM-DD"),
       id: session && session.data && session.data.user.flexChoiceId,
     });
   // Fetch settings only when the button is clicked
@@ -121,7 +122,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                     </Typography>
                   </Box>
                   <Switch
-                    defaultChecked={data.settings.displayOnList ?? true}
+                    defaultChecked={data.settings.allowAppointments ?? true}
                     onChange={(e) => {
                       updateSettings(
                         "allowAppointments",
@@ -152,7 +153,20 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                   <TextField
                     type="number"
                     variant="outlined"
-                    defaultValue={25}
+                    defaultValue={data.settings.maxAppointments ?? 25}
+                    onKeyUp={(e) => {
+                      if (e.key === "Enter") {
+                        e.target.blur();
+                      }
+                    }}
+                    onBlur={(e) => {
+                      updateSettings(
+                        "maxAppointments",
+                        e.target.value,
+                        session.data.user.flexChoiceId,
+                        dayjs(day).format("YYYY-MM-DD")
+                      );
+                    }}
                     placeholder="25"
                   />
                 </Box>
@@ -176,8 +190,20 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                     sx={{
                       width: "500px",
                     }}
-                    value={bannerText}
-                    onChange={(e) => setBannerText(e.target.value)}
+                    defaultValue={data.settings.bannerText ?? ""}
+                    onKeyUp={(e) => {
+                      if (e.key === "Enter") {
+                        e.target.blur();
+                      }
+                    }}
+                    onBlur={(e) => {
+                      updateSettings(
+                        "bannerText",
+                        e.target.value,
+                        session.data.user.flexChoiceId,
+                        dayjs(day).format("YYYY-MM-DD")
+                      );
+                    }}
                     placeholder='Example: "Flex appointments are for test retakes only"'
                   />
                 </Box>
@@ -185,6 +211,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                   sx={{
                     display: "flex",
                     alignItems: "center",
+                    mb: 5,
                   }}
                 >
                   <Box sx={{ flexGrow: 1 }}>
@@ -197,7 +224,26 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
                     </Typography>
                   </Box>
                   <Button variant="contained" color="error" disableElevation>
-                    Clear appointments
+                    Clear&nbsp;appointments
+                  </Button>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Reset to defaults
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      This will reset all settings for this day. This action
+                      cannot be undone.
+                    </Typography>
+                  </Box>
+                  <Button variant="contained" color="error" disableElevation>
+                    Reset
                   </Button>
                 </Box>
               </Box>
