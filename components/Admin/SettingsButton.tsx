@@ -183,6 +183,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
           variant="body2"
           sx={{
             display: { xs: "none", sm: "block" },
+            fontWeight: "500",
           }}
         >
           Settings
