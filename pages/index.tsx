@@ -97,7 +97,7 @@ export default function Index(): React.ReactElement {
         {session ? (
           <>
             <Grid container spacing={5}>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={session.user.isAdmin ? 12 : 8}>
                 <WeeklyCalendar admin={session.user.isAdmin} />
               </Grid>
               <Grid item xs={12} md={4}>

@@ -1,4 +1,10 @@
-import { Typography, Button, SwipeableDrawer, IconButton } from "@mui/material";
+import {
+  Typography,
+  Button,
+  SwipeableDrawer,
+  IconButton,
+  Icon,
+} from "@mui/material";
 import dayjs from "dayjs";
 import { Box } from "@mui/system";
 import { useState } from "react";
@@ -15,6 +21,59 @@ import { green, red } from "@mui/material/colors";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { LoadingButton } from "@mui/lab";
+
+function Row({ row }) {
+  const [attended, setAttended] = useState(row.attended);
+
+  return (
+    <TableRow
+      key={row.name}
+      sx={{
+        "&:last-child td, &:last-child th": { border: 0 },
+      }}
+    >
+      <TableCell component="th" scope="row">
+        <u>{row.student.name.split(" ")[0]}</u> {row.student.name.split(" ")[1]}
+      </TableCell>
+      <TableCell component="th" scope="row">
+        {row.student.email}
+      </TableCell>
+      <TableCell align="right">{row.student.studentId}</TableCell>
+      <TableCell align="right">
+        <span className="material-symbols-outlined">
+          {row.teacherCreated ? "check" : "close"}
+        </span>
+      </TableCell>
+      <TableCell align="right">
+        <IconButton
+          disableRipple
+          sx={{
+            border: "2px solid rgba(0,0,0,0.05)",
+            borderColor: attended ? green[500] : red[500],
+            color: attended ? green[500] : red[500],
+            background: "transparent!important",
+            borderRadius: 2,
+            "&:hover": {
+              backgroundColor: "rgba(0,0,0,0.1)",
+            },
+            "&:active": {
+              transform: "scale(0.95)",
+              opacity: 0.5,
+            },
+          }}
+          onClick={() => {
+            setAttended(!attended);
+          }}
+          size="small"
+        >
+          <span className="material-symbols-outlined">
+            {attended ? "check" : "close"}
+          </span>
+        </IconButton>
+      </TableCell>
+    </TableRow>
+  );
+}
 
 export function ViewAttendees({
   customTrigger = null,
@@ -132,37 +191,7 @@ export function ViewAttendees({
                   </TableRow>
                 )}
                 {data ? (
-                  rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {row.student.name}
-                      </TableCell>
-                      <TableCell component="th" scope="row">
-                        {row.student.email}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.student.studentId}
-                      </TableCell>
-                      <TableCell align="right">
-                        <span className="material-symbols-outlined">
-                          {row.teacherCreated ? "check" : "close"}
-                        </span>
-                      </TableCell>
-                      <TableCell align="right">
-                        <span
-                          className="material-symbols-outlined"
-                          style={{
-                            color: row.attended ? green[500] : red[500],
-                          }}
-                        >
-                          {row.attended ? "check" : "close"}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                  rows.map((row) => <Row row={row} />)
                 ) : (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
