@@ -63,6 +63,19 @@ function NewFeatrureDialog() {
       }}
     >
       <DialogContent sx={{ p: 5, px: 4, pb: 2 }}>
+        {/* <picture>
+          <img
+            src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/94506a68741469.5bd69d57551d5.jpg"
+            alt="Adventure Illustration on Behance"
+            width="100%"
+            style={{
+              borderRadius: "20px",
+              height: "100px",
+              objectFit: "cover",
+              marginBottom: "10px",
+            }}
+          />
+        </picture> */}
         <Typography variant="h5" gutterBottom sx={{ fontWeight: "900" }}>
           What&apos;s new?
         </Typography>
@@ -91,7 +104,6 @@ function NewFeatrureDialog() {
         </Typography>
         <Button
           variant="contained"
-          onClick={() => setOpen(false)}
           fullWidth
           disableElevation
           size="large"
@@ -102,6 +114,7 @@ function NewFeatrureDialog() {
           }}
           onClick={() => {
             localStorage.setItem("newFeatureDialog", "true");
+            setOpen(false);
           }}
         >
           Nice!
