@@ -15,4 +15,5 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - Canvas integration
 
 ### Steps
-[x] Deployed on Vercel (https://flextime.vercel.app)
+- [x] Deployed on Vercel (https://flextime.vercel.app)
+- [ ] 
