@@ -65,7 +65,14 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
             autoComplete="off"
             sx={{
               width: 600,
+              // hide arrows from number
+              "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+                {
+                  "-webkit-appearance": "none",
+                  margin: 0,
+                },
             }}
+            type="number"
             onChange={(e: any) => {
               if (e.target.value.length == 9) {
                 // toast(e.target.value);
@@ -87,7 +94,8 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
                     },
                   }
                 );
-                e.target.value = "";
+                
+                setTimeout(() => (e.target.value = ""), 200);
               }
               if (e.target.value.length > 9) {
                 e.target.value = e.target.value.slice(0, 9);
