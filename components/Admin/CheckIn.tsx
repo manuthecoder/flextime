@@ -126,7 +126,7 @@ const BarcodeCheckIn = ({
               disableUnderline: true,
               // className: "font-heading",
               sx: {
-                fontSize: "75px",
+                fontSize: { xs: "50px", sm: "75px" },
                 "& *": {
                   textAlign: "center",
                 },
