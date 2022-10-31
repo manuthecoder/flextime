@@ -42,6 +42,7 @@ function NewFeatrureDialog() {
       onClose={() => setOpen(false)}
       TransitionComponent={Transition}
       keepMounted
+      sx={{ zIndex: 999999999 }}
       PaperProps={{
         elevation: 0,
         sx: {
@@ -76,8 +77,27 @@ function NewFeatrureDialog() {
               <br />
               Check in students using your barcode scanner.
             </li>
+            <li style={{ marginTop: "10px" }}>
+              <b>Mandatory appointments</b>
+              <br />
+              Lock appointments so that students can&apos;t cancel them.
+            </li>
           </ul>
         </Typography>
+        <Button
+          variant="contained"
+          onClick={() => setOpen(false)}
+          fullWidth
+          disableElevation
+          size="large"
+          sx={{
+            borderRadius: 99,
+            mb: 2,
+            background: teal[900] + "!important",
+          }}
+        >
+          Nice!
+        </Button>
       </DialogContent>
     </Dialog>
   );
@@ -231,7 +251,7 @@ export function Layout({ children }) {
       <Backdrop
         open={status === "loading" || status === "unauthenticated"}
         sx={{
-          zIndex: 9999999999999,
+          zIndex: 9999,
           background: "rgba(0,0,0,0.5)",
         }}
       >
