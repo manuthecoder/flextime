@@ -89,7 +89,6 @@ const BarcodeCheckIn = ({
                     day: dayjs(day).format("YYYY-MM-DD"),
                     flexId: flexChoiceId,
                   });
-                alert(url);
                 toast.promise(
                   fetch(url)
                     .then((res) => res.json())
