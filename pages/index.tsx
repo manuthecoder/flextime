@@ -1,18 +1,28 @@
-import { Box, Container, NoSsr } from "@mui/material";
+import { Box, Button, Container, NoSsr } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 import useSWR from "swr";
+var ical2json = require("ical2json");
 
 const Calendar = () => {
   const { data: session } = useSession();
-  const url =
-    "https://iusd.instructure.com/feeds/calendars/user_oAQbGWzXv6PnOTvZrK860MedEicqM9mI6ltvR2ko.ics";
-  const { error, data } = useSWR(url, () =>
-    fetch(url).then((res) => res.text())
-  );
 
-  return <Box>{JSON.stringify(data)}</Box>;
+  return (
+    <Box>
+      <Button
+        onClick={() => {
+          fetch("/api/feed")
+            .then((res) => res.text())
+            .then((data) => {
+              alert(data);
+            });
+        }}
+      >
+        Log Data
+      </Button>
+    </Box>
+  );
 };
 export default function Index(): React.ReactElement {
   const { data: session }: any = useSession();
