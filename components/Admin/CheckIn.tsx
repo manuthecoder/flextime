@@ -82,7 +82,7 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
                   }),
                   {
                     loading: "Checking in...",
-                    success: "Checked in!",
+                    success: "Student checked in!",
                     error: "Error checking in",
                   },
                   {
@@ -94,7 +94,7 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
                     },
                   }
                 );
-                
+
                 setTimeout(() => (e.target.value = ""), 200);
               }
               if (e.target.value.length > 9) {
