@@ -140,7 +140,6 @@ const BarcodeCheckIn = ({
           flexGrow: 1,
           borderWidth: "2px",
           background: "rgba(200,200,200,.3)",
-          ml: 1,
           flex: "50%",
           borderRadius: 5,
         }}
@@ -262,7 +261,14 @@ export function CheckIn({ day }) {
               How do you want to check students in?
             </Typography>
             {data ? (
-              <Box sx={{ display: "flex", mt: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  mt: 1,
+                  flexDirection: { xs: "column", sm: "row" },
+                }}
+              >
                 <TraditionalCheckIn
                   day={day}
                   checkInMode={checkInMode}
