@@ -81,7 +81,6 @@ const BarcodeCheckIn = ({
             type="number"
             onChange={(e: any) => {
               if (e.target.value.length == 9) {
-                // toast(e.target.value);
                 toast.promise(
                   fetch(
                     "/api/attendee/checkin?" +
@@ -90,7 +89,7 @@ const BarcodeCheckIn = ({
                         day: day.format("YYYY-MM-DD"),
                         flexId: flexChoiceId,
                       })
-                  ),
+                  ).then((res) => res.json()),
 
                   {
                     loading: "Hang tight...",
