@@ -26,6 +26,7 @@ const BarcodeCheckIn = ({
   flexChoiceId,
 }) => {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   return (
     <>
       <SwipeableDrawer
@@ -81,20 +82,29 @@ const BarcodeCheckIn = ({
             type="number"
             onChange={(e: any) => {
               if (e.target.value.length == 9) {
+                const url =
+                  "/api/appointments/checkIn?" +
+                  new URLSearchParams({
+                    studentId: e.target.value,
+                    day: dayjs(day).format("YYYY-MM-DD"),
+                    flexId: flexChoiceId,
+                  });
+                alert(url);
                 toast.promise(
-                  fetch(
-                    "/api/attendee/checkin?" +
-                      new URLSearchParams({
-                        studentId: e.target.value,
-                        day: day.format("YYYY-MM-DD"),
-                        flexId: flexChoiceId,
-                      })
-                  ).then((res) => res.json()),
+                  fetch(url)
+                    .then((res) => res.json())
+                    .then((res) => {
+                      if (res.error) {
+                        setError(res.error);
+                        throw new Error(res.error);
+                      }
+                      return res;
+                    }),
 
                   {
                     loading: "Hang tight...",
                     success: "Student checked in!",
-                    error: "Error checking in",
+                    error: error,
                   },
                   {
                     position: "bottom-center",
