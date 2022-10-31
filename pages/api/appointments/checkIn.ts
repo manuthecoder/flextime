@@ -18,7 +18,7 @@ export default async function handle(req: any, res: NextApiResponse) {
   });
 
   if (!result) {
-    res.json({ error: "Appointment not found" });
+    res.json({ error: "Incorrect student ID" });
     return;
   }
 
