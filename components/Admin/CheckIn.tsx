@@ -103,7 +103,7 @@ const BarcodeCheckIn = ({
                   {
                     loading: "Hang tight...",
                     success: "Student checked in!",
-                    error: error,
+                    error: (err) => err.toString().replace("Error: ", ""),
                   },
                   {
                     position: "bottom-center",
