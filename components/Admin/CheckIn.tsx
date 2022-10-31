@@ -61,39 +61,50 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
             textAlign: "center",
           }}
         >
-          <Grid container>
-            <Grid xs={12} sm={8}>
-              <TextField
-                autoComplete="off"
-                sx={{
-                  width: 600,
-                }}
-                onChange={(e: any) => {
-                  if (e.target.value.length == 9) {
-                    toast(e.target.value);
-                    e.target.value = "";
-                  }
-                  if (e.target.value.length > 9) {
-                    e.target.value = e.target.value.slice(0, 9);
-                  }
-                }}
-                placeholder="Enter an ID..."
-                InputProps={{
-                  disableUnderline: true,
-                  // className: "font-heading",
-                  sx: {
-                    fontSize: "75px",
-                    "& *": {
-                      textAlign: "center",
-                    },
+          <TextField
+            autoComplete="off"
+            sx={{
+              width: 600,
+            }}
+            onChange={(e: any) => {
+              if (e.target.value.length == 9) {
+                // toast(e.target.value);
+                toast.promise(
+                  new Promise((resolve: any) => {
+                    setTimeout(resolve, 1000);
+                  }),
+                  {
+                    loading: "Checking in...",
+                    success: "Checked in!",
+                    error: "Error checking in",
                   },
-                }}
-              />
-            </Grid>
-            <Grid xs={12} sm={4}>
-              <Card>a</Card>
-            </Grid>
-          </Grid>
+                  {
+                    position: "bottom-center",
+                    style: {
+                      background: "#001e26",
+                      color: "#fff",
+                      borderRadius: "10px",
+                    },
+                  }
+                );
+                e.target.value = "";
+              }
+              if (e.target.value.length > 9) {
+                e.target.value = e.target.value.slice(0, 9);
+              }
+            }}
+            placeholder="Enter an ID..."
+            InputProps={{
+              disableUnderline: true,
+              // className: "font-heading",
+              sx: {
+                fontSize: "75px",
+                "& *": {
+                  textAlign: "center",
+                },
+              },
+            }}
+          />
         </Box>
       </SwipeableDrawer>
       <Card
