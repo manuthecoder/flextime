@@ -1,4 +1,5 @@
 node_modules/
 .next/
 
-.env
+/.env
+public/sw.js.map
