@@ -77,7 +77,7 @@ function NewFeatrureDialog() {
           />
         </picture> */}
         <Typography variant="h5" gutterBottom sx={{ fontWeight: "900" }}>
-          What&apos;s new?
+          What&apos;s new in v1.0.0
         </Typography>
         <Typography variant="body1" gutterBottom>
           Check out some of the new features we&apos;ve added to the app!
