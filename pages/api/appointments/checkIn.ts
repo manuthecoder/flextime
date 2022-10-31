@@ -29,5 +29,14 @@ export default async function handle(req: any, res: NextApiResponse) {
     return;
   }
 
-  res.json(result);
+  const updated = await prisma.appointment.update({
+    where: {
+      identifier: identifier.toString(),
+    },
+    data: {
+      attended: true,
+    },
+  });
+
+  res.json(updated);
 }
