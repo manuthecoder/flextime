@@ -15,5 +15,7 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - Canvas integration
 
 ### Steps
+- [x] Work on basic demo
 - [x] Deployed on Vercel (https://flextime.vercel.app)
-- [ ] 
+- [ ] Link CNAME to flextime.iusd.org
+- [ ] Implement app
