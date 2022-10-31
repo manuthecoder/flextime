@@ -81,7 +81,7 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
                     setTimeout(resolve, 1000);
                   }),
                   {
-                    loading: "Checking in...",
+                    loading: "Hang tight...",
                     success: "Student checked in!",
                     error: "Error checking in",
                   },
