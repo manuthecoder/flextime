@@ -18,7 +18,13 @@ import * as React from "react";
 import { ViewAttendees } from "./ViewAttendees";
 import toast from "react-hot-toast";
 
-const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
+const BarcodeCheckIn = ({
+  day,
+  checkInMode,
+  setCheckInMode,
+  data,
+  flexChoiceId,
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -77,9 +83,15 @@ const BarcodeCheckIn = ({ day, checkInMode, setCheckInMode, data }) => {
               if (e.target.value.length == 9) {
                 // toast(e.target.value);
                 toast.promise(
-                  new Promise((resolve: any) => {
-                    setTimeout(resolve, 1000);
-                  }),
+                  fetch(
+                    "/api/attendee/checkin?" +
+                      new URLSearchParams({
+                        studentId: e.target.value,
+                        day: day.format("YYYY-MM-DD"),
+                        flexId: flexChoiceId,
+                      })
+                  ),
+
                   {
                     loading: "Hang tight...",
                     success: "Student checked in!",
@@ -253,6 +265,7 @@ export function CheckIn({ day }) {
                   day={day}
                   checkInMode={checkInMode}
                   setCheckInMode={setCheckInMode}
+                  flexChoiceId={session.user.flexChoiceId}
                   data={data}
                 />
               </Box>
