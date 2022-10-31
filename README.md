@@ -7,6 +7,8 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - React
 - Next.JS
 - Material-UI
+- Prisma ORM
+- MySQL for database
 
 
 ### Some new featres!
@@ -15,7 +17,9 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - Canvas integration
 
 ### Steps
-- [x] Work on basic demo
+- [x] Work on basic demo (in progress)
 - [x] Deployed on Vercel (https://flextime.vercel.app)
+- [ ] Get approval from IHS staff
+- [ ] Pay for database storage OR link to existing server
 - [ ] Link CNAME to flextime.iusd.org
-- [ ] Implement app
+- [ ] Implement app (hopefully!)
