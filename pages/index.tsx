@@ -64,14 +64,27 @@ const Calendar = () => {
                         ).format("MMMM D, YYYY")
                       : ""}
                   </Typography>
-                  {/* {event.DESCRIPTION} */}
                 </CardContent>
               </CardActionArea>
             </Card>
           ))}
         </>
       ) : (
-        <Skeleton variant="rectangular" width={210} height={118} />
+        <Box>
+          {[...new Array(10)].map(() => (
+            <Skeleton
+              variant="rectangular"
+              width={"100%"}
+              height={118}
+              animation="wave"
+              key={Math.random().toString()}
+              sx={{
+                borderRadius: 5,
+                mb: 2,
+              }}
+            />
+          ))}
+        </Box>
       )}
     </Box>
   );
