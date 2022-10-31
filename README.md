@@ -13,3 +13,6 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - New UI
 - Easier check-in process
 - Canvas integration
+
+### Steps
+[x] Deployed on Vercel (https://flextime.vercel.app)
