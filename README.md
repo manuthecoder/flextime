@@ -7,3 +7,9 @@ Presentation slides: https://docs.google.com/presentation/d/17XGrfEH1SeFmHOVT5b_
 - React
 - Next.JS
 - Material-UI
+
+
+### Some new featres!
+- New UI
+- Easier check-in process
+- Canvas integration
