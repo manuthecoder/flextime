@@ -1,3 +1,6 @@
+<img src="https://i.ibb.co/9vqnLWg/image.png" width="300px" align="center" style="margin:auto"><br />
+
+
 # IHS FlexTime
 ## FlexTime Revamp for Irvine High School!
 
