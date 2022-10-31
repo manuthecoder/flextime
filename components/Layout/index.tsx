@@ -2,7 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { green } from "@mui/material/colors";
+import { teal, green } from "@mui/material/colors";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,32 +10,76 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Grow from "@mui/material/Grow";
+import { TransitionProps } from "@mui/material/transitions";
+
 import {
   Backdrop,
   CircularProgress,
+  Dialog,
+  DialogContent,
   SwipeableDrawer,
   TextField,
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Grow in={true} ref={ref} {...props} />;
+});
+
 function NewFeatrureDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
-    <SwipeableDrawer
-      anchor="bottom"
+    <Dialog
       open={open}
       onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      TransitionComponent={Transition}
+      keepMounted
       PaperProps={{
+        elevation: 0,
         sx: {
           display: "flex",
+          borderRadius: 5,
           alignItems: "center",
+          width: "calc(100vw - 20px)",
+          maxWidth: "500px",
+          background: "#001e26",
+          color: teal[50],
           justifyContent: "center",
         },
       }}
-    ></SwipeableDrawer>
+    >
+      <DialogContent sx={{ p: 5, px: 4, pb: 2 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: "900" }}>
+          What&apos;s new?
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Check out some of the new features we&apos;ve added to the app!
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <ul>
+            <li>
+              <b>Sync to Canvas Calendar</b>
+              <br />
+              You can now sync your FlexTime with Canvas! View upcoming events
+              and deadlines.
+            </li>
+            <li style={{ marginTop: "10px" }}>
+              <b>Barcode check-in</b>
+              <br />
+              Check in students using your barcode scanner.
+            </li>
+          </ul>
+        </Typography>
+      </DialogContent>
+    </Dialog>
   );
 }
 
