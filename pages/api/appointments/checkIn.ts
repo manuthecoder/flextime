@@ -33,6 +33,7 @@ export default async function handle(req: any, res: NextApiResponse) {
     where: {
       identifier: identifier.toString(),
     },
+    include: { student: true },
     data: {
       attended: true,
     },

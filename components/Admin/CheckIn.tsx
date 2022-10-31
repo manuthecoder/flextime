@@ -102,7 +102,8 @@ const BarcodeCheckIn = ({
 
                   {
                     loading: "Hang tight...",
-                    success: "Student checked in!",
+                    success: (res) =>
+                      res.student.name.split(" ")[0] + " is now checked in!",
                     error: (err) => err.toString().replace("Error: ", ""),
                   },
                   {
@@ -112,6 +113,7 @@ const BarcodeCheckIn = ({
                       color: "#fff",
                       borderRadius: "10px",
                     },
+                    duration: 5000,
                   }
                 );
 
