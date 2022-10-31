@@ -25,21 +25,26 @@ import {
 import { LoadingButton } from "@mui/lab";
 
 const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
+  props: any,
   ref: React.Ref<unknown>
 ) {
-  return <Grow in={true} ref={ref} {...props} />;
+  return <Grow in={props.open} ref={ref} {...props} />;
 });
 
 function NewFeatrureDialog() {
-  const [open, setOpen] = React.useState(true);
-
+  const [open, setOpen] = React.useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("newFeatureDialog") === null) {
+      setOpen(true);
+    }
+  }, []);
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        setOpen(false);
+        localStorage.setItem("newFeatureDialog", "true");
+      }}
       TransitionComponent={Transition}
       keepMounted
       sx={{ zIndex: 999999999 }}
@@ -94,6 +99,9 @@ function NewFeatrureDialog() {
             borderRadius: 99,
             mb: 2,
             background: teal[900] + "!important",
+          }}
+          onClick={() => {
+            localStorage.setItem("newFeatureDialog", "true");
           }}
         >
           Nice!
