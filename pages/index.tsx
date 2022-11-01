@@ -1,21 +1,20 @@
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
-  Container,
   CardContent,
+  Container,
+  Grid,
   NoSsr,
   Skeleton,
   Typography,
-  Grid,
 } from "@mui/material";
-import { useSession } from "next-auth/react";
-import React from "react";
-import { WeeklyCalendar } from "../components/WeeklyCalendar";
-import useSWR from "swr";
 import dayjs from "dayjs";
 import iCalDateParser from "ical-date-parser";
+import { useSession } from "next-auth/react";
+import React from "react";
+import useSWR from "swr";
+import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
 const Calendar = () => {
   const { data: session } = useSession();
