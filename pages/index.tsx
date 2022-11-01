@@ -25,13 +25,13 @@ const Calendar = () => {
 
   const events = data ? data.VCALENDAR[0].VEVENT : [];
   return (
-    <Box>
+    <Box sx={{ px: 1 }}>
       <Typography className="font-heading" variant="h4" gutterBottom>
         Calendar
       </Typography>
       {data ? (
         <>
-          {events.map((event) => (
+          {events.slice(0, 10).map((event) => (
             <Card
               elevation={0}
               sx={{

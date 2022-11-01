@@ -113,6 +113,7 @@ export function FlexAppointment({ mutationUrl, appointment }) {
           sx={{
             ...(appointment.teacherCreated && {
               background: red[900] + "!important",
+              color: red[50] + "!important",
             }),
             ml: { xs: -2, sm: 0 },
             mt: { xs: 1, sm: 0 },
@@ -122,7 +123,15 @@ export function FlexAppointment({ mutationUrl, appointment }) {
             whiteSpace: "nowrap",
           }}
         >
-          {appointment.flexChoice.name}
+          <span
+            style={{
+              maxWidth: "100px",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {appointment.flexChoice.name}
+          </span>
           <span className="material-symbols-outlined">
             {appointment.teacherCreated ? "lock" : "edit"}
           </span>
