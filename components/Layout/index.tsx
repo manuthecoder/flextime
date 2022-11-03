@@ -31,8 +31,7 @@ const Transition = React.forwardRef(function Transition(
   return <Grow in={props.open} ref={ref} {...props} />;
 });
 
-function NewFeatrureDialog() {
-  const [open, setOpen] = React.useState(false);
+function NewFeatureDialog({ open, setOpen }) {
   useEffect(() => {
     if (localStorage.getItem("newFeatureDialog") === null) {
       setOpen(true);
@@ -153,7 +152,11 @@ function stringAvatar(name: string) {
   };
 }
 
-function ProfileMenu({ session }) {
+function ProfileMenu({
+  open: featureModalOpen,
+  setOpen: setFeatureModalOpen,
+  session,
+}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -199,22 +202,8 @@ function ProfileMenu({ session }) {
           },
         }}
       >
-        <MenuItem
-          sx={menuStyles}
-          onClick={() => {
-            let deferredPrompt;
-
-            window.addEventListener("beforeinstallprompt", (e) => {
-              // Prevent the mini-infobar from appearing on mobile
-              e.preventDefault();
-              // Stash the event so it can be triggered later.
-              deferredPrompt = e;
-              deferredPrompt.prompt();
-            });
-            handleClose();
-          }}
-        >
-          Add to home screen
+        <MenuItem sx={menuStyles} onClick={() => setFeatureModalOpen(true)}>
+          What&apos;s new?
         </MenuItem>
         <MenuItem sx={menuStyles} onClick={handleClose}>
           Settings
@@ -266,6 +255,8 @@ export function Layout({ children }) {
   const { status, data: session }: any = useSession(options);
   const [studentId, setStudentId] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+
+  const [open, setOpen] = React.useState(false);
 
   return (
     <>
@@ -388,7 +379,7 @@ export function Layout({ children }) {
           </Box>
           <Box>
             {session ? (
-              <ProfileMenu session={session} />
+              <ProfileMenu session={session} open={open} setOpen={setOpen} />
             ) : (
               <Button
                 onClick={() => signIn()}
@@ -407,7 +398,7 @@ export function Layout({ children }) {
       </AppBar>
       <Toolbar sx={{ py: 0.5 }} />
       {children}
-      <NewFeatrureDialog />
+      <NewFeatureDialog open={open} setOpen={setOpen} />
     </>
   );
 }
