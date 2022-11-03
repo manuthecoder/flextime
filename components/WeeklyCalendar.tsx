@@ -129,7 +129,8 @@ export function WeeklyCalendar({ admin }) {
               ? dayjs(week[0]).format("MMMM") +
                 " - " +
                 dayjs(week[6]).format("MMMM")
-              : dayjs(week[0]).format("MMMM")}
+              : dayjs(week[0]).format("MMMM")}{" "}
+            {dayjs(week[0]).format("YYYY")}
           </Typography>
         </Box>
         <Box
