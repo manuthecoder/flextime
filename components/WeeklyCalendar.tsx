@@ -5,8 +5,10 @@ import {
   ButtonGroup,
   TextField,
   Checkbox,
+  IconButton,
+  Collapse,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Day } from "./Day";
 import { green } from "@mui/material/colors";
@@ -98,14 +100,15 @@ export function WeeklyCalendar({ admin }) {
   }
 
   const styles = {
-    "&:not(:disabled)": {
-      background: `${green[200]}!important`,
-    },
+    background: `transparent!important`,
+    p: navigation == 0 ? 1.5 : 1,
+    transition: "all .2s",
+    px: navigation == 0 ? 3 : 3,
+    minWidth: "auto",
     border: "0!important",
-    mx: 0.5,
-    borderRadius: "5px!important",
     color: "#000",
   };
+  const [show, setShow] = useState(true);
 
   return (
     <Box>
@@ -131,37 +134,70 @@ export function WeeklyCalendar({ admin }) {
         </Box>
         <Box
           sx={{
+            p: 1,
             ml: "auto",
             background: { xs: green[100], sm: "transparent" },
-            p: { xs: 1.5, sm: 0 },
             mt: { xs: 2, sm: 0 },
-            borderRadius: 4,
+            borderRadius: 9999,
             position: { xs: "fixed", sm: "unset" },
+            boxShadow: {
+              xs: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              sm: "none",
+            },
             bottom: "20px",
             left: admin ? 15 : "unset",
             zIndex: 999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <ButtonGroup variant="contained" disableElevation>
+          <Button
+            sx={{ ...styles, borderRadius: 999 }}
+            size="large"
+            onClick={() => {
+              setNavigation((n) => n - 1);
+              setShow(false);
+              setTimeout(() => setShow(true));
+            }}
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </Button>
+          <Collapse in={navigation !== 0} orientation="horizontal">
             <Button
-              sx={{ ...styles, mr: 2 }}
-              onClick={() => setNavigation(0)}
+              sx={{
+                ...styles,
+                my: 0,
+                px: 2,
+                borderRadius: 999,
+              }}
+              onClick={() => {
+                setNavigation(0);
+                setShow(false);
+                setTimeout(() => setShow(true));
+              }}
+              size="large"
               disabled={navigation === 0}
             >
               Today
             </Button>
-            <Button sx={styles} onClick={() => setNavigation((n) => n - 1)}>
-              <span className="material-symbols-outlined">chevron_left</span>
-            </Button>
-            <Button sx={styles} onClick={() => setNavigation((n) => n + 1)}>
-              <span className="material-symbols-outlined">chevron_right</span>
-            </Button>
-          </ButtonGroup>
+          </Collapse>
+          <Button
+            sx={{ ...styles, borderRadius: 999 }}
+            size="large"
+            onClick={() => {
+              setNavigation((n) => n + 1);
+              setShow(false);
+              setTimeout(() => setShow(true));
+            }}
+          >
+            <span className="material-symbols-outlined">arrow_forward</span>
+          </Button>
         </Box>
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: show ? "flex" : "none",
           flexDirection: { xs: "column", sm: "row" },
           background: { sm: "rgba(200,200,200,0.3)" },
           gap: { xs: 2, sm: 1 },
@@ -178,8 +214,9 @@ export function WeeklyCalendar({ admin }) {
               dayjs(day).format("dddd") !== "Saturday" &&
               dayjs(day).format("dddd") !== "Sunday"
           )
-          .map((day) => (
+          .map((day, i) => (
             <Day
+              index={i}
               day={day}
               url={url}
               admin={admin}
@@ -187,6 +224,9 @@ export function WeeklyCalendar({ admin }) {
             />
           ))}
       </Box>
+      {!show && (
+        <Box sx={{ height: "100vh", width: "100%", display: "block" }} />
+      )}
       {admin && <GlobalAdminSettings />}
     </Box>
   );

@@ -1,6 +1,6 @@
 import { Typography, Box } from "@mui/material";
 import { green } from "@mui/material/colors";
-import React from "react";
+import React, { useEffect } from "react";
 import dayjs from "dayjs";
 import { AddStudentButton } from "./Admin/AddStudentButton";
 import { CreateAppointmentButton } from "./Student/CreateAppointmentButton";
@@ -9,14 +9,18 @@ import { CheckIn } from "./Admin/CheckIn";
 import { SettingsButton } from "./Admin/SettingsButton";
 import { FlexAppointment } from "./Student/FlexAppointment";
 
-export function Day({ url, calendarData, admin = false, day }) {
+export function Day({ index, url, calendarData, admin = false, day }) {
   const appointmentsToday = calendarData
     ? calendarData.filter((a) => a.date === dayjs(day).format("YYYY-MM-DD"))
     : [];
 
+  const isPast = dayjs(day).isBefore(dayjs(), "day");
+
   return (
     <Box
+      className="slideDown"
       sx={{
+        animationDelay: index * 75 + "ms!important",
         p: { xs: 2, sm: 4 },
         px: 3,
         display: { xs: "flex", sm: "block" },
@@ -26,6 +30,9 @@ export function Day({ url, calendarData, admin = false, day }) {
         background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
         borderRadius: 5,
         width: { sm: "100%" },
+        ...(isPast && { opacity: 0.5 }),
+        minWidth: { sm: "150px" },
+        maxWidth: { sm: "150px" },
         flexBasis: 0,
         flexGrow: 1,
         "&:hover": {
@@ -106,7 +113,7 @@ export function Day({ url, calendarData, admin = false, day }) {
           ))}
         {admin && !dayjs(day).isBefore(dayjs(), "day") && (
           <SettingsButton
-          // flexId={}
+            // flexId={}
             mutationUrl={url}
             day={day}
             appointmentsToday={appointmentsToday}

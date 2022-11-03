@@ -111,10 +111,13 @@ export function FlexAppointment({ mutationUrl, appointment }) {
           disableElevation
           variant="contained"
           sx={{
-            ...(appointment.teacherCreated && {
-              background: red[900] + "!important",
-              color: red[50] + "!important",
-            }),
+            ...(appointment.teacherCreated &&
+              !dayjs(dayjs(appointment.date).format("YYYY-MM-DD")).isBefore(
+                dayjs().format("YYYY-MM-DD")
+              ) && {
+                background: red[900] + "!important",
+                color: red[50] + "!important",
+              }),
             ml: { xs: -2, sm: 0 },
             mt: { xs: 1, sm: 0 },
             borderWidth: "2px!important",
