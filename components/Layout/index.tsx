@@ -205,9 +205,9 @@ function ProfileMenu({
         <MenuItem sx={menuStyles} onClick={() => setFeatureModalOpen(true)}>
           What&apos;s new?
         </MenuItem>
-        <MenuItem sx={menuStyles} onClick={handleClose}>
+        {/* <MenuItem sx={menuStyles} onClick={handleClose}>
           Settings
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           sx={menuStyles}
           onClick={() => {
