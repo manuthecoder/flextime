@@ -180,7 +180,8 @@ function ProfileSettings({ children }) {
           sx={{
             position: "fixed",
             bottom: 0,
-            left: 0,
+            left: "50%",
+            transform:"translateX(-50%)",
             width: "100vw",
             maxWidth: "500px",
             mx:"auto",
