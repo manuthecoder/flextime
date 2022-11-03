@@ -134,6 +134,7 @@ function StudentBarcode({ styles }) {
           <Button
             fullWidth
             size="large"
+            onClick={() => setOpen(false)}
             sx={{
               color: teal[50],
               background: "#032b36!important",
