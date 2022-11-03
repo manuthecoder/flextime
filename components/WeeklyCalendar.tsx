@@ -101,7 +101,7 @@ export function WeeklyCalendar({ admin }) {
 
   const styles = {
     background: `transparent!important`,
-    p: navigation == 0 ? 1.5 : 1,
+    p: 1,
     transition: "all .2s",
     px: navigation == 0 ? 3 : 3,
     minWidth: "auto",
