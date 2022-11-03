@@ -1,18 +1,17 @@
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { teal, green } from "@mui/material/colors";
+import Button from "@mui/material/Button";
+import { green, teal } from "@mui/material/colors";
+import Grow from "@mui/material/Grow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
-import { signIn, signOut, useSession } from "next-auth/react";
-import React, { useEffect } from "react";
-import Link from "next/link";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Grow from "@mui/material/Grow";
-import { TransitionProps } from "@mui/material/transitions";
-
+import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { LoadingButton } from "@mui/lab";
 import {
   Backdrop,
   CircularProgress,
@@ -22,7 +21,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 
 const Transition = React.forwardRef(function Transition(
   props: any,

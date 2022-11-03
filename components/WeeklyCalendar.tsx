@@ -8,7 +8,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { teal, green } from "@mui/material/colors";
+import { green, teal } from "@mui/material/colors";
+import Grow from "@mui/material/Grow";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
@@ -69,6 +70,13 @@ function GlobalAdminSettings() {
   );
 }
 
+const Transition = React.forwardRef(function Transition(
+  props: any,
+  ref: React.Ref<unknown>
+) {
+  return <Grow in={props.open} ref={ref} {...props} />;
+});
+
 function StudentBarcode({ styles }) {
   const [open, setOpen] = React.useState(false);
   const session: any = useSession();
@@ -91,6 +99,7 @@ function StudentBarcode({ styles }) {
         Check&nbsp;in
       </Button>
       <Dialog
+        TransitionComponent={Transition}
         PaperProps={{
           elevation: 0,
           sx: {
