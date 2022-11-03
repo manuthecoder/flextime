@@ -171,6 +171,8 @@ function ProfileSettings({ children }) {
         PaperProps={{
           elevation: 0,
           sx: {
+            maxWidth: "500px",
+            mx:"auto",
             background: "transparent",
             height: "100vh",
           },
