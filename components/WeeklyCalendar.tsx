@@ -133,6 +133,7 @@ function StudentBarcode({ styles }) {
           </Box>
           <Button
             fullWidth
+            size="large"
             sx={{
               color: teal[50],
               background: "#032b36!important",
