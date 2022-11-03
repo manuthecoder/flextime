@@ -253,7 +253,7 @@ export function WeeklyCalendar({ admin }) {
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </Button>
-          <Collapse in={navigation !== 0} orientation="horizontal">
+          <Collapse in={admin || navigation !== 0} orientation="horizontal">
             <Button
               sx={{
                 ...styles,
@@ -272,7 +272,7 @@ export function WeeklyCalendar({ admin }) {
               Today
             </Button>
           </Collapse>
-          <Collapse in={navigation === 0} orientation="horizontal">
+          <Collapse in={!admin && navigation === 0} orientation="horizontal">
             <StudentBarcode styles={styles} />
           </Collapse>
           <Button
