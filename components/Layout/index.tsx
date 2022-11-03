@@ -152,6 +152,106 @@ function stringAvatar(name: string) {
   };
 }
 
+function ProfileSettings({ children }) {
+  const [open, setOpen] = React.useState(false);
+  const trigger = React.cloneElement(children, {
+    onClick: (event: React.MouseEvent<HTMLElement>) => setOpen(true),
+  });
+  const [show, setShow] = React.useState(false);
+  const session: any = useSession();
+
+  return (
+    <>
+      {trigger}
+      <SwipeableDrawer
+        anchor="bottom"
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        disableSwipeToOpen
+        sx={{ zIndex: 999999999999999 }}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            background: "transparent",
+            height: "100vh",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            width: "100vw",
+            textAlign: "center",
+            background: green[100],
+            borderRadius: "20px 20px 0px 0px",
+            overflow: "visible",
+          }}
+        >
+          <Avatar
+            {...stringAvatar(session.data.user.name)}
+            sx={{
+              mx: "auto",
+              background: green[300],
+              width: 60,
+              height: 60,
+              position: "relative",
+              top: -30,
+              mb: -2,
+            }}
+          />
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: "900",
+            }}
+            gutterBottom
+          >
+            {session.data.user.name}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {session.data.user.email}
+          </Typography>
+          <Box sx={{ p: 3 }}>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 5,
+                background: green[200],
+                textAlign: "left",
+              }}
+            >
+              <Typography
+                variant="h6"
+                onClick={() => setShow(!show)}
+                sx={{
+                  fontWeight: "900",
+                  filter: "blur(5px)",
+                  background: green[500],
+                  px: 1,
+                  py: 0,
+                  display: "inline-block",
+                  borderRadius: 2,
+                  cursor: "pointer",
+                  ...(show && {
+                    filter: "blur(0px)",
+                    background: green[300],
+                  }),
+                }}
+              >
+                {session.data.user.studentId}
+              </Typography>
+              <Typography variant="body1">Student ID</Typography>
+            </Box>
+          </Box>
+        </Box>
+      </SwipeableDrawer>
+    </>
+  );
+}
+
 function ProfileMenu({
   open: featureModalOpen,
   setOpen: setFeatureModalOpen,
@@ -205,9 +305,11 @@ function ProfileMenu({
         <MenuItem sx={menuStyles} onClick={() => setFeatureModalOpen(true)}>
           What&apos;s new?
         </MenuItem>
-        {/* <MenuItem sx={menuStyles} onClick={handleClose}>
-          Settings
-        </MenuItem> */}
+        <ProfileSettings>
+          <MenuItem sx={menuStyles} onClick={handleClose}>
+            Settings
+          </MenuItem>
+        </ProfileSettings>
         <MenuItem
           sx={menuStyles}
           onClick={() => {

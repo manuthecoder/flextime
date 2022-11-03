@@ -1,20 +1,20 @@
-import {
-  Typography,
-  Button,
-  Box,
-  ButtonGroup,
-  TextField,
-  Checkbox,
-  IconButton,
-  Collapse,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import { Day } from "./Day";
-import { green } from "@mui/material/colors";
-import useSWR from "swr";
-import { useSession } from "next-auth/react";
 import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Button,
+  Collapse,
+  Dialog,
+  DialogContent,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { teal, green } from "@mui/material/colors";
+import dayjs from "dayjs";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+import useSWR from "swr";
+import { Day } from "./Day";
+var Barcode = require("react-barcode");
 
 function GlobalAdminSettings() {
   const { data: session }: any = useSession();
@@ -69,6 +69,85 @@ function GlobalAdminSettings() {
   );
 }
 
+function StudentBarcode({ styles }) {
+  const [open, setOpen] = React.useState(false);
+  const session: any = useSession();
+
+  return (
+    <>
+      <Button
+        sx={{
+          ...styles,
+          my: 0,
+          px: 2,
+          borderRadius: 999,
+          fontWeight: "bold",
+        }}
+        onClick={() => {
+          setOpen(true);
+        }}
+        size="large"
+      >
+        Check&nbsp;in
+      </Button>
+      <Dialog
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            display: "flex",
+            borderRadius: 5,
+            alignItems: "center",
+            width: "calc(100vw - 20px)",
+            maxWidth: "500px",
+            background: "#001e26",
+            color: teal[50],
+            justifyContent: "center",
+          },
+        }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <DialogContent sx={{ p: 5, px: 4, pb: 2 }}>
+          <Typography variant="h5" gutterBottom sx={{ fontWeight: "900" }}>
+            Barcode
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Scan this barcode to quickly check in.
+          </Typography>
+          <Box
+            sx={{
+              background: "#032b36",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+              borderRadius: 5,
+              my: 2,
+              p: 5,
+            }}
+          >
+            <Barcode
+              value={session.data.user.studentId}
+              background="#032b36"
+              lineColor="#fff"
+            />
+          </Box>
+          <Button
+            fullWidth
+            sx={{
+              color: teal[50],
+              background: "#032b36!important",
+              mb: 3,
+              borderRadius: 5,
+              fontWeight: "bold",
+            }}
+          >
+            Done
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
 export function WeeklyCalendar({ admin }) {
   const { data: session }: any = useSession();
   const url =
@@ -109,7 +188,6 @@ export function WeeklyCalendar({ admin }) {
     color: "#000",
   };
   const [show, setShow] = useState(true);
-
   return (
     <Box>
       <Box
@@ -182,6 +260,9 @@ export function WeeklyCalendar({ admin }) {
             >
               Today
             </Button>
+          </Collapse>
+          <Collapse in={navigation === 0} orientation="horizontal">
+            <StudentBarcode styles={styles} />
           </Collapse>
           <Button
             sx={{ ...styles, borderRadius: 999 }}
