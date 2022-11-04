@@ -139,6 +139,7 @@ function StudentBarcode({ styles }) {
               value={session.data.user.studentId}
               background="#fff"
               lineColor="#032b36"
+              height={50}
             />
           </Box>
           <Button
