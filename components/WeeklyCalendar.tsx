@@ -106,8 +106,8 @@ function StudentBarcode({ styles }) {
             display: "flex",
             borderRadius: 5,
             alignItems: "center",
-            width: "calc(100vw - 20px)",
-            maxWidth: "500px",
+            width: "100vw",
+            maxWidth: "calc(100vw - 20px)",
             background: "#001e26",
             color: teal[50],
             justifyContent: "center",
@@ -116,7 +116,7 @@ function StudentBarcode({ styles }) {
         open={open}
         onClose={() => setOpen(false)}
       >
-        <DialogContent sx={{ p: 5, px: 4, pb: 2 }}>
+        <DialogContent sx={{ p: 5, px: 2, pb: 2 }}>
           <Typography variant="h5" gutterBottom sx={{ fontWeight: "900" }}>
             Barcode
           </Typography>
