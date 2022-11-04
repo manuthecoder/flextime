@@ -90,6 +90,7 @@ function StudentBarcode({ styles }) {
           px: 2,
           borderRadius: 999,
           fontWeight: "bold",
+          background: green[200] + "!important",
         }}
         onClick={() => {
           setOpen(true);
@@ -255,7 +256,14 @@ export function WeeklyCalendar({ admin }) {
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </Button>
-          <Collapse in={admin || navigation !== 0} orientation="horizontal">
+
+          <Collapse
+            in={admin || navigation !== 0}
+            orientation="horizontal"
+            sx={{
+              borderRadius: 999,
+            }}
+          >
             <Button
               sx={{
                 ...styles,
@@ -274,7 +282,13 @@ export function WeeklyCalendar({ admin }) {
               Today
             </Button>
           </Collapse>
-          <Collapse in={!admin && navigation === 0} orientation="horizontal">
+          <Collapse
+            in={!admin && navigation === 0}
+            orientation="horizontal"
+            sx={{
+              borderRadius: 999,
+            }}
+          >
             <StudentBarcode styles={styles} />
           </Collapse>
           <Button
