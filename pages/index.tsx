@@ -17,7 +17,6 @@ import useSWR from "swr";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
 const Calendar = () => {
-  const { data: session } = useSession();
   const { error, data } = useSWR("/api/feed", () =>
     fetch("/api/feed").then((res) => res.json())
   );

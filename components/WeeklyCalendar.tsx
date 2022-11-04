@@ -125,19 +125,20 @@ function StudentBarcode({ styles }) {
           </Typography>
           <Box
             sx={{
-              background: "#032b36",
+              background: "#fff",
               alignItems: "center",
               display: "flex",
               justifyContent: "center",
               borderRadius: 5,
               my: 2,
               p: 5,
+              py: 2,
             }}
           >
             <Barcode
               value={session.data.user.studentId}
-              background="#032b36"
-              lineColor="#fff"
+              background="#fff"
+              lineColor="#032b36"
             />
           </Box>
           <Button
