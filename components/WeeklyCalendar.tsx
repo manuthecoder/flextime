@@ -131,7 +131,7 @@ function StudentBarcode({ styles }) {
               justifyContent: "center",
               borderRadius: 5,
               my: 2,
-              p: 5,
+              p: 2,
               py: 2,
             }}
           >
