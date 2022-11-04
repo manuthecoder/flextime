@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -7,6 +8,7 @@ import {
   Grid,
   NoSsr,
   Skeleton,
+  SwipeableDrawer,
   Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
@@ -16,8 +18,39 @@ import React from "react";
 import useSWR from "swr";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
-const Calendar = () => {
-  const { data: session } = useSession();
+const SetUpIcal = () => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <SwipeableDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        anchor="bottom"
+        disableSwipeToOpen
+      >
+        <Typography variant="h4" gutterBottom>
+          Set up your iCal
+        </Typography>
+      </SwipeableDrawer>
+      <Button
+        variant="contained"
+        size="large"
+        fullWidth
+        disableElevation
+        sx={{
+          mb: 1,
+          borderRadius: 9,
+        }}
+      >
+        Set up
+      </Button>
+    </>
+  );
+};
+
+const CanvasCalendar = () => {
+  const { data: session }: any = useSession();
   const { error, data } = useSWR("/api/feed", () =>
     fetch("/api/feed").then((res) => res.json())
   );
@@ -28,6 +61,7 @@ const Calendar = () => {
       <Typography className="font-heading" variant="h4" gutterBottom>
         Calendar
       </Typography>
+      {!session.user.iCal && <SetUpIcal />}
       {data ? (
         <>
           {events.slice(0, 10).map((event) => (
@@ -100,7 +134,7 @@ export default function Index(): React.ReactElement {
                 <WeeklyCalendar admin={session.user.isAdmin} />
               </Grid>
               <Grid item xs={12} md={4}>
-                {!session.user.isAdmin && <Calendar />}
+                {!session.user.isAdmin && <CanvasCalendar />}
               </Grid>
             </Grid>
           </>
