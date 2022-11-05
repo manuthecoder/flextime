@@ -20,11 +20,15 @@ import useSWR from "swr";
 import { green } from "@mui/material/colors";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 import useEmblaCarousel from "embla-carousel-react";
+import { LoadingButton } from "@mui/lab";
+import toast from "react-hot-toast";
 
 const SetUpIcal = () => {
+  const { data: session }: any = useSession();
   const [open, setOpen] = React.useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel();
   const [url, setUrl] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const handleNext = () => emblaApi && emblaApi.scrollNext();
 
   return (
@@ -184,9 +188,41 @@ const SetUpIcal = () => {
                       autoComplete="off"
                     />
                     <Box>
-                      <Button variant="contained" disableElevation>
+                      <LoadingButton
+                        disabled={
+                          url == "" ||
+                          !url.startsWith(
+                            "https://iusd.instructure.com/feeds/calendars/"
+                          )
+                        }
+                        loading={loading}
+                        variant="contained"
+                        disableElevation
+                        onClick={() => {
+                          setLoading(true);
+                          fetch("/api/updateSettings", {
+                            body: JSON.stringify({
+                              accessToken: session.user.accessToken,
+                              data: {
+                                iCal: url,
+                              },
+                            }),
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            method: "POST",
+                          })
+                            .then((res) => res.json())
+                            .then(() => {
+                              setLoading(false);
+                              setOpen(false);
+                              toast.success("Success!");
+                            })
+                            .catch(() => setLoading(false));
+                        }}
+                      >
                         Finish
-                      </Button>
+                      </LoadingButton>
                     </Box>
                   </Box>
                 </Box>
@@ -214,8 +250,13 @@ const SetUpIcal = () => {
 
 const CanvasCalendar = () => {
   const { data: session }: any = useSession();
-  const { error, data } = useSWR("/api/feed", () =>
-    fetch("/api/feed").then((res) => res.json())
+  const url =
+    "/api/feed?" +
+    new URLSearchParams({
+      url: session.user.iCal,
+    });
+  const { error, data } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
   );
 
   const events = data ? data.VCALENDAR[0].VEVENT : [];
