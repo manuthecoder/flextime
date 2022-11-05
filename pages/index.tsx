@@ -157,14 +157,37 @@ const SetUpIcal = () => {
                           "https://iusd.instructure.com/feeds/calendars/"
                         )
                       }
+                      helperText={
+                        url !== "" &&
+                        !url.startsWith(
+                          "https://iusd.instructure.com/feeds/calendars/"
+                        ) && (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1,
+                              ml: -1,
+                              mt: 0.5,
+                            }}
+                          >
+                            <span className="material-symbols-outlined">
+                              error
+                            </span>{" "}
+                            Invalid URL
+                          </Box>
+                        )
+                      }
                       fullWidth
                       label="Feed URL"
                       size="small"
                       autoComplete="off"
                     />
-                    <Button variant="contained" disableElevation>
-                      Finish
-                    </Button>
+                    <Box>
+                      <Button variant="contained" disableElevation>
+                        Finish
+                      </Button>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
