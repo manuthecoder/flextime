@@ -96,6 +96,7 @@ body {
 }
 .embla {
   overflow: hidden;
+  user-select: none;
 }
 .embla__container {
   display: flex;
