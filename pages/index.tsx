@@ -9,6 +9,7 @@ import {
   NoSsr,
   Skeleton,
   SwipeableDrawer,
+  TextField,
   Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
@@ -18,9 +19,13 @@ import React from "react";
 import useSWR from "swr";
 import { green } from "@mui/material/colors";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
+import useEmblaCarousel from "embla-carousel-react";
 
 const SetUpIcal = () => {
   const [open, setOpen] = React.useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const handleNext = () => emblaApi && emblaApi.scrollNext();
+
   return (
     <>
       <SwipeableDrawer
@@ -54,7 +59,108 @@ const SetUpIcal = () => {
           <Typography variant="h5" className="font-heading" sx={{ mb: 2 }}>
             Set up your calendar
           </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}></Typography>
+          {/* <Typography variant="body1" sx={{ mb: 2 }}></Typography> */}
+          <div className="embla" ref={emblaRef}>
+            <div className="embla__container" style={{ gap: "10px" }}>
+              <Box className="embla__slide">
+                <Box
+                  sx={{
+                    background: "rgba(200,200,200,.3)",
+                    borderRadius: 5,
+                    p: 4,
+                  }}
+                >
+                  <picture>
+                    <img
+                      src="https://i.ibb.co/Wv8J0fd/step1.jpg"
+                      style={{ borderRadius: "15px" }}
+                      width="100%"
+                    />
+                  </picture>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
+                    STEP 1
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: "900" }}>
+                    Navigate to your Canvas Calendar
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    fullWidth
+                    disableElevation
+                  >
+                    Next
+                  </Button>
+                </Box>
+              </Box>
+
+              <Box className="embla__slide">
+                <Box
+                  sx={{
+                    background: "rgba(200,200,200,.3)",
+                    borderRadius: 5,
+                    p: 4,
+                  }}
+                >
+                  <picture>
+                    <img
+                      src="https://i.ibb.co/q0pnGg2/step2.jpg"
+                      style={{ borderRadius: "15px" }}
+                      width="100%"
+                    />
+                  </picture>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
+                    STEP 2
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: "900" }}>
+                    Scroll down and click "Calendar feed"
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    fullWidth
+                    disableElevation
+                  >
+                    Next
+                  </Button>
+                </Box>
+              </Box>
+              <Box className="embla__slide">
+                <Box
+                  sx={{
+                    background: "rgba(200,200,200,.3)",
+                    borderRadius: 5,
+                    p: 4,
+                  }}
+                >
+                  <picture>
+                    <img
+                      src="https://i.ibb.co/P5CXvTP/step3.jpg"
+                      style={{ borderRadius: "15px" }}
+                      width="100%"
+                    />
+                  </picture>
+                  <Typography variant="body2" sx={{ mt: 2 }}>
+                    STEP 3
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: "900" }}>
+                    Copy the feed URL and paste it below
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <TextField
+                      fullWidth
+                      label="Feed URL"
+                      size="small"
+                      autoComplete="off"
+                    />
+                    <Button variant="contained" disableElevation>
+                      Finish
+                    </Button>
+                  </Box>
+                </Box>
+              </Box>
+            </div>
+          </div>
         </Box>
       </SwipeableDrawer>
       <Button
@@ -95,7 +201,7 @@ const CanvasCalendar = () => {
               sx={{
                 background: "rgba(200,200,200,0.3)",
                 mb: 2,
-                borderRadius: 3,
+                borderRadius: 5,
               }}
             >
               <CardActionArea onClick={() => window.open(event.URL, "_blank")}>

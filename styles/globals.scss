@@ -94,3 +94,13 @@ body {
     transform: scale(1);
   }
 }
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  gap: 1;
+}
+.embla__slide {
+  flex: 0 0 100%;
+}
