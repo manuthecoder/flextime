@@ -193,7 +193,7 @@ const CanvasCalendar = () => {
         Calendar
       </Typography>
       {!session.user.iCal && <SetUpIcal />}
-      {data ? (
+      {session.user.iCal && data ? (
         <>
           {events.slice(0, 10).map((event) => (
             <Card
@@ -235,19 +235,20 @@ const CanvasCalendar = () => {
         </>
       ) : (
         <Box>
-          {[...new Array(10)].map(() => (
-            <Skeleton
-              variant="rectangular"
-              width={"100%"}
-              height={118}
-              animation="wave"
-              key={Math.random().toString()}
-              sx={{
-                borderRadius: 5,
-                mb: 2,
-              }}
-            />
-          ))}
+          {!data &&
+            [...new Array(10)].map(() => (
+              <Skeleton
+                variant="rectangular"
+                width={"100%"}
+                height={118}
+                animation="wave"
+                key={Math.random().toString()}
+                sx={{
+                  borderRadius: 5,
+                  mb: 2,
+                }}
+              />
+            ))}
         </Box>
       )}
     </Box>

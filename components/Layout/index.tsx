@@ -181,10 +181,10 @@ function ProfileSettings({ children }) {
             position: "fixed",
             bottom: 0,
             left: "50%",
-            transform:"translateX(-50%)",
+            transform: "translateX(-50%)",
             width: "100vw",
             maxWidth: "500px",
-            mx:"auto",
+            mx: "auto",
             textAlign: "center",
             background: green[100],
             borderRadius: "20px 20px 0px 0px",
@@ -502,6 +502,7 @@ export function Layout({ children }) {
       <Toolbar sx={{ py: 0.5 }} />
       {children}
       <NewFeatureDialog open={open} setOpen={setOpen} />
+      <Toolbar sx={{ py: 2 }} />
     </>
   );
 }
