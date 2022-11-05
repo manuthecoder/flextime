@@ -24,6 +24,7 @@ import useEmblaCarousel from "embla-carousel-react";
 const SetUpIcal = () => {
   const [open, setOpen] = React.useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [url, setUrl] = React.useState("");
   const handleNext = () => emblaApi && emblaApi.scrollNext();
 
   return (
@@ -148,6 +149,14 @@ const SetUpIcal = () => {
                   </Typography>
                   <Box sx={{ display: "flex", gap: 2 }}>
                     <TextField
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      error={
+                        url !== "" &&
+                        !url.startsWith(
+                          "https://iusd.instructure.com/feeds/calendars/"
+                        )
+                      }
                       fullWidth
                       label="Feed URL"
                       size="small"
