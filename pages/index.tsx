@@ -16,6 +16,7 @@ import iCalDateParser from "ical-date-parser";
 import { useSession } from "next-auth/react";
 import React from "react";
 import useSWR from "swr";
+import { green } from "@mui/material/colors";
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 
 const SetUpIcal = () => {
@@ -28,12 +29,36 @@ const SetUpIcal = () => {
         onOpen={() => setOpen(true)}
         anchor="bottom"
         disableSwipeToOpen
+        PaperProps={{
+          elevation: 1,
+          sx: {
+            maxWidth: "500px",
+            mx: "auto",
+            p: 4,
+            background: green[50],
+            borderRadius: "20px 20px 0 0",
+          },
+        }}
       >
-        <Typography variant="h4" gutterBottom>
-          Set up your iCal
-        </Typography>
+        <Box>
+          <Box
+            sx={{
+              width: "50px",
+              height: "2px",
+              background: green[600],
+              borderRadius: 99,
+              mx: "auto",
+              mb: 5,
+            }}
+          />
+          <Typography variant="h5" className="font-heading" sx={{ mb: 2 }}>
+            Set up your calendar
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}></Typography>
+        </Box>
       </SwipeableDrawer>
       <Button
+        onClick={() => setOpen(true)}
         variant="contained"
         size="large"
         fullWidth
