@@ -2,6 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import { green, teal } from "@mui/material/colors";
 import Grow from "@mui/material/Grow";
 import Menu from "@mui/material/Menu";
@@ -17,7 +18,13 @@ import {
   CircularProgress,
   Dialog,
   DialogContent,
+  FormControl,
+  ListItem,
+  ListItemButton,
+  ListItemSecondaryAction,
+  ListItemText,
   SwipeableDrawer,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -157,6 +164,26 @@ function ProfileSettings({ children }) {
   });
   const [show, setShow] = React.useState(false);
   const session: any = useSession();
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+
+    fetch("/api/updateSettings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: {
+          darkMode: event.target.checked ? "true" : "false",
+        },
+        accessToken: session.data.user.accessToken,
+      }),
+    }).then((res) => {
+      window.location.reload();
+    });
+  };
 
   return (
     <>
@@ -219,32 +246,85 @@ function ProfileSettings({ children }) {
             <Box
               sx={{
                 p: 2,
+                mb: 2,
                 borderRadius: 5,
                 background: green[200],
                 textAlign: "left",
               }}
             >
-              <Typography
-                variant="h6"
-                onClick={() => setShow(!show)}
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: "900" }}>
+                Settings
+              </Typography>
+              <ListItemButton
                 sx={{
-                  fontWeight: "900",
-                  filter: "blur(5px)",
-                  background: green[500],
-                  px: 1,
-                  py: 0,
-                  display: "inline-block",
-                  borderRadius: 2,
-                  cursor: "pointer",
-                  ...(show && {
-                    filter: "blur(0px)",
-                    background: green[300],
-                  }),
+                  cursor: "auto",
+                  transition: "none",
+                  borderRadius: 9,
+                }}
+                disableRipple
+              >
+                <ListItemText primary="Dark Mode" />
+                <ListItemSecondaryAction>
+                  <Switch
+                    edge="end"
+                    checked={session && session.data.user.darkMode}
+                    onChange={handleChange}
+                  />
+                </ListItemSecondaryAction>
+              </ListItemButton>
+            </Box>
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 5,
+                background: green[200],
+                textAlign: "left",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {session.data.user.studentId}
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "900",
+                    filter: "blur(4px)",
+                    background: green[500],
+                    px: 1,
+                    py: 0,
+                    display: "inline-block",
+                    borderRadius: 2,
+                    cursor: "pointer",
+                    userSelect: "none",
+                    ...(show && {
+                      filter: "blur(0px)",
+                      background: green[300],
+                    }),
+                  }}
+                  onClick={() => setShow(!show)}
+                >
+                  {session.data.user.studentId}
+                </Typography>
+                <IconButton
+                  sx={{
+                    ml: "auto",
+                    p: 0,
+                    color: green[900],
+                  }}
+                  onClick={() => setShow(!show)}
+                >
+                  <span className="material-symbols-outlined">
+                    {show ? "visibility_off" : "visibility"}
+                  </span>
+                </IconButton>
+              </Box>
+
+              <Typography variant="body1" sx={{ mt: 1, ml: 1.8 }}>
+                Student ID
               </Typography>
-              <Typography variant="body1">Student ID</Typography>
             </Box>
           </Box>
         </Box>

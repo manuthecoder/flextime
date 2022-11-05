@@ -14,11 +14,14 @@ export default async function handle(
   const accessToken = body.accessToken;
   const data = body.data;
 
-  const allowedParameters = ["studentId", "iCal", "image"];
+  const allowedParameters = ["studentId", "iCal", "darkMode"];
   const updated = {};
   allowedParameters.forEach((parameter) => {
-    if (data[parameter]) {
+    if (data[parameter] && parameter !== "darkMode") {
       updated[parameter] = data[parameter];
+    }
+    if (data[parameter] && parameter === "darkMode") {
+      updated[parameter] = data[parameter] === "true" ? true : false;
     }
   });
 

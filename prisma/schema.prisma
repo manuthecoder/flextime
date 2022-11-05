@@ -64,9 +64,12 @@ model User {
   // Required for NextAuth, but not used
   emailVerified DateTime?
   image         String?
+
+  darkMode Boolean @default(false)
+
   // oAuth stuff and session management
-  accounts      Account[]
-  sessions      Session[]
+  accounts Account[]
+  sessions Session[]
 }
 
 model VerificationToken {
