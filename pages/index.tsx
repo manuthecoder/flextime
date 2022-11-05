@@ -65,7 +65,7 @@ const SetUpIcal = () => {
               <Box className="embla__slide">
                 <Box
                   sx={{
-                    background: "rgba(200,200,200,.3)",
+                    background: green[100],
                     borderRadius: 5,
                     p: 4,
                   }}
@@ -97,7 +97,7 @@ const SetUpIcal = () => {
               <Box className="embla__slide">
                 <Box
                   sx={{
-                    background: "rgba(200,200,200,.3)",
+                    background: green[100],
                     borderRadius: 5,
                     p: 4,
                   }}
@@ -128,7 +128,7 @@ const SetUpIcal = () => {
               <Box className="embla__slide">
                 <Box
                   sx={{
-                    background: "rgba(200,200,200,.3)",
+                    background: green[100],
                     borderRadius: 5,
                     p: 4,
                   }}
