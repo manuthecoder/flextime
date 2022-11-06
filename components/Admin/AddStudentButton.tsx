@@ -115,7 +115,7 @@ export function AddStudentButton({
             top: 0,
             right: 0,
             m: { xs: 3, sm: 5 },
-            color: "#000",
+            color: global.darkMode ? "hsl(240, 11%,95%)" : "#000",
           }}
           size="large"
           onClick={() => setOpen(false)}
