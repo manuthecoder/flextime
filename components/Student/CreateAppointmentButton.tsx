@@ -98,7 +98,9 @@ function AppointmentDetails({
           maxWidth: "400px",
           mx: "auto",
           p: 3,
-          background: "rgba(200,200,200,.3)",
+          background: global.darkMode
+            ? "rgba(32, 32, 40,.7)"
+            : "rgba(200,200,200,.3)",
           borderRadius: 5,
           mt: { md: 15 },
         }}
@@ -286,7 +288,9 @@ export function CreateAppointmentButton({
                   height: "400px",
                   maxHeight: "50vh",
                   overflowY: "auto",
-                  background: "rgba(200,200,200,.3)",
+                  background: global.darkMode
+                    ? "rgba(32, 32, 40,.3)"
+                    : "rgba(200,200,200,.3)",
                   backdropFilter: "blur(100px)",
                   mt: 2,
                   borderRadius: 5,

@@ -26,8 +26,8 @@ export const Person: any = React.memo(function ({
             width: 30,
             transition: "transform .2s",
             height: 30,
-            background: green[900],
-            color: "#fff",
+            background: green[global.darkMode ? 100 : 900],
+            color: global.darkMode ? "#000" : "#fff",
           }}
         >
           <span className="material-symbols-outlined">check</span>
