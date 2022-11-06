@@ -115,6 +115,7 @@ function NewFeatureDialog({ open, setOpen }) {
             borderRadius: 99,
             mb: 2,
             background: teal[900] + "!important",
+            color: teal[50] + "!important",
           }}
           onClick={() => {
             localStorage.setItem("newFeatureDialog", "true");
