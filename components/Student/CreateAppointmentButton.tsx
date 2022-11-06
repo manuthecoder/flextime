@@ -357,7 +357,9 @@ export function CreateAppointmentButton({
           disabled={dayjs(day).isBefore(dayjs(), "day")}
           sx={{
             width: { sm: "100%" },
-            background: "rgba(200,200,200,0.3)!important",
+            background: global.darkMode
+              ? "hsl(240,11%,18%)!important"
+              : "rgba(200,200,200,0.3)!important",
             color: global.darkMode ? "#fff" : "#212121",
             borderWidth: "2px!important",
             justifyContent: "start",

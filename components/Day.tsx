@@ -74,7 +74,9 @@ export function Day({ index, url, calendarData, admin = false, day }) {
               mt: { sm: -1 },
               width: { xs: 10, sm: 20 },
               height: { xs: 10, sm: 20 },
-              background: "rgba(200,200,200,0.3)",
+              background: global.darkMode
+                ? "hsl(240,11%,18%)"
+                : "rgba(200,200,200,0.3)",
               ...(dayjs(day).isSame(dayjs(), "day") && {
                 background: green[900],
                 color: "#fff",
