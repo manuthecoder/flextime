@@ -222,7 +222,8 @@ function ProfileSettings({ children }) {
             {...stringAvatar(session.data.user.name)}
             sx={{
               mx: "auto",
-              background: green[300],
+              background: green[global.darkMode ? 900 : 300],
+              color: green[global.darkMode ? 100 : 900],
               width: 60,
               height: 60,
               position: "relative",
@@ -411,10 +412,10 @@ function ProfileMenu({
           width: 35,
           height: 35,
           borderRadius: 3,
-          background: green[200],
+          background: green[global.darkMode ? 900 : 300],
+          color: green[global.darkMode ? 100 : 900],
           fontSize: "15px",
           fontWeight: "100",
-          color: green[900],
         }}
       />
     </Box>
