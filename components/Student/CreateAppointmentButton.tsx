@@ -358,7 +358,7 @@ export function CreateAppointmentButton({
           sx={{
             width: { sm: "100%" },
             background: "rgba(200,200,200,0.3)!important",
-            color: "#212121",
+            color: global.darkMode ? "#fff" : "#212121",
             borderWidth: "2px!important",
             justifyContent: "start",
             mt: 1,

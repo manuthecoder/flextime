@@ -33,7 +33,9 @@ function GlobalAdminSettings() {
           p: 5,
           mb: 10,
           borderRadius: 5,
-          background: "rgba(200,200,200,0.3)",
+          background: global.darkMode
+            ? "hsl(240, 11%, 7%)"
+            : "rgba(200,200,200,0.3)",
         }}
       >
         <TextField
@@ -199,7 +201,7 @@ export function WeeklyCalendar({ admin }) {
     px: navigation == 0 ? 3 : 3,
     minWidth: "auto",
     border: "0!important",
-    color: "#000",
+    color: global.darkMode ? "hsl(240, 11%, 95%)" : "#000",
   };
   const [show, setShow] = useState(true);
   return (
@@ -229,7 +231,10 @@ export function WeeklyCalendar({ admin }) {
           sx={{
             p: 1,
             ml: "auto",
-            background: { xs: green[100], sm: "transparent" },
+            background: {
+              xs: green[global.darkMode ? 900 : 100],
+              sm: "transparent",
+            },
             mt: { xs: 2, sm: 0 },
             borderRadius: 9999,
             position: { xs: "fixed", sm: "unset" },
@@ -308,7 +313,9 @@ export function WeeklyCalendar({ admin }) {
         sx={{
           display: show ? "flex" : "none",
           flexDirection: { xs: "column", sm: "row" },
-          background: { sm: "rgba(200,200,200,0.3)" },
+          background: {
+            sm: global.darkMode ? "hsl(240, 11%, 7%)" : "rgba(200,200,200,0.3)",
+          },
           gap: { xs: 2, sm: 1 },
           borderRadius: 2,
           p: 1,

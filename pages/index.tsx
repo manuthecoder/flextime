@@ -272,7 +272,9 @@ const CanvasCalendar = () => {
             <Card
               elevation={0}
               sx={{
-                background: "rgba(200,200,200,0.3)",
+                background: global.darkMode
+                  ? "hsl(240, 11%, 7%)"
+                  : "rgba(200,200,200,0.3)",
                 mb: 2,
                 borderRadius: 5,
               }}

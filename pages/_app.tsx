@@ -12,39 +12,19 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }): React.ReactElement {
-  const theme = createTheme({
-    components: {
-      // Name of the component
-      MuiButtonBase: {
-        defaultProps: {
-          style: {
-            textTransform: "none",
-          },
-        },
-      },
-    },
-    palette: {
-      primary: {
-        main: green["800"],
-      },
-    },
-  });
-
   return (
     <SessionProvider session={session}>
-      <ThemeProvider theme={theme}>
-        <Head>
-          <meta name="theme-color" content="#e8f5e9" />
-          <link rel="shortcut icon" href="https://i.ibb.co/9vqnLWg/image.png" />
-          <title>Flextime &bull; Irvine High</title>
-        </Head>
-        <NoSsr>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </NoSsr>
-        <Toaster />
-      </ThemeProvider>
+      <Head>
+        <meta name="theme-color" content="#e8f5e9" />
+        <link rel="shortcut icon" href="https://i.ibb.co/9vqnLWg/image.png" />
+        <title>Flextime &bull; Irvine High</title>
+      </Head>
+      <NoSsr>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </NoSsr>
+      <Toaster />
     </SessionProvider>
   );
 }

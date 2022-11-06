@@ -1,10 +1,26 @@
+import { LoadingButton } from "@mui/lab";
+import {
+  Backdrop,
+  CircularProgress,
+  Dialog,
+  DialogContent,
+  ListItemButton,
+  ListItemSecondaryAction,
+  ListItemText,
+  SwipeableDrawer,
+  Switch,
+  TextField,
+  ThemeProvider,
+  createTheme,
+  Typography,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import { green, teal } from "@mui/material/colors";
 import Grow from "@mui/material/Grow";
+import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,22 +28,6 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { LoadingButton } from "@mui/lab";
-import {
-  Backdrop,
-  CircularProgress,
-  Dialog,
-  DialogContent,
-  FormControl,
-  ListItem,
-  ListItemButton,
-  ListItemSecondaryAction,
-  ListItemText,
-  SwipeableDrawer,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(
   props: any,
@@ -213,7 +213,7 @@ function ProfileSettings({ children }) {
             maxWidth: "500px",
             mx: "auto",
             textAlign: "center",
-            background: green[100],
+            background: green[global.darkMode ? 900 : 100],
             borderRadius: "20px 20px 0px 0px",
             overflow: "visible",
           }}
@@ -441,148 +441,190 @@ export function Layout({ children }) {
 
   const [open, setOpen] = React.useState(false);
 
-  return (
-    <>
-      <Backdrop
-        open={status === "loading" || status === "unauthenticated"}
-        sx={{
-          zIndex: 9999,
-          background: "rgba(0,0,0,0.5)",
-        }}
-      >
-        <CircularProgress />
-      </Backdrop>
-      <SwipeableDrawer
-        anchor="bottom"
-        onOpen={() => {}}
-        onClose={() => {}}
-        open={session && !session.user.studentId && !session.user.isAdmin}
-        disableSwipeToOpen
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            background: "transparent",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+  const darkMode = session && session.user.darkMode;
+  global.darkMode = darkMode;
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+      document
+        .querySelector(`meta[name="theme-color"]`)
+        .setAttribute("content", "hsl(240,11%,10%)");
+    }
+  });
+
+  const theme = createTheme({
+    components: {
+      // Name of the component
+      MuiButtonBase: {
+        defaultProps: {
+          style: {
+            textTransform: "none",
           },
+        },
+      },
+    },
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: green[darkMode ? "A400" : 800],
+      },
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          background: darkMode ? "hsl(240, 11%, 5%)" : "#fff",
+          ...(darkMode && {
+            color: "hsl(0, 0%, 95%)",
+          }),
         }}
       >
-        <Box
+        <Backdrop
+          open={status === "loading" || status === "unauthenticated"}
           sx={{
-            maxWidth: "500px",
-            mx: "auto",
-            background: "#fff",
-            color: green[900],
-            p: 5,
-            borderRadius: 5,
+            zIndex: 9999,
+            background: "rgba(0,0,0,0.5)",
           }}
         >
-          <Typography variant="h4" gutterBottom className="font-heading">
-            Finish signup
-          </Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Please enter your student ID to finish signing up. Your data is
-            stored with zero-access encryption.{" "}
-            <b>
-              Be careful, you will not be able to change this later, unless
-              approved by a staff member
-            </b>
-          </Typography>
-          <TextField
-            value={studentId}
-            onChange={(e: any) => {
-              // Trim to max length of 9 characters
-              setStudentId(parseInt(e.target.value.slice(0, 9), 10));
+          <CircularProgress />
+        </Backdrop>
+        <SwipeableDrawer
+          anchor="bottom"
+          onOpen={() => {}}
+          onClose={() => {}}
+          open={session && !session.user.studentId && !session.user.isAdmin}
+          disableSwipeToOpen
+          PaperProps={{
+            elevation: 0,
+            sx: {
+              background: "transparent",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: "500px",
+              mx: "auto",
+              background: "#fff",
+              color: green[900],
+              p: 5,
+              borderRadius: 5,
             }}
-            fullWidth
-            variant="filled"
-            type="number"
-            label="9-digit student ID"
-            autoComplete="off"
-            placeholder="*********"
-          />
-          <LoadingButton
-            onClick={() => {
-              setLoading(true);
-              fetch("/api/setStudentId", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  id: session.user.id,
-                  studentId,
-                }),
-              })
-                .then((res) => res.json())
-                .then(() => {
-                  setLoading(false);
-                  window.location.reload();
-                })
-                .catch((err) => {
-                  setLoading(false);
-                  alert("Something went wrong. Please try again later.");
-                });
-            }}
-            loading={loading}
-            size="large"
-            variant="contained"
-            fullWidth
-            disableElevation
-            sx={{ mt: 2, borderRadius: 999 }}
           >
-            Continue
-          </LoadingButton>
-        </Box>
-      </SwipeableDrawer>
-      <AppBar
-        elevation={0}
-        sx={{
-          background: "rgba(232, 245, 233, .8)",
-          backdropFilter: "blur(10px)",
-          transition: "background .1s",
-          py: 0.5,
-          color: "black",
-        }}
-      >
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link href="/">
-              <Button
-                color="inherit"
-                sx={{
-                  fontWeight: "bold",
-                }}
-              >
-                IHS FlexTime
-              </Button>
-            </Link>
+            <Typography variant="h4" gutterBottom className="font-heading">
+              Finish signup
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              Please enter your student ID to finish signing up. Your data is
+              stored with zero-access encryption.{" "}
+              <b>
+                Be careful, you will not be able to change this later, unless
+                approved by a staff member
+              </b>
+            </Typography>
+            <TextField
+              value={studentId}
+              onChange={(e: any) => {
+                // Trim to max length of 9 characters
+                setStudentId(parseInt(e.target.value.slice(0, 9), 10));
+              }}
+              fullWidth
+              variant="filled"
+              type="number"
+              label="9-digit student ID"
+              autoComplete="off"
+              placeholder="*********"
+            />
+            <LoadingButton
+              onClick={() => {
+                setLoading(true);
+                fetch("/api/setStudentId", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    id: session.user.id,
+                    studentId,
+                  }),
+                })
+                  .then((res) => res.json())
+                  .then(() => {
+                    setLoading(false);
+                    window.location.reload();
+                  })
+                  .catch((err) => {
+                    setLoading(false);
+                    alert("Something went wrong. Please try again later.");
+                  });
+              }}
+              loading={loading}
+              size="large"
+              variant="contained"
+              fullWidth
+              disableElevation
+              sx={{ mt: 2, borderRadius: 999 }}
+            >
+              Continue
+            </LoadingButton>
           </Box>
-          <Box>
-            {session ? (
-              <ProfileMenu session={session} open={open} setOpen={setOpen} />
-            ) : (
-              <Button
-                onClick={() => signIn()}
-                variant="contained"
-                disableElevation
-                size="large"
-                sx={{
-                  borderRadius: 99999,
-                }}
-              >
-                Sign in
-              </Button>
-            )}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Toolbar sx={{ py: 0.5 }} />
-      {children}
-      <NewFeatureDialog open={open} setOpen={setOpen} />
-      <Toolbar sx={{ py: 2 }} />
-    </>
+        </SwipeableDrawer>
+        <AppBar
+          elevation={0}
+          sx={{
+            background: darkMode
+              ? "hsl(240, 11%, 10%)"
+              : "rgba(232, 245, 233, .8)",
+            backdropFilter: "blur(10px)",
+            transition: "background .1s",
+            py: 0.5,
+            color: darkMode ? "white" : "black",
+          }}
+        >
+          <Toolbar>
+            <Box sx={{ flexGrow: 1 }}>
+              <Link href="/">
+                <Button
+                  color="inherit"
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  IHS FlexTime
+                </Button>
+              </Link>
+            </Box>
+            <Box>
+              {session ? (
+                <ProfileMenu session={session} open={open} setOpen={setOpen} />
+              ) : (
+                <Button
+                  onClick={() => signIn()}
+                  variant="contained"
+                  disableElevation
+                  size="large"
+                  sx={{
+                    borderRadius: 99999,
+                  }}
+                >
+                  Sign in
+                </Button>
+              )}
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <Toolbar sx={{ py: 0.5 }} />
+        {children}
+        <NewFeatureDialog open={open} setOpen={setOpen} />
+        <Toolbar sx={{ py: 2 }} />
+      </Box>
+    </ThemeProvider>
   );
 }

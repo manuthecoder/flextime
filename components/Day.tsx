@@ -28,7 +28,12 @@ export function Day({ index, url, calendarData, admin = false, day }) {
           gap: { xs: 1, sm: 5 },
           alignItems: "center",
           flexDirection: "column",
-          background: { xs: "rgba(200,200,200,0.2)", sm: "transparent" },
+          background: {
+            xs: global.darkMode
+              ? "hsl(240, 11%, 10%)"
+              : "rgba(200,200,200,0.2)",
+            sm: "transparent",
+          },
           borderRadius: 5,
           width: { sm: "100%" },
           ...(isPast && { opacity: 0.5 }),
@@ -37,7 +42,11 @@ export function Day({ index, url, calendarData, admin = false, day }) {
           flexBasis: 0,
           flexGrow: 1,
           "&:hover": {
-            background: { sm: "rgba(200,200,200,0.1)" },
+            background: {
+              sm: global.darkMode
+                ? "hsl(240, 11%, 10%)"
+                : "rgba(200,200,200,0.1)",
+            },
           },
         }}
       >

@@ -35,8 +35,17 @@ body {
   background: radial-gradient(#000, #000);
 }
 
+.dark .MuiTouchRipple-child {
+  filter: opacity(0.3) !important;
+  background: radial-gradient(hsl(240, 11%, 50%), hsl(240, 11%, 50%));
+}
+
 .MuiBackdrop-root {
   background-color: rgba(232, 245, 233, 0.5) !important;
+  backdrop-filter: blur(10px);
+}
+.dark .MuiBackdrop-root {
+  background-color: rgba(23, 23, 28, 0.5) !important;
   backdrop-filter: blur(10px);
 }
 
@@ -59,6 +68,14 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   box-shadow: inset 0 0 10px 10px #84ab85;
 }
+
+.dark ::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px hsl(240, 11%, 20%);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 10px 10px hsl(240, 11%, 30%);
+}
+
 ::-moz-scrollbar-button:decrement,
 ::-moz-scrollbar-button:increment,
 ::-webkit-scrollbar-button:decrement,

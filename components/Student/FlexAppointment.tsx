@@ -43,7 +43,7 @@ export function FlexAppointment({ mutationUrl, appointment }) {
             maxWidth: "500px",
             mx: "auto",
             p: 4,
-            background: green[50],
+            background: green[global.darkMode ? 900 : 50],
             borderRadius: "20px 20px 0 0",
           },
         }}
