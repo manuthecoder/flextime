@@ -211,7 +211,7 @@ export function ViewAttendees({
           fullWidth
           onClick={() => setOpen(true)}
           sx={{
-            color: "#212121",
+            color: global.darkMode ? "#fff" : "#212121",
             justifyContent: "start",
             px: 2,
             gap: 1.5,

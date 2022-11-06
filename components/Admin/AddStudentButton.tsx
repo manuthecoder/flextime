@@ -267,7 +267,7 @@ export function AddStudentButton({
         onClick={() => setOpen(true)}
         disabled={dayjs(day).isBefore(dayjs().subtract(1, "day"))}
         sx={{
-          color: "#212121",
+          color: global.darkMode ? "#fff" : "#212121",
           px: 1,
           minWidth: "auto",
           borderRadius: 9,

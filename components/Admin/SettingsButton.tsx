@@ -74,7 +74,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
           sx={{
             minWidth: "80vw",
             maxWidth: "100vw",
-            background: "#fff",
+            background: global.darkMode ? "hsl(240,11%,15%)" : "#fff",
             boxShadow:
               "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
             maxHeight: "90%",
@@ -284,7 +284,7 @@ export function SettingsButton({ mutationUrl, day, appointmentsToday }) {
           width: { sm: "100%" },
           // width: "100%",
           background: "rgba(200,200,200,0.3)!important",
-          color: "#212121",
+          color: global.darkMode ? "#fff" : "#212121",
           borderWidth: "2px!important",
           justifyContent: { sm: "start" },
           mt: 1,
