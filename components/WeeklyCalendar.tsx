@@ -92,7 +92,7 @@ function StudentBarcode({ styles }) {
           px: 2,
           borderRadius: 999,
           fontWeight: "bold",
-          background: green[200] + "!important",
+          background: green[global.darkMode ? 900 : 200] + "!important",
         }}
         onClick={() => {
           setOpen(true);
