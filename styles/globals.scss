@@ -122,3 +122,7 @@ body {
 .embla__slide {
   flex: 0 0 100%;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
